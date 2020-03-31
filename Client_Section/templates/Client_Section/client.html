@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block javascript %}
+  <script src="{% static 'js/create_client.js' %}"></script>
+{% endblock %}
+
+{% block content%}
+
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Simple Table</h4>
+                  <p class="card-category"> Here is a subtitle for this table</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="book-table">
+                      <thead class=" text-primary">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          RC
+                        </th>
+                        <th>
+                          Fax
+                        </th>
+                        <th>
+                          adresse
+                        </th>
+                       <th>
+                          active
+                        </th>
+
+                      </thead>
+                      <tbody>
+                    {% include 'Client_Section/partial_client_c.html' %}
+                      </tbody>
+                        <div class="modal fade" id="modal-book">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+                        </div>
+                    </table>
+    <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Client
+    </button>
+  </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+
+      </footer>
+    </div>
+  </div>
+
+{% endblock%}
+

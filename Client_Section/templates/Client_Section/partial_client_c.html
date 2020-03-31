@@ -1,0 +1,24 @@
+  {% for obj in client %}
+
+                        <tr>
+                          <td>
+                            {{obj.id}}
+                          </td>
+                          <td>
+                           {{obj.Name}}
+                          </td>
+                          <td>
+                           {{obj.RC}}
+                          </td>
+                              <td>
+                            {{obj.fax}}
+                          </td>
+                          <td>
+                            {{obj.adresse}}
+                          </td>
+                          <td>
+                            {{obj.active}}
+                          </td>
+
+                        </tr>
+                      {% endfor%}

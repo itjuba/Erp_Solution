@@ -1,0 +1,20 @@
+{% load widget_tweaks %}
+
+<form  method="post" action="{% url 'create' %}" class="js-book-create-form">
+  {% csrf_token %}
+  <div class="modal-body form-group">
+    {% for field in form %}
+      <div class=" form-group bmd-form-group form-group{% if field.errors %} has-error{% endif %} bmd-form-group input-group no-border">
+        <label class="bmd-label-floating" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% render_field field class="form-control" %}
+        {% for error in field.errors %}
+          <p class="help-block">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Create book</button>
+  </div>
+</form>
