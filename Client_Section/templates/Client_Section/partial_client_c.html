@@ -19,6 +19,18 @@
                           <td>
                             {{obj.active}}
                           </td>
+                            <td>
+                                   <button type="button"
+              class="btn btn-warning btn-sm js-update-book"
+              data-url="{% url 'update' slug=obj.slug %}">
+        <span class="glyphicon glyphicon-pencil"></span> Edit
+      </button>
+                                      <button type="button"
+              class="btn btn-danger btn-sm js-delete-book"
+              data-url="{% url 'delete' slug=obj.slug %}">
+        <span class="glyphicon glyphicon-trash"></span> Delete
+      </button>
+                            </td>
 
                         </tr>
                       {% endfor%}
