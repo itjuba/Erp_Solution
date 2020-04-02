@@ -11,11 +11,11 @@ from django.db.models.signals import  pre_save
 
 class Client_Data(models.Model):
      RC = models.CharField(max_length=50)
-     Raison_social = models.CharField(max_length=254,blank=True)
-     NIF = models.CharField(max_length=50,blank=True,unique=True)
-     AI = models.CharField(max_length=50,blank=True,unique=True)
-     NIS = models.CharField(max_length=50,blank=True,unique=True)
-     Banque = models.CharField(max_length=50,blank=True,unique=True)
+     Raison_social = models.CharField(max_length=254)
+     NIF = models.CharField(max_length=50,unique=True)
+     AI = models.CharField(max_length=50,unique=True)
+     NIS = models.CharField(max_length=50,unique=True)
+     Banque = models.CharField(max_length=50,unique=True)
      CB = models.CharField(max_length=50)
      adresse = models.CharField(max_length=50)
      slug = models.SlugField(blank=True, unique=True)
