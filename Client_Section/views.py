@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 
 from .models import Client_Data
-from .forms import ClientForm
+from .forms import ClientForm,Contact_Form
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 # Create your views here.
@@ -17,19 +17,27 @@ def client(request):
 
 
 
-def save_client_form(request, form, template_name):
+def save_client_form(request, form,Contact_form, template_name):
     data = dict()
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid() and Contact_form.is_valid():
+            client = form.save()
+            contact = Contact_form.save(commit=False)
+            contact.client = client
+            contact.save()
             form.save()
+            Contact_form.save()
+
             data['form_is_valid'] = True
             books = Client_Data.objects.all()
             data['html_book_list'] = render_to_string('Client_Section/partial_client_c.html', {
                 'client': books
             })
         else:
+            print(form.errors)
+            print(Contact_form.errors)
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form,'contact_form':Contact_form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -39,9 +47,11 @@ def save_client_form(request, form, template_name):
 def client_create(request):
     if request.method == 'POST':
         form = ClientForm(request.POST)
+        contact_form = Contact_Form(request.POST)
     else:
         form = ClientForm()
-    return save_client_form(request, form, 'Client_Section/partial_client.html')
+        contact_form = Contact_Form()
+    return save_client_form(request, form,contact_form, 'Client_Section/partial_client.html')
 
 
 def client_update(request, slug):
