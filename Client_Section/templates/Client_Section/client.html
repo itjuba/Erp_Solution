@@ -5,12 +5,23 @@
   <script src="{% static 'js/create_client.js' %}"></script>
 {% endblock %}
 
+
 {% block content%}
+
 
       <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
+                       <div class="alert  alert-success alert-with-icon" id="display" data-notify="container" style="display : none;">
+                    <i class="material-icons" data-notify="icon">add_alert</i>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="material-icons">close</i>
+                    </button>
+                    <span data-notify="message"> Client Created Successfully </span>
+                  </div>
+                </div>
+                <br><br>
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Simple Table</h4>

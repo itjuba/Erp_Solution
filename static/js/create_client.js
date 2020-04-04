@@ -1,5 +1,7 @@
 $(function () {
 
+
+
   /* Functions */
 
   var loadForm = function () {
@@ -20,6 +22,7 @@ $(function () {
 
   var saveForm = function () {
     var form = $(this);
+
     $.ajax({
       url: form.attr("action"),
       data: form.serialize(),
@@ -29,6 +32,8 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
+          md.showNotificationSuccess('top','center','success');
+          setTimeout(function() { $("#display").hide(); }, 5000);
         }
         else {
           $("#modal-book .modal-content").html(data.html_form);

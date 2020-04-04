@@ -164,6 +164,25 @@ md = {
     }
   },
 
+    showNotificationSuccess: function(from, align,couleur) {
+    type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
+
+    color = Math.floor((Math.random() * 6) + 1);
+
+    $.notify({
+      icon: "add_alert",
+      message: "Client Created Successfully !! "
+
+    }, {
+      type: couleur,
+      timer: 3000,
+      placement: {
+        from: from,
+        align: align
+      }
+    });
+  },
+
   showNotification: function(from, align) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
@@ -732,3 +751,4 @@ function debounce(func, wait, immediate) {
     if (immediate && !timeout) func.apply(context, args);
   };
 };
+

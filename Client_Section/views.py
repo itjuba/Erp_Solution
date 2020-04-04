@@ -3,6 +3,7 @@ from django.shortcuts import render,get_object_or_404
 from .models import Client_Data
 from .forms import ClientForm,Contact_Form
 from django.http import JsonResponse
+from django.contrib import messages
 from django.template.loader import render_to_string
 # Create your views here.
 
