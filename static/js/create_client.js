@@ -43,6 +43,52 @@ $(function () {
     return false;
   };
 
+   var saveFormDelete = function () {
+    var form = $(this);
+
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          $("#book-table tbody").html(data.html_book_list);
+          $("#modal-book").modal("hide");
+          md.showNotificationDelete('top','center','danger');
+          setTimeout(function() { $("#display").hide(); }, 5000);
+        }
+        else {
+          $("#modal-book .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  };
+
+   var saveFormUpdate = function () {
+    var form = $(this);
+
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          $("#book-table tbody").html(data.html_book_list);
+          $("#modal-book").modal("hide");
+          md.showNotificationUpdate('top','center','primary');
+          setTimeout(function() { $("#display").hide(); }, 5000);
+        }
+        else {
+          $("#modal-book .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  };
+
 
   /* Binding */
 
@@ -52,10 +98,10 @@ $(function () {
 
   // Update book
   $("#book-table").on("click", ".js-update-book", loadForm);
-  $("#modal-book").on("submit", ".js-book-update-form", saveForm);
+  $("#modal-book").on("submit", ".js-book-update-form", saveFormUpdate);
 
   // Delete book
   $("#book-table").on("click", ".js-delete-book", loadForm);
-  $("#modal-book").on("submit", ".js-book-delete-form", saveForm);
+  $("#modal-book").on("submit", ".js-book-delete-form", saveFormDelete);
 
 });
