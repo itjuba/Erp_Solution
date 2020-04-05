@@ -119,8 +119,6 @@ def client_delete(request, slug):
 
 
 
-
-
 #
 # def create_client(request):
 #     data = dict()
