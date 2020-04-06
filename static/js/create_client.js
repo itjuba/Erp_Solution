@@ -33,9 +33,11 @@ $(function () {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
           md.showNotificationSuccess('top','center','success');
-          setTimeout(function() { $("#display").hide(); }, 5000);
+          console.log("success");
         }
         else {
+          console.log('error');
+          md.showNotificationFail('bottom','left','warning');
           $("#modal-book .modal-content").html(data.html_form);
         }
       }
