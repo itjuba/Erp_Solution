@@ -23,7 +23,7 @@ class Contact_Form(forms.ModelForm):
         model = Contact
         fields = ('Nom','post','Tel','email','contact_type','client')
 
-    def __init__(self, cl,*args, **kwargs):
+    def __init__(self,*args, **kwargs):
         super(Contact_Form, self).__init__(*args, **kwargs)
         client = self.initial.get('client')
         if client:

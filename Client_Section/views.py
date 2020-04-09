@@ -53,7 +53,7 @@ def see(request,slug):
             form.fields['client'].queryset = Contact.objects.filter(client=client.id)
 
     context = {'form': formset}
-    template_name = 'Client_Section/partial_client_contact_form.html'
+    template_name = 'Client_Section/partial_client_contact.html'
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
     # return render(request,template_name,context)
