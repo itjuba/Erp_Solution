@@ -39,6 +39,12 @@
               data-url="{% url 'delete' slug=obj.slug %}">
         <span class="glyphicon glyphicon-trash"></span> Delete
       </button>
+                                                                <button type="button"
+              class="btn btn-danger btn-sm js-delete-book"
+              data-url="{% url 'see' slug=obj.slug %}">
+        <span class="glyphicon glyphicon-trash"></span> see
+      </button>
+
                             </td>
 
                         </tr>
