@@ -29,21 +29,30 @@
                             {{obj.adresse}}
                           </td>
                             <td>
-                                   <button type="button"
-              class="btn btn-warning btn-sm js-update-book"
-              data-url="{% url 'update' slug=obj.slug %}">
-        <span class="glyphicon glyphicon-pencil"></span> Edit
-      </button>
-                                      <button type="button"
-              class="btn btn-danger btn-sm js-delete-book"
-              data-url="{% url 'delete' slug=obj.slug %}">
-        <span class="glyphicon glyphicon-trash"></span> Delete
-      </button>
-                                                                <button type="button"
-              class="btn btn-danger btn-sm js-delete-book"
-              data-url="{% url 'see' slug=obj.slug %}">
-        <span class="glyphicon glyphicon-trash"></span> see
-      </button>
+
+
+            <a class="  likes-button js-update-book "   data-url="{% url 'update' slug=obj.slug %}" href="#" style="color : black;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+
+        <a class="js-delete-book" data-url="{% url 'delete' slug=obj.slug %}" href="#"  style="color : black;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+        <a class="js-delete-book" data-url="{% url 'see' slug=obj.slug %}" href="#"  style="color : black;">
+        <i class="fa fa-id-badge w3-xxlarge" aria-hidden="true"></i></a>
+
+
+
+<!--                                      <button type="button"-->
+<!--              class="btn btn-danger btn-sm js-delete-book"-->
+<!--              data-url="{% url 'delete' slug=obj.slug %}">-->
+<!--        <span class="glyphicon glyphicon-trash"></span> Delete-->
+<!--      </button>-->
+<!--                                                                <button type="button"-->
+<!--              class="btn btn-danger btn-sm js-delete-book"-->
+<!--              data-url="{% url 'see' slug=obj.slug %}">-->
+<!--        <span class="glyphicon glyphicon-trash"></span> see-->
+<!--      </button>-->
 
                             </td>
 

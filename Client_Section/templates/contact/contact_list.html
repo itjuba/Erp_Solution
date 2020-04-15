@@ -1,0 +1,36 @@
+  {% for obj in contact %}
+
+                        <tr>
+                          <td>
+                            {{obj.Nom}}
+                          </td>
+                          <td>
+                           {{obj.post}}
+                          </td>
+                          <td>
+                           {{obj.Tel}}
+                          </td>
+                              <td>
+                            {{obj.contact_type}}
+                          </td>
+                               <td>
+                            {{obj.email}}
+                          </td>
+                                  <td>
+                            {{obj.client}}
+                          </td>
+                            <td>
+
+       <a class="  likes-button js-update-book "   data-url="{% url 'contact_update' obj.id %}" href="#" style="color : black;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+                                <a class="js-delete-book" data-url="{% url 'contact_delete' obj.id %}" href="#"  style="color : black;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+
+
+                            </td>
+                            </td>
+
+                        </tr>
+
+                      {% endfor%}

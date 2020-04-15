@@ -53,10 +53,3 @@ class Contact(models.Model):
 
 
 
-# @receiver(post_save, sender=Client_Data)
-# def create_contact(sender, **kwargs):
-#           if kwargs['created']:
-#                conatact = Contact.objects.create(client=kwargs['instance'])
-#
-# post_save.connect(create_contact, sender=Client_Data)
-

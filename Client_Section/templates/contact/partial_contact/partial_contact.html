@@ -1,4 +1,4 @@
-<form method="post"  class="js-book-create-form">
+<form method="post" action="{% url 'create_contact' %}" class="js-book-create-form">
   {% csrf_token %}
 <!--  <div class="modal-header">-->
 <!--    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
@@ -7,12 +7,12 @@
 <!--    <h4 class="modal-title">Create a new Client</h4>-->
 <!--  </div>-->
   <div class="modal-body" >
-    {% include 'Client_Section/partial_client_contact_form.html' %}
+    {% include 'contact/partial_contact/partial_contact_form.html' %}
   </div>
   <br><br>
   <div style="pos">
 
-    <button    style="float : right"  type="submit" class="btn btn-primary ">Update Contacts</button>
+    <button    style="float : right"  type="submit" class="btn btn-primary ">Add Client</button>
         <button  style="float : right" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
   </div>
 </form>
