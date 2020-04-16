@@ -30,6 +30,13 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table" id="book-table">
+                           <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Client
+    </button>
+  </p>
+
                       <thead class=" text-primary">
                         <th>
                           ID
@@ -73,13 +80,7 @@
                      </div>
                         </div>
                     </table>
-    <p>
-    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      New Client
-    </button>
-  </p>
-                  </div>
+        </div>
                 </div>
               </div>
             </div>

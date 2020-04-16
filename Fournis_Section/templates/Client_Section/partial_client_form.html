@@ -1,0 +1,91 @@
+<!--{% load widget_tweaks %}-->
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">RC</label>
+           {% render_field form.RC class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+            <label  class="bmd-label-floating" for="{{field.id_for_label}}">AI</label>
+            {% render_field form.AI class="form-control" %}
+      </div>
+    </div>
+       <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">NIS</label>
+           {% render_field form.NIS class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">NIF</label>
+           {% render_field form.NIF class="form-control" %}
+      </div>
+    </div>
+     <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">Nom</label>
+           {% render_field contact_form.Nom class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Post</label>
+           {% render_field contact_form.post class="form-control" %}
+      </div>
+    </div>
+     <div class="form-row">
+
+      <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label"></label>
+           {% render_field contact_form.contact_type class="form-control" %}
+      </div>
+              <div class="form-group col-md-6 mb-0">
+       <label  class="bmd-label-floating" for="form.id_for_label">Tel</label>
+           {% render_field contact_form.Tel class="form-control" %}
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+         <label class="bmd-label-floating" for="form.id_for_label">CB</label>
+           {% render_field form.CB class="form-control" %}
+      </div>
+           <div class="form-group col-md-6 mb-0">
+         <label class="bmd-label-floating" for="form.id_for_label">Banque</label>
+           {% render_field form.Banque class="form-control" %}
+      </div>
+               <div class="form-group col-md-12 mb-0">
+         <label class="bmd-label-floating" for="form.id_for_label">Adresse</label>
+           {% render_field form.adresse class="form-control" %}
+      </div>
+
+                       <div class="form-group col-md-12 mb-0">
+         <label class="bmd-label-floating" for="form.id_for_label">Raison_social</label>
+           {% render_field form.Raison_social class="form-control" %}
+      </div>
+                          <div class="form-group col-md-12 mb-0">
+         <label class="bmd-label-floating" for="form.id_for_label">Email</label>
+           {% render_field contact_form.email class="form-control" %}
+      </div>
+
+
+      </div>
+<!--{% if contact_form.errors %}-->
+<!--    {% for field in contact_form %}-->
+<!--        {% for error in field.errors %}-->
+<!--            <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">-->
+<!--                  <p> {{ error }} </p>-->
+<!--            </div>-->
+
+<!--        {% endfor %}-->
+<!--    {% endfor %}-->
+<!--{% endif %}-->
+<!--  {% for error in contact_form.errors %}-->
+<!--      <p class="help-block">{{ error }}</p>-->
+<!--    {% endfor %}-->
+
+<!--    <div class="alert alert-danger">{{contact_form.errors }}</div>-->
+
+{% endblock %}

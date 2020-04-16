@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block javascript %}
+  <script src="{% static 'js/create_client.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Client</h1>
+
+  <!-- BUTTON TO TRIGGER THE ACTION -->
+   <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New book
+    </button>
+  </p>
+
+  <table class="table" id="book-table">
+    <!-- TABLE CONTENT SUPPRESSED FOR BREVITY'S SAKE -->
+  </table>
+
+  <!-- THE MODAL WE WILL BE USING -->
+  <div class="modal fade" id="modal-book">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+{% endblock %}

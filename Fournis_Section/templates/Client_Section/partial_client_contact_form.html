@@ -1,0 +1,133 @@
+<!--{% load widget_tweaks %}-->
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+
+{% for form in form %}
+ <div class="container">
+  <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Nom</label>
+           {% render_field form.Nom class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+            <label  class="bmd-label-floating" for="{{field.id_for_label}}">post</label>
+            {% render_field form.post class="form-control" %}
+      </div>
+    </div>
+       <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">Contact_type</label>
+           {% render_field form.contact_type class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Tel</label>
+           {% render_field form.Tel class="form-control" %}
+      </div>
+
+                       <div class="form-group col-md-12 mb-0">
+         <label class="bmd-label-floating" for="form.id_for_label">Email</label>
+           {% render_field form.email class="form-control" %}
+      </div>
+             </div>
+      </div>
+<br>
+
+{% endfor %}
+
+
+
+<!--<div class="form-row">-->
+<!--<div class="form-group col-md-6 mb-0">-->
+<!--    <div class="container">-->
+<!--        <br>-->
+<!--        {% for form in form %}-->
+
+<!--              <div class="form-group col-md-12 mb-0">-->
+<!--          <label class="bmd-label-floating" for="form.id_for_label">Nom</label>-->
+<!--           {% render_field form.Nom class="form-control" %}-->
+<!--      </div>-->
+
+<!--              <div class="form-group col-md-12 mb-0">-->
+<!--          <label class="bmd-label-floating" for="form.id_for_label">post</label>-->
+<!--           {% render_field form.post class="form-control" %}-->
+<!--      </div>-->
+
+<!--              <div class="form-group col-md-12 mb-0">-->
+<!--          <label class="bmd-label-floating" for="form.id_for_label">email</label>-->
+<!--           {% render_field form.email class="form-control" %}-->
+<!--      </div>-->
+
+
+<!--        {% endfor %}-->
+
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+{% endblock %}
+
+
+
+
+
+
+
+<!--        {{form.as_p}}-->
+<!--    <div class="form-row">-->
+<!--      <div class="form-group col-md-6 mb-0">-->
+<!--          <label class="bmd-label-floating" for="form.id_for_label">RC</label>-->
+<!--           {% render_field form.RC class="form-control" %}-->
+<!--      </div>-->
+<!--      <div class="form-group col-md-6 mb-0">-->
+<!--            <label  class="bmd-label-floating" for="{{field.id_for_label}}">AI</label>-->
+<!--            {% render_field form.AI class="form-control" %}-->
+<!--      </div>-->
+<!--    </div>-->
+<!--       <div class="form-row">-->
+<!--      <div class="form-group col-md-6 mb-0">-->
+<!--        <label class="bmd-label-floating" for="form.id_for_label">NIS</label>-->
+<!--           {% render_field form.NIS class="form-control" %}-->
+<!--      </div>-->
+<!--      <div class="form-group col-md-6 mb-0">-->
+<!--        <label  class="bmd-label-floating" for="form.id_for_label">NIF</label>-->
+<!--           {% render_field form.NIF class="form-control" %}-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+<!--    <div class="form-row">-->
+<!--      <div class="form-group col-md-6 mb-0">-->
+<!--         <label class="bmd-label-floating" for="form.id_for_label">CB</label>-->
+<!--           {% render_field form.CB class="form-control" %}-->
+<!--      </div>-->
+<!--           <div class="form-group col-md-6 mb-0">-->
+<!--         <label class="bmd-label-floating" for="form.id_for_label">Banque</label>-->
+<!--           {% render_field form.Banque class="form-control" %}-->
+<!--      </div>-->
+<!--               <div class="form-group col-md-12 mb-0">-->
+<!--         <label class="bmd-label-floating" for="form.id_for_label">Adresse</label>-->
+<!--           {% render_field form.adresse class="form-control" %}-->
+<!--      </div>-->
+
+<!--                       <div class="form-group col-md-12 mb-0">-->
+<!--         <label class="bmd-label-floating" for="form.id_for_label">Raison_social</label>-->
+<!--           {% render_field form.Raison_social class="form-control" %}-->
+<!--      </div>-->
+
+<!--                         <div class="form-group col-md-12 mb-0">-->
+<!--         <label class="bmd-label-floating" for="form.id_for_label">Contact</label>-->
+<!--           {% render_field form.contact class="form-control" %}-->
+<!--      </div>-->
+
+
+
+<!--      </div>-->
+<!--  {% for error in form.errors %}-->
+<!--      <p class="help-block">{{ error }}</p>-->
+<!--    {% endfor %}-->

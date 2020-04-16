@@ -13,7 +13,6 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-
 <!--                       <div class="alert  alert-success alert-with-icon" id="display" data-notify="container" style="display : none;">-->
 <!--                    <i class="material-icons" data-notify="icon">add_alert</i>-->
 <!--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
@@ -24,7 +23,6 @@
 <!--                </div>-->
                 <br><br>
               <div class="card">
-
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Client Table</h4>
                   <p class="card-category"> Here is Contacts informations</p>
@@ -32,13 +30,6 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table" id="book-table">
-                           <p>
-    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create_contact' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      New Contact
-    </button>
-  </p>
-
                       <thead class=" text-primary">
                         <th>
                           Nom
@@ -75,7 +66,13 @@
                      </div>
                         </div>
                     </table>
-       </div>
+    <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create_contact' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Contact
+    </button>
+  </p>
+                  </div>
                 </div>
               </div>
             </div>
