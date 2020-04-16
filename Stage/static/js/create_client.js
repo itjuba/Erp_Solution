@@ -32,7 +32,7 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
-          md.showNotificationSuccess('top','center','success');
+          md.showNotificationSuccess('top','center','success','Client Created Successfully !');
           console.log("success");
         }
         else {
@@ -57,7 +57,7 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
-          md.showNotificationDelete('top','center','danger');
+          md.showNotificationDelete('top','center','danger','Client Deleted Successfully !');
           setTimeout(function() { $("#display").hide(); }, 5000);
         }
         else {
@@ -80,7 +80,7 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
-          md.showNotificationUpdate('top','center','primary');
+          md.showNotificationUpdate('top','center','primary','Client Updated Successfully');
           setTimeout(function() { $("#display").hide(); }, 5000);
         }
         else {

@@ -166,14 +166,14 @@ md = {
 
 
 
-    showNotificationSuccess: function(from, align,couleur) {
+    showNotificationSuccess: function(from, align,couleur,msg) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
     color = Math.floor((Math.random() * 6) + 1);
 
     $.notify({
       icon: "add_alert",
-      message: "Client Created Successfully !! "
+      message: msg
 
     }, {
       type: couleur,
@@ -205,14 +205,14 @@ md = {
     });
   },
 
-      showNotificationDelete: function(from, align,couleur) {
+      showNotificationDelete: function(from, align,couleur,msg) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
     color = Math.floor((Math.random() * 6) + 1);
 
     $.notify({
       icon: "add_alert",
-      message: "Client Deleted Successfully !"
+      message: msg
 
     }, {
       type: couleur,
@@ -223,14 +223,14 @@ md = {
       }
     });
   },
-    showNotificationUpdate: function(from, align,couleur) {
+    showNotificationUpdate: function(from, align,couleur,msg) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
     color = Math.floor((Math.random() * 6) + 1);
 
     $.notify({
       icon: "add_alert",
-      message: "Client Update Successfully !"
+      message: msg
 
     }, {
       type: couleur,
