@@ -2,7 +2,7 @@
 {% load static%}
 
 {% block javascript %}
-  <script src="{% static 'js/create_contact.js' %}"></script>
+  <script src="{% static 'js/create_client.js' %}"></script>
 {% endblock %}
 
 
@@ -25,39 +25,52 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Client Table</h4>
-                  <p class="card-category"> Here is Contacts informations</p>
+                  <p class="card-category"> Here is Fournisers informations</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table" id="book-table">
+                           <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'Fournis_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Fourniser
+    </button>
+  </p>
                       <thead class=" text-primary">
                         <th>
-                          Nom
+                          ID
                         </th>
                         <th>
-                          Post
+                          Raison_social
                         </th>
                         <th>
-                          Tel
+                          RC
+                        </th>
+                        <th>
+                          NIF
                         </th>
                           <th>
-                          Contact Type
+                          AI
                         </th>
                           <th>
-                          Email
+                          NIS
                         </th>
-
                           <th>
-                          Client
+                          Banque
                         </th>
-                           <th>
-                          Actions
+                          <th>
+                          CB
                         </th>
-
+                        <th>
+                          Adresse
+                        </th>
+                      <th>
+                          Action
+                      </th>
 
                       </thead>
                       <tbody>
-                    {% include 'contact/contact_list.html' %}
+                    {% include 'Fournis_Section/partial_client_c.html' %}
                       </tbody>
                         <div class="modal fade" id="modal-book">
                     <div class="modal-dialog" style=" left: 10%">
@@ -66,12 +79,7 @@
                      </div>
                         </div>
                     </table>
-    <p>
-    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create_contact' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      New Contact
-    </button>
-  </p>
+
                   </div>
                 </div>
               </div>

@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='contact',
             name='client',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='Client_Section.Client_Data'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='Fournis_Section.Client_Data'),
         ),
     ]
