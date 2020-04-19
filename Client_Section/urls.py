@@ -12,7 +12,7 @@ from .views import home,client,\
 
 urlpatterns = [
     path('',home,name='home'),
-    path('tables/',client,name='tables'),
+    path('client/',client,name='client'),
     path('contact/',contact,name='contact'),
     path('create/',client_create,name='create'),
     path('create_contact/',Contact_create,name='create_contact'),
