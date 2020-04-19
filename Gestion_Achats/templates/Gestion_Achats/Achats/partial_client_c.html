@@ -1,0 +1,29 @@
+  {% for obj in Achats %}
+
+                        <tr>
+                          <td>
+                            {{obj.Id_Fournis}}
+                          </td>
+                          <td>
+                           {{obj.Montant_HT}}
+                          </td>
+                          <td>
+                           {{obj.Montant_TVA}}
+                          </td>
+                              <td>
+                            {{obj.Montant_TTC}}
+                          </td>
+                            <td>
+
+
+            <a class="  likes-button js-update-book "   data-url="{% url 'achats_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+<a class="  likes-button js-update-book "   data-url="{% url 'achats_delete' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+
+
+                            </td>
+
+                        </tr>
+                      {% endfor%}

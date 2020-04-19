@@ -1,0 +1,32 @@
+<!--{% load widget_tweaks %}-->
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Designation</label>
+           {% render_field form.Designation class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+            <label  class="bmd-label-floating" for="{{field.id_for_label}}">Code</label>
+            {% render_field form.Code class="form-control" %}
+      </div>
+    </div>
+       <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">Description</label>
+           {% render_field form.Description class="form-control" %}
+      </div>
+      <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Service &nbsp;    {% render_field form.Service class="form-control" %}</label>
+
+      </div>
+    </div>
+
+      </div>
+  {% for error in form.errors %}
+      <p class="help-block">{{ error }}</p>
+    {% endfor %}
+{% endblock %}

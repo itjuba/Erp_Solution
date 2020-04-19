@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('client/',include('Client_Section.urls')),
     path('fournis/',include('Fournis_Section.urls')),
+    path('achat_article/',include('Gestion_Achats.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

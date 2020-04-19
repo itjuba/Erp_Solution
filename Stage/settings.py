@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Client_Section.apps.ClientSectionConfig',
     'Fournis_Section.apps.FournisSectionConfig',
+    'Gestion_Achats.apps.GestionAchatsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

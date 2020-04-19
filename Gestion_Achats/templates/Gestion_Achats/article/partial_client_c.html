@@ -1,0 +1,44 @@
+  {% for obj in article %}
+
+                        <tr>
+                          <td>
+                            {{obj.Designation}}
+                          </td>
+                          <td>
+                           {{obj.Code}}
+                          </td>
+                          <td>
+                           {{obj.Description}}
+                          </td>
+                              <td>
+                            {{obj.Service}}
+                          </td>
+                               <td>
+                            {{obj.AI}}
+                          </td>
+                               <td>
+                            {{obj.NIS}}
+                          </td>
+                          <td>
+                            {{obj.Banque}}
+                          </td>
+                          <td>
+                            {{obj.CB}}
+                          </td>
+                              <td>
+                            {{obj.adresse}}
+                          </td>
+                            <td>
+
+
+            <a class="  likes-button js-update-book "   data-url="{% url 'article_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+<a class="  likes-button js-update-book "   data-url="{% url 'article_delete' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+
+
+                            </td>
+
+                        </tr>
+                      {% endfor%}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block javascript %}
+  <script src="{% static 'js/create_client.js' %}"></script>
+{% endblock %}
+
+
+{% block content%}
+
+
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+<!--                       <div class="alert  alert-success alert-with-icon" id="display" data-notify="container" style="display : none;">-->
+<!--                    <i class="material-icons" data-notify="icon">add_alert</i>-->
+<!--                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                      <i class="material-icons">close</i>-->
+<!--                    </button>-->
+<!--                    <span data-notify="message"> Client Created Successfully </span>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <br><br>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Achats Table</h4>
+                  <p class="card-category"> Here is Achats informations</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="book-table">
+                           <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'achats_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Achats
+    </button>
+  </p>
+                      <thead class=" text-primary">
+                        <th>
+                         Id_Fournis
+                        </th>
+                        <th>
+                          Montant_HT
+                        </th>
+                        <th>
+                          Montant_TVA
+                        </th>
+                        <th>
+                          Montant_TTC
+                        </th>
+
+
+                      </thead>
+                      <tbody>
+                    {% include 'Gestion_Achats/Achats/partial_client_c.html' %}
+                      </tbody>
+                        <div class="modal fade" id="modal-book">
+                    <div class="modal-dialog" style=" left: 10%">
+                   <div class="modal-content"  >
+                  </div>
+                     </div>
+                        </div>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+
+      </footer>
+    </div>
+  </div>
+
+{% endblock%}
+
