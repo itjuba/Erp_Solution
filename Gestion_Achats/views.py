@@ -7,8 +7,10 @@ from django.shortcuts import render
 from django.shortcuts import render,get_object_or_404,HttpResponse
 
 from .models import Association,Article,Achats
+from django.forms import formset_factory
 from django.forms import modelformset_factory
 from django.http import JsonResponse
+from django.forms import formset_factory
 from .forms import AchatForm,ArticleForm,AssociationForm
 from urllib.parse import parse_qs
 import json
@@ -17,20 +19,55 @@ from django.template.loader import render_to_string
 # Create your views here.
 
 
+def view(request):
+    achat = Achats.objects.all()
+    form = modelformset_factory(Association, form=AssociationForm, extra=5)
+    if request.method == 'POST':
+        formset = form(request.POST or None)
 
+        print('post')
+        print(formset.is_bound)
+        print(formset.is_valid)
+        print(formset.errors)
+        if formset.is_valid():
+            print('valide')
+            formset.save()
+            print(formset.cleaned_data)
+            return HttpResponse('done')
+            print(formset)
+    else:
+        formset = form(queryset=Association.objects.none())
+        print(formset.errors)
+
+    return render(request, 'html.html', {'Achats': achat, 'formset': formset})
 
 
 def find(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
     return render(request,'html.html',{'achat':achat})
 
-def view(request):
-    achat = Achats.objects.all()
-
-    return render(request,'html.html',{'obj':achat})
-
-
-
+# def view(request):
+#     achat = Achats.objects.all()
+#     form =  formset_factory(AssociationForm,extra=1)
+#
+#     if request.method == 'POST':
+#       print('post')
+#       formset = form(request.POST or None)
+#       if formset.is_valid():
+#             print('form is vlaid')
+#             print(formset)
+#             for form in formset:
+#                 form.save()
+#       else:
+#           print(formset.errors)
+#
+#       return render(request,'html.html',{'Achats':achat,'formset':formset})
+#     else:
+#         achat = Achats.objects.all()
+#         form = formset_factory(AssociationForm, extra=1)
+#         return render(request, 'html.html', {'Achats': achat, 'formset': form})
+#
+#
 def Article_table(request):
     article = Article.objects.all()
     return render(request,'Gestion_Achats/article/client.html',{'article':article})

@@ -5,11 +5,11 @@
 
 {% block content %}
 
+
    <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-                <br><br>
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Achats Table</h4>
@@ -25,7 +25,7 @@
 
              <select name="da" id="da" class="form-control">
                  <option selected></option>
-                        {% for obj in obj %}
+                        {% for obj in Achats %}
                  <option  value="{{obj}}">{{obj.Id_Fournis}}</option>
                          {%endfor%}
 
@@ -55,24 +55,34 @@
                       <tbody>
                     {% include 'Gestion_Achats/Achats/partial_client_c.html' %}
                       </tbody>
-                        <div class="modal fade" id="modal-book">
-                    <div class="modal-dialog" style=" left: 10%">
-                   <div class="modal-content"  >
-                  </div>
-                     </div>
-                        </div>
                     </table>
+                         <table class="table ">
 
-                  </div>
-                </div>
-              </div>
+             <thead class=" text-primary ">
+                        <th>
+                         Id_Achats
+                        </th>
+                        <th>
+                          Id_Article
+                        </th>
+                        <th>
+                          Prix_Unitaire
+                        </th>
+                        <th>
+                          Quantite
+                        </th>
+
+
+                      </thead>
+                      <tbody>
+                      {% include 'Gestion_Achats/Achats/assos.html' %}
+                      </tbody>
+                         </table>
+
             </div>
           </div>
         </div>
       </div>
-      <footer class="footer">
-
-      </footer>
     </div>
   </div>
 

@@ -1,0 +1,26 @@
+<!--{% load widget_tweaks %}-->
+{% load my_tag %}
+<form method="POST">
+<!--    <input type="submit" value="Ajouter">-->
+    <button  class="btn btn-primary" type="submit">Ajouter</button>
+    {% csrf_token %}
+    {{ formset.management_form }}
+{{ formset.management_data}}
+    {% for form in formset.forms %}
+    <tr >
+        {% for field in form.visible_fields %}
+        <td>
+            {# Include the hidden fields in the form #}
+            {% if forloop.first %}
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% endif %}
+            {{ field.errors.as_ul }}
+            {{  field }}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</form>

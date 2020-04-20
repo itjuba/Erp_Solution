@@ -42,13 +42,13 @@
         <ul class="nav">
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'home' %}">
-              <i class="material-icons" style="color : white;"  >dashboard</i>
+              <i class="material-icons" style="color : black;" >dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="#">
-              <i class="material-icons" style="color : white;" >person</i>
+              <i class="material-icons" style="color : black;" >person</i>
               <p>User Profile</p>
             </a>
           </li>
@@ -61,14 +61,14 @@
           <div id="cl" class="show">
           <li class="nav-item  ">
             <a class="nav-link" href="{% url 'client'%}">
-              <i class="material-icons" style="color : white;" >content_paste</i>
+              <i class="material-icons" style="color : black;" >content_paste</i>
 
               <p>Client List</p>
             </a>
           </li>
                 <li class="nav-item  ">
             <a class="nav-link" href="{% url 'contact'%}">
-              <i class="material-icons" style="color : white;" >content_paste</i>
+              <i class="material-icons" style="color : black;" >content_paste</i>
 
               <p>Client Contact List</p>
             </a>
@@ -84,50 +84,57 @@
           <div id="fournis" class="show">
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'fournis'%}">
-              <i class="material-icons" style="color : white;" >content_paste</i>
+              <i class="material-icons" style="color : black;" >content_paste</i>
               <p>Fournis List</p>
             </a>
           </li>
              <li class="nav-item ">
             <a class="nav-link" href="{% url 'Fournis_contact'%}">
-              <i class="material-icons" style="color : white;" >content_paste</i>
+              <i class="material-icons" style="color : black;" >content_paste</i>
               <p>Fournis Contact List</p>
             </a>
           </li>
             </div>
             <li class="nav-item ">
             <a class="nav-link" href="{% url 'article'%}">
-              <i class="material-icons" style="color : white;" >content_paste</i>
+              <i class="material-icons" style="color : black;" >content_paste</i>
               <p>Article List </p>
             </a>
           </li>
                 <li class="nav-item ">
             <a class="nav-link" href="{% url 'achats'%}">
-              <i class="material-icons" style="color : white;" >content_paste</i>
+              <i class="material-icons" style="color : black;" >content_paste</i>
               <p>Achats List </p>
+            </a>
+          </li>
+            </li>
+                <li class="nav-item ">
+            <a class="nav-link" href="{% url 'view'%}">
+              <i class="material-icons" style="color : black;" >content_paste</i>
+              <p>Achats Article List </p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="#">
-              <i class="material-icons" style="color : white;" >location_ons</i>
+              <i class="material-icons" style="color : black;" >location_ons</i>
               <p>Maps</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="#">
-              <i class="material-icons" style="color : white;" >notifications</i>
+              <i class="material-icons" style="color : black;" >notifications</i>
               <p>Notifications</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="#">
-              <i class="material-icons" style="color : white;" >language</i>
+              <i class="material-icons" style="color : black;" >language</i>
               <p>RTL Support</p>
             </a>
           </li>
 <!--          <li class="nav-item active-pro ">-->
 <!--            <a class="nav-link " href="#">-->
-<!--              <i class="material-icons" style="color : white;" >unarchive</i>-->
+<!--              <i class="material-icons" style="color : black;" >unarchive</i>-->
 <!--              <p>Upgrade to PRO</p>-->
 <!--            </a>-->
 <!--          </li>-->
@@ -485,21 +492,13 @@
 
 <!--<script>-->
 
-<!--       -->
-<!--          $('#cl').addClass(Cookies.get("id"));-->
+
+<!--    if(Cookies.get('id') && !($('#cl').hasClass('show'))){-->
+<!--      $('#cl').addClass(Cookies.get("id"));}-->
+<!--Cookies.remove('id');-->
 <!--  $('.dropdown-btn').on("click",function(){-->
-<!--       if(Cookies.get('id')){-->
-<!--      $('#cl').removeClass(Cookies.get("id"));-->
-
-<!--       }-->
-
-<!--       else { Cookies.set("id", "show");}-->
-
-
-
-
-
-
+<!--           Cookies.set("id", "show");-->
+<!--&lt;!&ndash;           Cookies.remove('id');&ndash;&gt;-->
 
 
 <!--})-->
