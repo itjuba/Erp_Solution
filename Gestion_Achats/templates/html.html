@@ -2,11 +2,15 @@
 {% load static%}
 
 
+{% block javascript %}
+  <script src="{% static 'js/create_client.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
 
-   <div class="content">
+   <div class="content" id="content">
+        <button class="btn  nadjib btn-primary">show</button>
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -16,7 +20,7 @@
                   <p class="card-category"> Here is Achats informations</p>
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
+                  <div class="table-responsive"  style="height:300px; overflow:auto;">
                     <table class="table" id="book-table">
                         <div class="row">
                             <div class="col-2">
@@ -32,11 +36,17 @@
              </select>
     </form>
 </div>
-       <div class="col-2">
+       <div class="col-2" >
    <button class="btn btn-primary"  data-url="{% url 'find' %}">find</button>
     </div>
+                                                    <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'achats_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Achats
+    </button>
+  </p>
                         </div>
-             <thead class=" text-primary">
+             <thead class=" text-primary"  >
                         <th>
                          Id_Fournis
                         </th>
@@ -52,13 +62,20 @@
 
 
                       </thead>
-                      <tbody>
+                      <tbody >
                     {% include 'Gestion_Achats/Achats/partial_client_c.html' %}
                       </tbody>
+                            <div class="modal fade" id="modal-book">
+                    <div class="modal-dialog" style=" left: 10%">
+                   <div class="modal-content"  >
+                  </div>
+                     </div>
+                        </div>
                     </table>
-                         <table class="table ">
-
-             <thead class=" text-primary ">
+                  </div>
+                        <div class="table-responsive" >
+                    <table class="table" >
+              <thead class=" text-primary ">
                         <th>
                          Id_Achats
                         </th>
@@ -74,10 +91,12 @@
 
 
                       </thead>
-                      <tbody>
+
+                      </thead>
+                    <tbody>
                       {% include 'Gestion_Achats/Achats/assos.html' %}
                       </tbody>
-                         </table>
+                    </table>
 
             </div>
           </div>

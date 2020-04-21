@@ -20,6 +20,9 @@
     .active  {
     background-color : #9c27b0;
     }
+<!--    .nadji{-->
+<!--   float:right;-->
+<!--    }-->
 
   </style>
   <script src="https://code.iconify.design/1/1.0.5/iconify.min.js"></script>
@@ -29,7 +32,7 @@
 </header>
 <main role="main">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+    <div class="sidebar show attig collapse"  id="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -143,7 +146,7 @@
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navbarr">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="javascript:;">Dashboard</a>
@@ -204,10 +207,17 @@
                   <a class="dropdown-item" href="#">Log out</a>
                 </div>
               </li>
+              <li>
+
+
+              </li>
             </ul>
           </div>
         </div>
+
+
       </nav>
+
 
 
     {% block content%}
@@ -506,6 +516,60 @@
 
   {% block javascript %}
     {% endblock %}
+
+<script>
+<!--    $('.nadjib').on("click",function(){-->
+
+<!--    if($('#sidebar').hasClass('show')){-->
+<!--    console.log('yes');-->
+<!--    $('#sidebar').removeClass('show');-->
+<!--    $('#content').addClass('nadji');-->
+<!--    }-->
+<!--    else {-->
+<!--    console.log('no');-->
+<!--     $('#sidebar').addClass('show');-->
+<!--       $('#content').removeClass('nadji');-->
+<!--  }-->
+<!--  });-->
+
+</script>
+
+<script>
+      $('.nadjib').on("click",function(){
+    if($('#sidebar').hasClass('attig')){
+    console.log('yes');
+        $('#sidebar').animate({
+               left: '-300px'
+            }, 500);
+            $('#sidebar').removeClass('attig')
+           $('.contant').css('float', 'none');
+            $('.main-panel').css('float', 'left');
+            $('.main-panel contant').animate({
+                paddingLeft: '0px',
+
+            }, 500);
+
+    }
+
+
+  else{
+     $('#sidebar').animate({
+                left: '0px'
+            }, 500);
+              $('#sidebar').addClass('attig')
+                    $('.contant').css('float', 'none');
+            $('.main-panel').css('float', 'right');
+            $('.main-panel contant').animate({
+                paddingRight: '0px',
+
+            }, 500);
+  }
+
+
+  });
+</script>
+
+  <script src="{% static 'js/create_client.js' %}"></script>
 
 
 
