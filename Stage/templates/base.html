@@ -17,6 +17,12 @@
   <link href="{% static 'css/material-dashboard.css'%}" rel="stylesheet" />
     <title>SH ERP</title>
   <style>
+
+  .cardd {
+    width:1200px;
+    resize:both;
+    overflow:auto;
+}
     .active  {
     background-color : #9c27b0;
     }
@@ -575,22 +581,6 @@ input:checked + .slider:before {
   {% block javascript %}
     {% endblock %}
 
-<script>
-<!--    $('.nadjib').on("click",function(){-->
-
-<!--    if($('#sidebar').hasClass('show')){-->
-<!--    console.log('yes');-->
-<!--    $('#sidebar').removeClass('show');-->
-<!--    $('#content').addClass('nadji');-->
-<!--    }-->
-<!--    else {-->
-<!--    console.log('no');-->
-<!--     $('#sidebar').addClass('show');-->
-<!--       $('#content').removeClass('nadji');-->
-<!--  }-->
-<!--  });-->
-
-</script>
 
 <script>
       $('.nadjib').on("click",function(){
@@ -598,13 +588,21 @@ input:checked + .slider:before {
     console.log('yes');
         $('#sidebar').animate({
                left: '-300px'
-            }, 50);
+            }, 600);
             $('#sidebar').removeClass('attig')
-<!--           $('.contant').css('float', 'none');-->
+<!--            $('#content').addClass('cardd');-->
             $('.main-panel ').animate({
                 left: '-275px',
 
-            }, 500);
+            }, 600);
+                 $('#content').animate({
+                   width:'1250px',
+
+
+            }, 600);
+
+
+
 
     }
 
@@ -612,13 +610,18 @@ input:checked + .slider:before {
   else{
      $('#sidebar').animate({
                 left: '0px'
-            }, 750);
+            }, 600);
               $('#sidebar').addClass('attig')
-<!--                    $('.contant').css('float', 'none');-->
+                $('#content').removeClass('cardd');
             $('.main-panel').animate({
                 left: '0',
 
-            }, 500);
+            }, 600);
+                   $('#content').animate({
+                   width:'1000px',
+
+
+            }, 600);
   }
 
 
