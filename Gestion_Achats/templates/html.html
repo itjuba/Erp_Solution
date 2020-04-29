@@ -3,11 +3,11 @@
 
 
 {% block javascript %}
-  <script src="{% static 'js/create_client.js' %}"></script>
+  <script src="{% static 'js/create_achats.js' %}"></script>
 {% endblock %}
 
-{% block content %}
 
+{% block content %}
 
    <div class="content" id="content">
 <!--        <button class=" nadjib " style="right : 2% ; color: black;">&#9776; &nbsp;show</button>-->
@@ -17,57 +17,58 @@
 </label>
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-6" id="col1">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Achats Table</h4>
-                  <p class="card-category"> Here is Achats informations</p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive"  style="height:300px; overflow:auto;">
-                    <table class="table" id="book-table">
-                        <div class="row">
-    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'achats_create' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      New Achats
-    </button>
-  </p>
-                        </div>
-             <thead class=" text-primary"  >
-                        <th>
-                         Id_Fournis
-                        </th>
-                        <th>
-                          Montant_HT
-                        </th>
-                        <th>
-                          Montant_TVA
-                        </th>
-                        <th>
-                          Montant_TTC
-                        </th>
+<!--            <div class="col-md-6" id="col1">-->
+<!--              <div class="card">-->
+<!--                <div class="card-header card-header-primary">-->
+<!--                  <h4 class="card-title ">Achats Table</h4>-->
+<!--                  <p class="card-category"> Here is Achats informations</p>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                  <div class="table-responsive"  style="height:300px; overflow:auto;">-->
+<!--                    <table class="table" id="book-table">-->
+<!--                        <div class="row">-->
+<!--                            <p>-->
+<!--    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'achats_create2' %}">-->
+<!--      <span class="glyphicon glyphicon-plus"></span>-->
+<!--      New Achats-->
+<!--    </button>-->
+<!--  </p>-->
+<!--                        </div>-->
+<!--             <thead class=" text-primary"  >-->
+<!--                        <th>-->
+<!--                         Id_Fournis-->
+<!--                        </th>-->
+<!--                        <th>-->
+<!--                          Montant_HT-->
+<!--                        </th>-->
+<!--                        <th>-->
+<!--                          Montant_TVA-->
+<!--                        </th>-->
+<!--                        <th>-->
+<!--                          Montant_TTC-->
+<!--                        </th>-->
 
 
-                      </thead>
-                      <tbody >
-                    {% include 'Gestion_Achats/Achats/partial_client_c.html' %}
-                      </tbody>
-                            <div class="modal fade" id="modal-book">
-                    <div class="modal-dialog" style=" left: 10%">
-                   <div class="modal-content"  >
-                  </div>
-                     </div>
+<!--                      </thead>-->
+<!--                      <tbody >-->
+<!--                    {% include 'Gestion_Achats/Achats/partial_client_c.html' %}-->
+<!--                      </tbody>-->
+<!--                            <div class="modal fade" id="modal-book">-->
+<!--                    <div class="modal-dialog">-->
+<!--                   <div class="modal-content"  >-->
+<!--                  </div>-->
+<!--                     </div>-->
 
-                        </div>
+<!--                        </div>-->
 
-                    </table>
+<!--                    </table>-->
 
-                  </div>
+<!--                  </div>-->
 
-                </div>
-              </div>
-            </div>
-                          <div class="col-md-6" id="col2" >
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+                          <div class="col-md-12" id="col2" >
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Achats  Article Table</h4>
@@ -77,11 +78,18 @@
                                <div class="table-responsive"  style="height:300px; overflow:auto; dipslay : none ">
                     <table class="table">
 
-
+                           <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'achats_create2' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Achats
+    </button>
+  </p>
+                                                   <p>
+                                                       <a class="btn btn-primary" href="{% url 'step1'%}">do the magic</a>
 
              <thead class=" text-primary"  >
                         <th>
-                         Id_Fournis
+                         Fournisseur
                         </th>
                         <th>
                           Montant_HT
@@ -92,17 +100,25 @@
                         <th>
                           Montant_TTC
                         </th>
+                              <th>
+                          Date
+                        </th>
+                          <th>
+                          Actions
+                        </th>
 
 
                       </thead>
                       <tbody >
                     {% include 'Gestion_Achats/Achats/partial_client_c_2.html' %}
                       </tbody>
-                            <div class="modal fade">
-                    <div class="modal-dialog" style=" left: 10%">
+                         <div class="modal fade" id="modal-book">
+                    <div class="modal-dialog">
                    <div class="modal-content"  >
                   </div>
                      </div>
+
+                        </div>
                             </div>
                     </table>
               </div>

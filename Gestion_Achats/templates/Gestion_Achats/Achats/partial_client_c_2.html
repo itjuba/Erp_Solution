@@ -1,21 +1,29 @@
   {% for obj in as %}
 
+
                         <tr>
                           <td>
-                            {{obj.Id_Achats}}
+                            {{obj.Id_Fournis}}
                           </td>
                           <td>
-                           {{obj.Id_Article}}
+                           {{obj.Montant_HT}}
                           </td>
                           <td>
-                           {{obj.Prix_Unitaire}}
+                           {{obj.Montant_TVA}}
                           </td>
                               <td>
-                            {{obj.Quantite}}
+                            {{obj.Montant_TTC}}
+                          </td>
+                            <td>
+                            {{obj.Date}}
                           </td>
                             <td>
 
+                                                   <a class="  likes-button js-update-book "    href="{% url 'update_achat' obj.id  %}" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
                             </td>
-
                         </tr>
+
+
                       {% endfor%}

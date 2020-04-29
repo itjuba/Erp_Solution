@@ -1,7 +1,6 @@
 from django.db import models
 
 from Fournis_Section.models import Fournis_Data
-
 # Create your models here.
 
 
@@ -24,7 +23,7 @@ class Achats(models.Model):
    Montant_TTC = models.DecimalField(max_digits=10,decimal_places=2)
 
    def __str__(self):
-         return str(self.Id_Fournis)
+         return str(self.Id_Fournis.Raison_social)
 
 
 class Association(models.Model):

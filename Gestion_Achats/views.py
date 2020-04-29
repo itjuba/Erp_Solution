@@ -4,25 +4,97 @@ from django.shortcuts import render
 
 
 
-from django.shortcuts import render,get_object_or_404,HttpResponse
-
+from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
+from formtools.wizard.views import SessionWizardView
 from .models import Association,Article,Achats
-from django.shortcuts import redirect
+from django.shortcuts import redirect,reverse
 from django.forms import formset_factory
 from django.forms import modelformset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
 from .forms import AchatForm,ArticleForm,AssociationForm
-from urllib.parse import parse_qs
-import json
-from django.contrib import messages
 from django.template.loader import render_to_string
-# Create your views here.
+
+from Fournis_Section.models import Fournis_Data
+
+
+def update(request,pk):
+    achat = get_object_or_404(Achats, pk=pk)
+    print(achat.id)
+    ass = Association.objects.filter(Id_Achats=achat)
+    print(ass)
+    form = modelformset_factory(Association, form=AssociationForm, extra=5)
+    formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
+    return render(request, 'step2.html', {'formset': formset})
+
+
+
+def step1(request):
+    if request.method == 'POST':
+      form = AchatForm(request.POST or None)
+      if form.is_valid():
+             form.save()
+             print(form.cleaned_data)
+             return redirect('step2')
+      print(form.errors)
+    else:
+
+         form = AchatForm()
+    return render(request, 'step1.html', {'form': form})
+
+
+def step2(request):
+    if request.method == 'POST':
+        nadjib = modelformset_factory(Association, form=AssociationForm, extra=5)
+        form = nadjib(request.POST)
+        if form.is_valid():
+
+            form.save()
+            print(form.cleaned_data)
+            return redirect('view')
+
+    form = modelformset_factory(Association, form=AssociationForm, extra=20)
+    formset = form(queryset=Association.objects.none())
+    # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
+    return render(request, 'step2.html', {'formset': formset})
+
+
+class ContactWizard(SessionWizardView):
+    template_name = 'step1.html'
+    def get_form(self, step=None, data=None, files=None):
+
+        form = super(ContactWizard, self).get_form(step, data, files)
+        # print self['forms']['0'].cleaned_data
+
+        step = step or self.steps.current
+
+
+        if step == '1':
+            form.fields['Id_Achats'].initial = Achats.objects.latest('id')
+
+        return form
+
+
+    def done(self, form_list, **kwargs):
+
+        for form in form_list:
+            print(form.cleaned_data)
+            form.save()
+        return redirect('nadjib')
 
 
 def view(request):
     achat = Achats.objects.all()
-    achat_articl = Association.objects.all()
+
+
+    name = Achats.objects.all().select_related()
+    print(name)
+    # for p in Achats.objects.raw('SELECT Id_Fournis_id,id FROM Gestion_Achats_achats'):
+    #    print(p.Montant_TTC)
+    #    print(p.Id_Fournis_id)
+
+
+    achat_articl = Achats.objects.all()
     form = modelformset_factory(Association, form=AssociationForm, extra=5)
     if request.method == 'POST':
         formset = form(request.POST or None)
@@ -105,6 +177,27 @@ def save_Achats_form(request, form, template_name):
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
+
+def save_Achats_form2(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+
+            form.save()
+
+
+            data['form_is_valid'] = True
+            achats = Achats.objects.all()
+            data['html_book_list'] = render_to_string('Gestion_Achats/Achats/partial_client_c.html', {
+                'Achats': achats
+            })
+        else:
+            print(form.errors)
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
 def save_article_form_update(request, form, template_name):
     data = dict()
     if request.method == 'POST':
@@ -158,8 +251,18 @@ def article_create(request):
         form = ArticleForm(request.POST)
 
     else:
-        form = ArticleForm(request.POST)
+        form = ArticleForm()
     return save_Artcile_form(request, form, 'Gestion_Achats/article/partial_client.html')
+
+
+def Achats_create2(request):
+    if request.method == 'POST':
+        form = AchatForm(request.POST)
+
+    else:
+        form = AchatForm()
+    return save_Achats_form2(request, form, 'Gestion_Achats/Achats/partial_client2.html')
+
 
 
 def Achats_create(request):
@@ -167,7 +270,7 @@ def Achats_create(request):
         form = AchatForm(request.POST)
 
     else:
-        form =AchatForm(request.POST)
+        form = AchatForm()
     return save_Achats_form(request, form, 'Gestion_Achats/Achats/partial_client.html')
 
 

@@ -19,7 +19,10 @@ class Fournis_Data(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.slug
+        return self.Raison_social
+
+    def name(Fournis_Data):
+        return Fournis_Data.Raison_social
 
 
 def product_presave_receiver(sender, instance, *args, **kwargs):
