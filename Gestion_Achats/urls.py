@@ -21,6 +21,7 @@ urlpatterns = [
     path('achats_create2/', Achats_create2, name='achats_create2'),
     path('achats_update/<int:pk>',Achats_update,name='achats_update'),
     path('achats_update_view/<int:pk>',achat_view_update,name='achats_update_view'),
+
     path('achats_delete/<int:pk>', Achats_delete, name='achats_delete'),
     # path('nadjib/', ContactWizard.as_view([AchatForm, AssociationForm]), name='nadjib'),
     path('step1/', step1, name='step1'),

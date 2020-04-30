@@ -51,10 +51,28 @@ class AssociationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AssociationForm, self).__init__(*args, **kwargs)
-        self.initial['Id_Achats'] = Achats.objects.latest('id')
+        # self.initial['Id_Achats'] = Achats.objects.latest('id')
 
 
 form = modelformset_factory(Association, form=AssociationForm, extra=5)
 
 
+class AssociationForm2(forms.ModelForm):
+    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = Association
+        fields = ('Id_Achats', 'Id_Article', 'Prix_Unitaire', 'Quantite')
+
+    # def __init__(self, *args, **kwargs):
+    #     super(AssociationForm, self).__init__(*args, **kwargs)
+    #     self.queryset = Association.objects.none()
+
+    def __init__(self, *args, **kwargs):
+        super(AssociationForm2, self).__init__(*args, **kwargs)
+        self.initial['Id_Achats'] = Achats.objects.latest('id')
+
+
+form = modelformset_factory(Association, form=AssociationForm, extra=5)
 

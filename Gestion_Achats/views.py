@@ -12,7 +12,7 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2
 from django.template.loader import render_to_string
 
 from Fournis_Section.models import Fournis_Data
@@ -47,12 +47,12 @@ def step1(request):
     else:
 
          form = AchatForm()
-    return render(request, 'step1.html', {'form': form})
+    return render(request, 'step1.html', {'form': form,'error':form.errors})
 
 
 def step2(request):
     if request.method == 'POST':
-        nadjib = modelformset_factory(Association, form=AssociationForm, extra=5)
+        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5)
         form = nadjib(request.POST)
         if form.is_valid():
 
@@ -60,7 +60,7 @@ def step2(request):
             print(form.cleaned_data)
             return redirect('view')
 
-    form = modelformset_factory(Association, form=AssociationForm, extra=5)
+    form = modelformset_factory(Association, form=AssociationForm2, extra=5)
     formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
     return render(request, 'step2.html', {'formset': formset})
@@ -377,8 +377,8 @@ def Achats_delete(request, pk):
         book.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
         achats = Achats.objects.all()
-        data['html_book_list'] = render_to_string('Gestion_Achats/Achats/partial_client_c.html', {
-            'Achats': achats
+        data['html_book_list'] = render_to_string('Gestion_Achats/Achats/partial_client_c_2.html', {
+            'as': achats
         })
     else:
         context = {'obj': book}
