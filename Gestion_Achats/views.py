@@ -20,11 +20,18 @@ from Fournis_Section.models import Fournis_Data
 
 def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
-    print(achat.id)
     ass = Association.objects.filter(Id_Achats=achat)
-    print(ass)
     form = modelformset_factory(Association, form=AssociationForm, extra=5)
     formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
+
+    if request.method == 'POST':
+       formset = form(request.POST or None)
+       if formset.is_valid():
+           formset.save()
+
+    else:
+        form = modelformset_factory(Association, form=AssociationForm, extra=5)
+        formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
     return render(request, 'step2.html', {'formset': formset})
 
 
@@ -53,7 +60,7 @@ def step2(request):
             print(form.cleaned_data)
             return redirect('view')
 
-    form = modelformset_factory(Association, form=AssociationForm, extra=20)
+    form = modelformset_factory(Association, form=AssociationForm, extra=5)
     formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
     return render(request, 'step2.html', {'formset': formset})
@@ -109,7 +116,7 @@ def view(request):
             print(formset.cleaned_data)
             return redirect('view')
     else:
-        formset = form(queryset=Association.objects.none())
+        formset = form(queryset=Association.objects.all())
         print(formset.errors)
 
     return render(request, 'html.html', {'Achats': achat, 'formset': formset,'as':achat_articl})
@@ -244,6 +251,26 @@ def save_achats_form_update(request, form, template_name):
 
 
 
+def save_achats_form_update_view(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        print(request.method=='POST')
+        if form.is_valid():
+
+            form.save()
+
+            data['form_is_valid'] = True
+            Achat = Achats.objects.all()
+            data['html_book_list'] = render_to_string('Gestion_Achats/Achats/partial_client_c_2.html', {
+                'as': Achat
+            })
+        else:
+            print(form.errors)
+
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 
 
 def article_create(request):
@@ -289,6 +316,18 @@ def Article_update(request,pk):
 
     return save_article_form_update(request, form,'Gestion_Achats/article/partial_client_update_update.html')
 
+
+
+def achat_view_update(request,pk):
+    achats = get_object_or_404(Achats, pk=pk)
+    if request.method == 'POST':
+        print(request.POST)
+        form = AchatForm(request.POST, instance=achats)
+
+    else:
+        form = AchatForm(instance=achats)
+
+    return save_achats_form_update_view(request, form, 'Gestion_Achats/Achats/partial_client_update_update_view.html')
 
 
 def Achats_update(request,pk):

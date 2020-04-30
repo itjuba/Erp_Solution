@@ -1,11 +1,12 @@
 {% extends 'base.html'%}
-
+{% load widget_tweaks %}
 {% block content %}
 
  <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-6">
+                  <div><a  class="btn btn-warning" href="javascript:history.forward(1)">Next</a> </div>
                 <br><br>
               <div class="card">
                 <div class="card-header card-header-primary">
@@ -13,11 +14,35 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table" id="book-table">
+                    <table class="table">
 <form method="POST">
     {% csrf_token %}
-  {{form.as_p}}
-    <input type="submit" value="Submit" />
+   <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Date</label>
+           {% render_field form.Date class="form-control" %}
+      </div>
+          <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TTC &nbsp;</label>
+            {% render_field form.Montant_TTC class="form-control" %}
+      </div>
+   </div>
+      <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Montant_HT</label>
+           {% render_field form.Montant_HT class="form-control" %}
+      </div>
+          <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TVA &nbsp;</label>
+            {% render_field form.Montant_TVA class="form-control" %}
+      </div>
+   </div>
+            <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Id_Fournis &nbsp;</label>
+            {% render_field form.Id_Fournis class="form-control" %}
+      </div>
+
+    <input class="btn btn-primary" type="submit" value="Submit" />
 </form>
                     </table>
                   </div>
