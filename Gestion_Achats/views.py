@@ -9,10 +9,10 @@ from formtools.wizard.views import SessionWizardView
 from .models import Association,Article,Achats
 from django.shortcuts import redirect,reverse
 from django.forms import formset_factory
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory,formset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,form
 from django.template.loader import render_to_string
 
 from Fournis_Section.models import Fournis_Data
@@ -20,18 +20,21 @@ from Fournis_Section.models import Fournis_Data
 
 def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
-    ass = Association.objects.filter(Id_Achats=achat)
-    form = modelformset_factory(Association, form=AssociationForm, extra=5)
-    formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
+    # ass = Association.objects.filter(Id_Achats=achat)
+    form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
+    # formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
 
     if request.method == 'POST':
        formset = form(request.POST or None)
        if formset.is_valid():
            formset.save()
+           return redirect('view')
 
     else:
-        form = modelformset_factory(Association, form=AssociationForm, extra=5)
+        form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
         formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
+
+
     return render(request, 'step2.html', {'formset': formset})
 
 
@@ -42,6 +45,7 @@ def step1(request):
       if form.is_valid():
              form.save()
              print(form.cleaned_data)
+             print(form.cleaned_data.get('Montant_HT'))
              return redirect('step2')
       print(form.errors)
     else:
@@ -52,15 +56,15 @@ def step1(request):
 
 def step2(request):
     if request.method == 'POST':
-        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5)
+        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
         form = nadjib(request.POST)
-        if form.is_valid():
 
+        if form.is_valid():
             form.save()
-            print(form.cleaned_data)
+
             return redirect('view')
 
-    form = modelformset_factory(Association, form=AssociationForm2, extra=5)
+    form = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
     formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
     return render(request, 'step2.html', {'formset': formset})
@@ -102,7 +106,7 @@ def view(request):
 
 
     achat_articl = Achats.objects.all()
-    form = modelformset_factory(Association, form=AssociationForm, extra=5)
+    form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
     if request.method == 'POST':
         formset = form(request.POST or None)
 
@@ -388,10 +392,11 @@ def Achats_delete(request, pk):
         )
     return JsonResponse(data)
 
-
-
-
-
+# for f in form:
+#     data = f.cleaned_data
+#     montant = data.get('Prix_Unitaire')
+#     quan = data.get('Quantite')
+#     TOTAL = montant *quan
 
 
 

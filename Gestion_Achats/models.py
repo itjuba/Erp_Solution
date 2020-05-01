@@ -34,3 +34,7 @@ class Association(models.Model):
 
    def __str__(self):
       return str(self.Id_Article)
+
+   # @property
+   # def total_cost(self):
+   #    return self.Prix_Unitaire * self.Quantite

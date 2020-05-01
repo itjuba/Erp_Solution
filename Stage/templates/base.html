@@ -634,6 +634,37 @@ function goBack() {
 }
 </script>
 
+<script>
+
+
+   $('#step2').on("click", function(e) {
+      e.preventDefault();
+        var total = 0;
+        $('.qu').each(function(ind) {
+            var prix = $('.na').eq(ind).val();
+            var quantite = $(this).val();
+            prix = (isNaN(prix) || (prix == '') )?0:parseInt(prix);
+            quantite = (isNaN(quantite) || (quantite == ''))?0:parseInt(quantite);
+            total += prix * quantite;
+        });
+        var sah = Cookies.get('montant')
+        if (total > sah){
+        alert( "rak ghalet fe la7seb chikh " + total);
+          }
+    });
+
+</script>
+
+<script>
+     $('#step1').on("click", function(e) {
+      var mont = $('.mont').val()
+      console.log(mont);
+      Cookies.set('montant',mont);
+      console.log(Cookies.get('montant'));
+
+    });
+
+</script>
 </body>
 
 </html>

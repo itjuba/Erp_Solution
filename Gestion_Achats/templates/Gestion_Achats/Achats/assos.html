@@ -1,9 +1,8 @@
-<!--{% load widget_tweaks %}-->
-{% load my_tag %}
+{% load widget_tweaks %}
+  <button  id="step2" class="btn btn-danger" >Check</button>
+<form method="POST" >
+    <button id="done" class="btn btn-primary" type="submit">Ajouter</button>
 
-<form method="POST" action="" >
-<!--    <input type="submit" value="Ajouter">-->
-    <button  class="btn btn-primary" type="submit">Ajouter</button>
     {% csrf_token %}
     {{ formset.management_form }}
 {{ formset.management_data}}
@@ -19,6 +18,7 @@
             {% endif %}
             {{ field.errors.as_ul }}
             {{  field }}
+
         </td>
         {% endfor %}
     </tr>

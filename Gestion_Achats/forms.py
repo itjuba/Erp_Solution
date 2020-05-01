@@ -4,7 +4,7 @@ from .models import Achats,Article,Association
 from django.forms.models import BaseModelFormSet
 from django.forms import modelformset_factory
 from django.forms import ValidationError
-
+from django.db.models import Sum
 
 class AchatForm(ModelForm):
     # Date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -38,7 +38,7 @@ class ArticleForm(forms.ModelForm):
 
 
 class AssociationForm(forms.ModelForm):
-    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'na'}))
     # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
     class Meta:
@@ -56,23 +56,29 @@ class AssociationForm(forms.ModelForm):
 
 form = modelformset_factory(Association, form=AssociationForm, extra=5)
 
-
+form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
 class AssociationForm2(forms.ModelForm):
-    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu'}))
     class Meta:
         model = Association
         fields = ('Id_Achats', 'Id_Article', 'Prix_Unitaire', 'Quantite')
 
-    # def __init__(self, *args, **kwargs):
-    #     super(AssociationForm, self).__init__(*args, **kwargs)
-    #     self.queryset = Association.objects.none()
+
 
     def __init__(self, *args, **kwargs):
         super(AssociationForm2, self).__init__(*args, **kwargs)
         self.initial['Id_Achats'] = Achats.objects.latest('id')
 
+    def clean(self):
+        cleaned_data = super(AssociationForm2, self).clean()
+        # cleaned_data = self.cleaned_data
+        Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
+        Quantite = self.cleaned_data.get('Quantite')
 
-form = modelformset_factory(Association, form=AssociationForm, extra=5)
+
+        return cleaned_data
+
+
+
 

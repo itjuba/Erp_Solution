@@ -3,6 +3,7 @@ from django.template import Library
 register = Library()
 
 
-@register.filter(name='addclass')
-def addclass(field, class_attr):
-    return field.as_widget(attrs={'class': class_attr})
+@register.simple_tag()
+def multiply(prix, quan, *args, **kwargs):
+    # you would need to do any localization of the result here
+    return prix * quan
