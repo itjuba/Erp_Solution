@@ -64,7 +64,7 @@ def step2(request):
 
             return redirect('view')
 
-    form = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
+    form = modelformset_factory(Association, form=AssociationForm2, extra=5)
     formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
     return render(request, 'step2.html', {'formset': formset})
