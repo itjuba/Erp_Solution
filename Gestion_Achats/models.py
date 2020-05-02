@@ -30,7 +30,7 @@ class Association(models.Model):
    Id_Achats = models.ForeignKey(Achats, blank=True, on_delete=models.CASCADE)
    Id_Article = models.ForeignKey(Article, blank=True, on_delete=models.CASCADE)
    Prix_Unitaire = models.DecimalField(max_digits=10,decimal_places=2,default=0)
-   Quantite = models.IntegerField(default=1)
+   Quantite = models.IntegerField(default=1,blank=False,null=False)
 
    def __str__(self):
       return str(self.Id_Article)

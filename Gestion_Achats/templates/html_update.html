@@ -1,6 +1,5 @@
 {% extends 'base.html'%}
-{% load crispy_forms_tags %}
-{% load widget_tweaks %}
+
 {% block content %}
 <br><br><br><br><br>
 
@@ -18,11 +17,8 @@
                 <div class="card-body">
                   <div class="table-responsive" >
                     <table class="table">
-{% for dict in formset.errors %}
-    {% for error in dict.values %}
-        {{ error }}
-    {% endfor %}
-{% endfor %}
+
+
              <thead class=" text-primary"  >
                         <th>
                          Achats
@@ -36,6 +32,9 @@
                         <th>
                           Quantite
                         </th>
+                           <th>
+                          Delete
+                        </th>
 
 
 
@@ -43,7 +42,7 @@
 
                       </thead>
                     <tbody>
-                      {% include 'Gestion_Achats/Achats/assos.html' %}
+                      {% include 'assos_html.html' %}
                       </tbody>
                     </table>
 

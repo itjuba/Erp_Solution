@@ -10,7 +10,7 @@
     <tr >
         {% for field in form.visible_fields %}
         <td>
-            {# Include the hidden fields in the form #}
+             {# Include the hidden fields in the form #}
             {% if forloop.first %}
             {% for hidden in form.hidden_fields %}
             {{ hidden }}

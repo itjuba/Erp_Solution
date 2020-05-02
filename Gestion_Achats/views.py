@@ -12,7 +12,7 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory,formset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,form
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2
 from django.template.loader import render_to_string
 
 from Fournis_Section.models import Fournis_Data
@@ -30,12 +30,13 @@ def update(request,pk):
            formset.save()
            return redirect('view')
 
+
     else:
         form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
         formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
 
 
-    return render(request, 'step2.html', {'formset': formset})
+    return render(request, 'html_update.html', {'formset': formset})
 
 
 
@@ -63,11 +64,14 @@ def step2(request):
             form.save()
 
             return redirect('view')
+        else:
+            print(form.errors)
+
 
     form = modelformset_factory(Association, form=AssociationForm2, extra=5)
     formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
-    return render(request, 'step2.html', {'formset': formset})
+    return render(request, 'step2.html', {'formset': formset,'error':form.errors})
 
 
 class ContactWizard(SessionWizardView):

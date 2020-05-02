@@ -54,12 +54,13 @@ class AssociationForm(forms.ModelForm):
         # self.initial['Id_Achats'] = Achats.objects.latest('id')
 
 
+
 form = modelformset_factory(Association, form=AssociationForm, extra=5)
 
 form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
 class AssociationForm2(forms.ModelForm):
-    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na'}))
-    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu'}))
+    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na'}))
+    # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu'}))
     class Meta:
         model = Association
         fields = ('Id_Achats', 'Id_Article', 'Prix_Unitaire', 'Quantite')
@@ -69,15 +70,8 @@ class AssociationForm2(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AssociationForm2, self).__init__(*args, **kwargs)
         self.initial['Id_Achats'] = Achats.objects.latest('id')
-
-    def clean(self):
-        cleaned_data = super(AssociationForm2, self).clean()
-        # cleaned_data = self.cleaned_data
-        Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
-        Quantite = self.cleaned_data.get('Quantite')
-
-
-        return cleaned_data
+        self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na'
+        self.fields['Quantite'].widget.attrs['class'] = 'qu'
 
 
 
