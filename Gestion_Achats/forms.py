@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Achats,Article,Association
+from .models import Achats,Article,Association,Payements
 from django.forms.models import BaseModelFormSet
 from django.forms import modelformset_factory
 from django.forms import ValidationError
@@ -70,9 +70,33 @@ class AssociationForm2(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AssociationForm2, self).__init__(*args, **kwargs)
         self.initial['Id_Achats'] = Achats.objects.latest('id')
-        self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na'
+        self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na';
         self.fields['Quantite'].widget.attrs['class'] = 'qu'
 
 
+
+
+
+class Payments_Form(forms.ModelForm):
+    class Meta:
+        model = Payements
+        fields = ('Date', 'mode_de_payement', 'reference', 'Montant_HT','Montant_TVA','Montant_TTC', 'Numero_facture', 'Numero_payement','E_S')
+
+    def __init__(self, *args, **kwargs):
+        self.form_achat_id = kwargs.pop("achat_id")
+        super(Payments_Form, self).__init__(*args, **kwargs)
+
+        achat = Achats.objects.get(id=self.form_achat_id)
+        self.initial['reference'] = achat.id
+        self.initial['Montant_HT'] = achat.Montant_HT
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Montant_HT = self.cleaned_data.get('Montant_HT')
+        Montant_HT = self.cleaned_data.get('Montant_HT')
+
+
+
+        return cleaned_data
 
 

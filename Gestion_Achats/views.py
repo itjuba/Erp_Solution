@@ -6,16 +6,35 @@ from django.shortcuts import render
 
 from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
 from formtools.wizard.views import SessionWizardView
-from .models import Association,Article,Achats
+from .models import Association,Article,Achats,Payements
 from django.shortcuts import redirect,reverse
 from django.forms import formset_factory
 from django.forms import modelformset_factory,formset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form
 from django.template.loader import render_to_string
 
 from Fournis_Section.models import Fournis_Data
+
+
+
+def payement_create(request,pk):
+    achat = get_object_or_404(Achats,pk=pk)
+
+
+    if request.method == 'POST':
+        form = Payments_Form(request.POST or None,achat_id=pk)
+        if form.is_valid():
+            form.save()
+            print(form.cleaned_data)
+            return redirect('view')
+        print(form.errors)
+    else:
+
+        form = Payments_Form(achat_id=pk)
+    return render(request, 'Gestion_Achats/payement/partial_payement_form.html',{'form':form})
+
 
 
 def update(request,pk):
