@@ -58,3 +58,8 @@ class Payements(models.Model):
    Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
    Numero_facture = models.IntegerField()
    Numero_payement =  models.IntegerField()
+
+
+
+   def __str__(self):
+      return str(self.Numero_payement)

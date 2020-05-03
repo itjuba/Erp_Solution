@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 
-
+from decimal import *
 from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
 from formtools.wizard.views import SessionWizardView
 from .models import Association,Article,Achats,Payements
@@ -12,7 +12,7 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory,formset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form,AchatForm2
 from django.template.loader import render_to_string
 
 from Fournis_Section.models import Fournis_Data
@@ -21,13 +21,30 @@ from Fournis_Section.models import Fournis_Data
 
 def payement_create(request,pk):
     achat = get_object_or_404(Achats,pk=pk)
-
+    # payemnt = Payements.objects.all().values_list('files_id', flat=True)
 
     if request.method == 'POST':
         form = Payments_Form(request.POST or None,achat_id=pk)
+
+        Montant_pay = achat.Montant_pay
+        montant_ttc = float(form.data['Montant_TTC'])
+        Montant_HT = float(form.data['Montant_HT'])
+        Montant_pay_aprés = float(Montant_pay) + montant_ttc
+
+        total = Montant_HT - montant_ttc
+        if total < 0:
+            error =  "le montant_ttc est superieur que le montant paye "
+            return render(request, 'Gestion_Achats/payement/partial_payement_form.html', {'form': form,'errors':error})
+
+
+
+        elif(Montant_pay_aprés > Montant_HT):
+            error =  "le montant_ttc est superieur que le montant paye 2 "
+            return render(request, 'Gestion_Achats/payement/partial_payement_form.html', {'form': form,'errors':error})
+
+
         if form.is_valid():
             form.save()
-            print(form.cleaned_data)
             return redirect('view')
         print(form.errors)
     else:

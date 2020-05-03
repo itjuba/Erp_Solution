@@ -10,23 +10,22 @@ class AchatForm(ModelForm):
     # Date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    # Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_pay = forms.DecimalField(required=False)
     class Meta:
         model = Achats
-        fields = ('Date','Id_Fournis','Montant_HT','Montant_TVA','Montant_TTC')
+        fields = ('Date','Id_Fournis','Montant_HT','Montant_TVA','Montant_TTC','Montant_pay')
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        Date = self.cleaned_data.get('Date')
-        Id_Fournis = self.cleaned_data.get('Id_Fournis')
-        Montant_HT = self.cleaned_data.get('Montant_HT')
-        Montant_TVA = self.cleaned_data.get('Montant_TVA')
-        Montant_TTC = self.cleaned_data.get('Montant_TTC')
+class AchatForm2(ModelForm):
+    # Date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    # Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    # Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_pay = forms.DecimalField(required=False)
+    class Meta:
+        model = Achats
+        fields = ('Date','Montant_HT','Montant_TVA','Montant_TTC','Montant_pay')
 
-        if Achats.objects.filter(Date=Date).exists() and  Achats.objects.filter(Id_Fournis=Id_Fournis).exists() and  Achats.objects.filter(Montant_HT=Montant_HT).exists() and  Achats.objects.filter(Montant_TVA=Montant_TVA).exists()and  Achats.objects.filter(Montant_TTC=Montant_TTC).exists():
-            raise ValidationError('data exists ')
 
-        return cleaned_data
+
 
 
 
@@ -90,13 +89,19 @@ class Payments_Form(forms.ModelForm):
         self.initial['reference'] = achat.id
         self.initial['Montant_HT'] = achat.Montant_HT
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        Montant_HT = self.cleaned_data.get('Montant_HT')
-        Montant_HT = self.cleaned_data.get('Montant_HT')
+    # def clean(self):
+    #     cleaned_data = self.cleaned_data
+    #     Montant_HT = self.cleaned_data.get('Montant_HT')
+    #     Montant_TTC = self.cleaned_data.get('Montant_TTC')
+    #     total = Montant_TTC - Montant_HT
+    #     if total<0:
+    #         Montant_pay = achat.Montant_pay
+    #         raise ValidationError(' rak depsit montant_ht ta3k ')
 
 
 
-        return cleaned_data
+
+
+
 
 
