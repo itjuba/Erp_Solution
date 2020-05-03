@@ -9,11 +9,16 @@
 {% block content%}
 
 
-      <div class="content">
+      <div class="content"  id="content">
+                 <label class="switch">
+  <input class="nadjib btn-primary" type="checkbox">
+  <span class="slider round"></span>
+</label>
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
                 <br><br>
+                  <div class="col-md-12" id="col2" >
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Client Table</h4>
@@ -22,40 +27,34 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table" id="book-table">
-                           <p>
-    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      New Client
-    </button>
-  </p>
 
                       <thead class=" text-primary">
                         <th>
-                          ID
+                          Date
                         </th>
                         <th>
-                          Raison_social
+                          mode_de_payement
                         </th>
                         <th>
-                          RC
+                          reference
                         </th>
                         <th>
-                          NIF
+                          MontantHT
                         </th>
                           <th>
-                          AI
+                          MontantTVA
                         </th>
                           <th>
-                          NIS
+                          Montant_TTC
                         </th>
                           <th>
-                          Banque
+                          Numero_facture
                         </th>
                           <th>
-                          CB
+                          Numero_payement
                         </th>
                         <th>
-                          Adresse
+                          ES
                         </th>
                       <th>
                           Action
@@ -63,7 +62,7 @@
 
                       </thead>
                       <tbody>
-                    {% include 'Client_Section/partial_client_c.html' %}
+                    {% include 'Gestion_Achats/payement/partial/partial_payement.html' %}
                       </tbody>
                         <div class="modal fade" id="modal-book">
                     <div class="modal-dialog" style=" left: 10%">
@@ -79,11 +78,12 @@
           </div>
         </div>
       </div>
+      </div>
       <footer class="footer">
 
       </footer>
     </div>
   </div>
-
+<
 {% endblock%}
 

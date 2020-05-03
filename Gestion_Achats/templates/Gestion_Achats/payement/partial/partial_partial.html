@@ -1,0 +1,37 @@
+  {% for obj in payement %}
+
+                        <tr>
+                          <td>
+                            {{obj.Date}}
+                          </td>
+                          <td>
+                           {{obj.mode_de_payement}}
+                          </td>
+                          <td>
+                           {{obj.reference}}
+                          </td>
+                              <td>
+                            {{obj.Montant_HT}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TVA}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TTC}}
+                          </td>
+                          <td>
+                            {{obj.Numero_facture}}
+                          </td>
+                          <td>
+                            {{obj.Numero_payement}}
+                          </td>
+                              <td>
+                            {{obj.E_S}}
+                          </td>
+                            <td>
+
+
+
+
+                        </tr>
+                      {% endfor%}

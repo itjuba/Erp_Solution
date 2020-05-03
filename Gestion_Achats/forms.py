@@ -73,6 +73,10 @@ class AssociationForm2(forms.ModelForm):
         self.fields['Quantite'].widget.attrs['class'] = 'qu'
 
 
+class Payments_Form2(forms.ModelForm):
+    class Meta:
+        model = Payements
+        fields = ('Date', 'mode_de_payement', 'reference', 'Montant_HT','Montant_TVA','Montant_TTC', 'Numero_facture', 'Numero_payement','E_S')
 
 
 

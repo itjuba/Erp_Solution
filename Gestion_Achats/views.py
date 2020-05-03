@@ -12,10 +12,65 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory,formset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form,AchatForm2
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form,AchatForm2,Payments_Form2
 from django.template.loader import render_to_string
 
 from Fournis_Section.models import Fournis_Data
+
+
+def payement(request):
+    payement = Payements.objects.all()
+    return render(request, 'Gestion_Achats/payement/payement_table.html', {'p': payement})
+
+
+def save_payements_form(request, form, payement_ttc, id, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            achat = get_object_or_404(Achats, pk=id)
+            hsab = achat.Montant_pay
+            total = hsab -payement_ttc
+            ttc_form = form.data['Montant_TTC']
+            s = float(total) + float(ttc_form)
+
+            achh = Achats.objects.filter(id=id).update(Montant_pay=s)
+            form.save()
+
+            data['form_is_valid'] = True
+            payement = Payements.objects.all()
+            data['html_book_list'] = render_to_string('Gestion_Achats/payement/partial/partial_partial.html', {
+                'payement': payement
+            })
+        else:
+            print(form.errors)
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def update_payement(request, pk):
+    payement = get_object_or_404(Payements, pk=pk)
+    payement_ttc = payement.Montant_TTC
+    id = payement.reference
+    print(id)
+    print(payement_ttc)
+    if request.method == 'POST':
+        form = Payments_Form2(request.POST,instance=payement)
+
+    else:
+        form = Payments_Form2(instance=payement)
+    return save_payements_form(request, form, payement_ttc,id, 'Gestion_Achats/payement/payement.html')
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27,10 +82,11 @@ def payement_create(request,pk):
         form = Payments_Form(request.POST or None,achat_id=pk)
 
         Montant_pay = achat.Montant_pay
+        # print(Montant_pay)
         montant_ttc = float(form.data['Montant_TTC'])
         Montant_HT = float(form.data['Montant_HT'])
         Montant_pay_aprés = float(Montant_pay) + montant_ttc
-
+        # print(Montant_pay_aprés)
         total = Montant_HT - montant_ttc
         if total < 0:
             error =  "le montant_ttc est superieur que le montant paye "
@@ -44,6 +100,11 @@ def payement_create(request,pk):
 
 
         if form.is_valid():
+            pay  = form.cleaned_data['Montant_TTC'] + Montant_pay
+            print(pay)
+            # field_object = Achats._meta.get_field(Montant_pay)
+            # print(field_object)
+            achh = Achats.objects.filter(id=pk).update(Montant_pay=pay)
             form.save()
             return redirect('view')
         print(form.errors)
@@ -187,6 +248,7 @@ def Achats_table(request):
 
 def save_Artcile_form(request, form, template_name):
     data = dict()
+
     if request.method == 'POST':
         if form.is_valid():
 

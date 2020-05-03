@@ -1,12 +1,12 @@
-<form method="post">
+<form method="post" action="{% url 'payement_update' form.instance.id %}" class="js-book-update-form">
   {% csrf_token %}
   <div class="modal-body" >
-    {% include 'Gestion_Achats/payement/partial_payement_form.html' %}
+    {% include 'Gestion_Achats/payement/partial/payment_form.html' %}
   </div>
   <br><br>
   <div style="pos">
 
-    <button    style="float : right"  type="submit"  class="btn btn-primary ">Add Payament</button>
+    <button    style="float : right"  type="submit"  class="btn btn-primary ">Update Payament</button>
         <button  style="float : right" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
   </div>
 </form>
