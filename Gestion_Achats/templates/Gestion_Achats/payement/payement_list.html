@@ -1,6 +1,10 @@
   {% for obj in contact %}
 
                         <tr>
+
+                             <td>
+                              {{ obj|achat }}
+                          </td>
                           <td>
                             {{obj.Nom}}
                           </td>

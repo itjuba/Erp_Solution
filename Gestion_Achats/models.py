@@ -3,7 +3,7 @@ from enum import Enum
 from Fournis_Section.models import Fournis_Data
 # Create your models here.
 
-
+from django.shortcuts import get_object_or_404
 
 class Article(models.Model):
    Designation  = models.CharField(max_length=200)
@@ -62,4 +62,5 @@ class Payements(models.Model):
 
 
    def __str__(self):
-      return str(self.Numero_payement)
+      payement = get_object_or_404(Achats, pk=self.reference)
+      return str(payement.Id_Fournis)

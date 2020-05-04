@@ -1,6 +1,11 @@
+ {% load my_tag %}
   {% for obj in p %}
 
                         <tr>
+
+                             <td>
+                              {{ obj|achat }}
+                          </td>
                           <td>
                             {{obj.Date}}
                           </td>

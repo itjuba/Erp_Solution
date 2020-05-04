@@ -1,6 +1,10 @@
   {% for obj in payement %}
 
                         <tr>
+
+                             <td>
+                              {{ obj|achat }}
+                          </td>
                           <td>
                             {{obj.Date}}
                           </td>
