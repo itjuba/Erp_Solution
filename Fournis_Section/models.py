@@ -39,7 +39,7 @@ class Fournis_Contact(models.Model):
     post = models.CharField(max_length=50)
     Tel = models.CharField(max_length=50)
     email = models.EmailField(max_length=255, unique=True)
-    contact_type = models.CharField(default='Client_contact', max_length=50)
+    contact_type = models.CharField(default='Fournis_contact', max_length=50)
 
     def __str__(self):
         return self.post
