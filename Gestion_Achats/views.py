@@ -22,6 +22,26 @@ def payement(request):
     payement = Payements.objects.all()
     return render(request, 'Gestion_Achats/payement/payement_table.html', {'p': payement})
 
+def payement_delete(request, pk):
+    payement = get_object_or_404(Payements, pk=pk)
+    achat = get_object_or_404(Achats, pk=payement.reference)
+    total =  achat.Montant_pay - payement.Montant_TTC
+    data = dict()
+    if request.method == 'POST':
+        achh = Achats.objects.filter(id=payement.reference).update(Montant_pay=total)
+        payement.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        books = Payements.objects.all()
+        data['html_book_list'] = render_to_string('Gestion_Achats/payement/partial/partial_payement.html', {
+            'payement': payement
+        })
+    else:
+        context = {'obj': payement}
+        data['html_form'] = render_to_string('Gestion_Achats/payement/partial/partial_payement_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)
 
 def save_payements_form(request, form, payement_ttc, id, template_name):
     data = dict()

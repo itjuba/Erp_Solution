@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from  django.conf.urls.static import static
-from .views import find,payement,step1,update_payement,payement_create,update,achat_view_update,step2,ContactWizard,Achats_create2 ,Article_table,view,article_create,Achats_delete,Article_update,Article_delete,Achats_table,Achats_create,Achats_update
+from .views import find,payement_delete,payement,step1,update_payement,payement_create,update,achat_view_update,step2,ContactWizard,Achats_create2 ,Article_table,view,article_create,Achats_delete,Article_update,Article_delete,Achats_table,Achats_create,Achats_update
 from .forms import AchatForm,AssociationForm
 
 
@@ -30,6 +30,7 @@ urlpatterns = [
 
     path('payement_create/<int:pk>', payement_create, name='payement_create'),
     path('payement_update/<int:pk>', update_payement, name='payement_update'),
+    path('payement_delete/<int:pk>', payement_delete, name='payement_delete'),
     path('payements/', payement, name='payements'),
 
 
