@@ -90,6 +90,7 @@ class Payments_Form(forms.ModelForm):
         super(Payments_Form, self).__init__(*args, **kwargs)
 
         achat = Achats.objects.get(id=self.form_achat_id)
+        self.initial['E_S'] = 'Dépence'
         self.initial['reference'] = achat.id
         self.initial['Montant_HT'] = achat.Montant_HT
 

@@ -50,7 +50,7 @@ class Payements(models.Model):
       virement = "par virement bancaire"
 
    Date = models.DateField()
-   E_S = models.BooleanField()
+   E_S = models.CharField(max_length=10)
    mode_de_payement = models.CharField(choices=Payement_Choic.choices,max_length=200)
    reference = models.IntegerField()
    Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)

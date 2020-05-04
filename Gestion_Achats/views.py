@@ -18,6 +18,8 @@ from django.template.loader import render_to_string
 from Fournis_Section.models import Fournis_Data
 
 
+
+
 def payement(request):
     payement = Payements.objects.all()
     return render(request, 'Gestion_Achats/payement/payement_table.html', {'p': payement})

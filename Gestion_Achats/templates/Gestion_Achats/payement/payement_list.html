@@ -1,10 +1,11 @@
+  {% load my_tag %}
   {% for obj in contact %}
 
                         <tr>
-
-                             <td>
+                            <td>
                               {{ obj|achat }}
                           </td>
+
                           <td>
                             {{obj.Nom}}
                           </td>
