@@ -15,6 +15,22 @@ class AchatForm(ModelForm):
         model = Achats
         fields = ('Date','Id_Fournis','Montant_HT','Montant_TVA','Montant_TTC','Montant_pay')
 
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Date = self.cleaned_data.get('Date')
+        Id_Fournis = self.cleaned_data.get('Id_Fournis')
+        Montant_HT = self.cleaned_data.get('Montant_HT')
+        Montant_TVA = self.cleaned_data.get('Montant_TVA')
+        Montant_TTC = self.cleaned_data.get('Montant_TTC')
+
+        if Achats.objects.filter(Date=Date).exists() and Achats.objects.filter(
+                Id_Fournis=Id_Fournis).exists() and Achats.objects.filter(
+                Montant_HT=Montant_HT).exists() and Achats.objects.filter(
+                Montant_TVA=Montant_TVA).exists() and Achats.objects.filter(Montant_TTC=Montant_TTC).exists():
+            raise ValidationError('data exists ')
+
+        return cleaned_data
+
 class AchatForm2(ModelForm):
     # Date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))

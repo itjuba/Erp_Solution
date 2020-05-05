@@ -45,9 +45,9 @@ class Association(models.Model):
 class Payements(models.Model):
 
    class Payement_Choic(models.TextChoices):
-      Chéck = "Chéck"
+      Chéque = "Chéque"
       espèces = "espèces"
-      virement = "par virement bancaire"
+      virement = "virement bancaire"
 
    Date = models.DateField()
    E_S = models.CharField(max_length=10)

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'Client_Section.apps.ClientSectionConfig',
     'Fournis_Section.apps.FournisSectionConfig',
     'Gestion_Achats.apps.GestionAchatsConfig',
+    'Proformas.apps.ProformasConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'Stage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db',
+        'NAME': 'Stage',
         'USER': 'root',
         'PASSWORD': 'root',
         'PORT': '',

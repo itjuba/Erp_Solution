@@ -22,50 +22,52 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Client Table</h4>
-                  <p class="card-category"> Here is Payements informations</p>
+                  <p class="card-category"> Here is clients informations</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table" id="book-table">
+                                                  <p>
+      <a class="btn btn-primary" href="{% url 'step1'%}"> Add Commande</a>
+
+  </p>
+
 
                       <thead class=" text-primary">
                        <th>
-                         Fournisseur
+                         Date
                         </th>
                         <th>
-                          Date
+                         Client
                         </th>
                         <th>
-                          mode_de_payement
+                          Numero commande
                         </th>
                         <th>
-                          reference
+                          Montant HT
                         </th>
                         <th>
-                          MontantHT
+                          Montant TVA
+                        </th>
+                        <th>
+                          Montant TTC
                         </th>
                           <th>
-                          MontantTVA
+                          Type Service
                         </th>
                           <th>
-                          Montant_TTC
+                          validation
                         </th>
                           <th>
-                          Numero_facture
+                          Modalité
                         </th>
                           <th>
                           Numero_payement
                         </th>
-                        <th>
-                          ES
-                        </th>
-                      <th>
-                          Action
-                      </th>
 
                       </thead>
                       <tbody>
-                    {% include 'Gestion_Achats/payement/partial/partial_payement.html' %}
+                    {% include 'Proformas/partial/partial_proformas.html' %}
                       </tbody>
                         <div class="modal fade" id="modal-book">
                     <div class="modal-dialog" style=" left: 10%">
@@ -87,6 +89,6 @@
       </footer>
     </div>
   </div>
-<
+
 {% endblock%}
 

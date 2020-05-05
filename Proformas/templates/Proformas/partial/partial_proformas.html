@@ -1,0 +1,48 @@
+
+  {% for obj in c %}
+
+                        <tr>
+
+                          <td>
+                            {{obj.Date}}
+                          </td>
+                          <td>
+                           {{obj.Client}}
+                          </td>
+                          <td>
+                           {{obj.Numero_commande}}
+                          </td>
+                              <td>
+                            {{obj.Montant_HT}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TVA}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TTC}}
+                          </td>
+                          <td>
+                            {{obj.Type_Service}}
+                          </td>
+                          <td>
+                            {{obj.validation}}
+                          </td>
+                              <td>
+                            {{obj.Modalite|truncatechars:15}}
+                          </td>
+                            <td>
+
+            <a class=" bout  likes-button js-update-book "   data-url="{% url 'payement_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+        <a class=" bout js-delete-book" data-url="{% url 'payement_delete' obj.id %}" href="#"  style="color : #9c27b0;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+
+             <a class="  likes-button "    href="{% url 'pdf' obj.id  %}" style="color : #9c27b0;" >
+          <i class="fa fa-file  w3-xxlarge"></i></a>
+&nbsp
+                            </td>
+
+                        </tr>
+                      {% endfor%}

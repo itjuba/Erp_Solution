@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-
+from django.conf import settings
 from decimal import *
 from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
 from formtools.wizard.views import SessionWizardView
@@ -14,9 +14,34 @@ from django.http import JsonResponse
 from django.forms import formset_factory
 from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form,AchatForm2,Payments_Form2
 from django.template.loader import render_to_string
-
+from django.views.generic import View
+import os
+from .utils import render_to_pdf
+from django.template.loader import get_template
 from Fournis_Section.models import Fournis_Data
 
+
+class GeneratePDF(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('proformas/pdf.html')
+        context = {
+            "invoice_id": 123,
+            "customer_name": "John Cooper",
+            "amount": 1399.99,
+            "today": "Today",
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('proformas/pdf.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" %("12341231")
+            content = "inline; filename='%s'" %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Not found")
 
 
 
@@ -166,7 +191,7 @@ def step1(request):
              form.save()
              print(form.cleaned_data)
              print(form.cleaned_data.get('Montant_HT'))
-             return redirect('step2')
+             return redirect('step2_ach')
       print(form.errors)
     else:
 

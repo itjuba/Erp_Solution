@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+<!--{% load widget_tweaks %}-->
+{% load crispy_forms_tags %}
+{% block content %}
+
+ <div class="content" style="margin-left : 15px">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8">
+  <div><a  class="btn btn-warning" href="javascript:history.back(1)">back</a> </div>                <br><br>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Add Modalite (Step 3)</h4>
+                </div>
+
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                        {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+                        <br><br><br><br><br>
+<form method="POST">
+    {% csrf_token %}
+   <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">modalite_payement</label>
+           {% render_field form.modalite_payement class="form-control" %}
+      </div>
+          <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Arret_Facture &nbsp;</label>
+            {% render_field form.Arret_Facture class="form-control" %}
+      </div>
+   </div>
+      <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Formation</label>
+           {% render_field form.Formation class="form-control mont" %}
+      </div>
+          <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Period_Réalisation &nbsp;</label>
+            {% render_field form.Period_Réalisation class="form-control" %}
+      </div>
+   </div>
+      <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Echéancier_payement &nbsp;</label>
+            {% render_field form.Echéancier_payement class="form-control" %}
+      </div>
+
+
+      </div>
+        <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Commande &nbsp;</label>
+            {% render_field form.Command class="form-control" %}
+      </div>
+
+
+    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />
+</form>
+
+<!--    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />-->
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ </div>
+
+{% endblock%}
+

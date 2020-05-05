@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Commande</title>
+      <style type="text/css">
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 3px solid black;
+   text-align: center
+
+}
+.height{
+  height : 200px;}
+ .image{
+ width : 300px;
+ height : 200px;}
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: black;
+            }
+            .title {
+                font-size: 15px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+        </style>
+</head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+                <img class="image" src="{% static  'img/sh.png' %}" alt="nadjib">
+                <p class='title'>GROUPE PROPRIETAIRE 421 SECTION 09 BABA ALI      BIRTOUTA  - ALGER
+                              RC : 16/00 - 1012249B17  - NIF : 001716101224922 - AI : 16340226465
+                   C.B.:  SGA - RIB.: 021 00012 1130035535 18-Mob:0561 45 80 88 / 0551 72 11 38
+ </p>
+
+                <hr>
+            </div>
+
+                <div class="">
+                    <div  style="float : right;" class="nadjib div-right" >
+                    <p>{{Date}}</p>
+                </div>
+                    Client : {{raison_social}}  <br/>
+                     <p>  Adresse :{{adresse}} </p>
+                </div>
+          <p>
+    NIF : {{NIF}}
+          </p>
+            <p> NIS : {{NIS}}</p>
+
+
+<div>
+            <table style="width:100%">
+  <tr>
+    <th>Ref</th>
+    <th style="width : 200px">Designation</th>
+    <th >Prix Unit</th>
+    <th>Qté</th>
+    <th>Montant</th>
+  </tr>
+  <tr class="height">
+    <td></td>
+    <td>{{Designation}}</td>
+    <td>{{Prix_Uni}}</td>
+      <td>{{Quantite}}</td>
+    <td>{{Montant_HT}}</td>
+  </tr>
+
+</table>
+    <div style="float : right">
+        <p>Total HT:  {{Montant_HT}}</p>
+        <p>TVA     : {{Montant_TVA}}</p>
+        <p>Timber  : 0</p>
+        <p>Total TTC  : {{Montant_TTC}}</p>
+
+    </div>
+    <br><br><br><br><br><br><br><br>
+<p style="text-align : center">Nous restons à votre disposition pour tout renseignement complémentaire</p>
+       </body>
+</html>
+
