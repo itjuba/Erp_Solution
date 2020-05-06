@@ -25,7 +25,7 @@ class Client_Data(models.Model):
 
 
      def __str__(self):
-          return self.slug
+          return self.Raison_social
 
 
 def product_presave_receiver(sender,instance,*args,**kwargs):

@@ -10,20 +10,48 @@ import datetime
 from .forms import Commande_Form,Commande_D_Form,Modalite_Form
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
+from django.forms import modelformset_factory,formset_factory
+
 from django.template.loader import render_to_string
 from weasyprint import HTML
 # Create your views here.
 
 def html_to_pdf_view(request,pk):
         com = get_object_or_404(Commande,pk=pk)
-        com_d = Commande_Designation.objects.get(Command=com)
+        design = Commande_Designation.objects.filter(Command=com).values_list('Designation', flat=True)
+        prix = Commande_Designation.objects.filter(Command=com).values_list('Prix_Unitaire', flat=True)
+        qua = Commande_Designation.objects.filter(Command=com).values_list('Quantite', flat=True)
+        ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
+        tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
+        ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
+        Designation = ''
+        for x in design:
 
-        Designation = com_d.Designation
-        Prix_Uni = com_d.Prix_Unitaire
-        Quantite = com_d.Quantite
-        Montant_HT = com_d.Montant_HT
-        Montant_TVA = com_d.Montant_TVA
-        Montant_TTC = com_d.Montant_TTC
+            print(x)
+            Designation = Designation + " " +  x
+
+        Prix_Uni = 0
+        for x in prix:
+            Prix_Uni = Prix_Uni + x
+
+        Quantite = 0
+        for x in qua:
+            Quantite = Quantite + x
+
+        Montant_HT= 0
+        for x in ht:
+            Montant_HT =Montant_HT +x
+
+        Montant_TVA = 0
+        for x in tva:
+            Montant_TVA = Montant_TVA +x
+
+            Montant_TTC = 0
+            for x in ttc:
+                Montant_TTC = Montant_TTC +x
+
+
+
 
 
         client = com.Client
@@ -95,17 +123,19 @@ def step1(request):
     return render(request, 'Proformas/steps/step1.html', {'form': form})
 
 
-
-
-
 def step2(request):
     if request.method == 'POST':
-        form = Commande_D_Form(request.POST or None)
+        nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=5, can_delete=True)
+        form = nadjib(request.POST)
+
         if form.is_valid():
             form.save()
-            return redirect('step3')
-        print(form.errors)
-    else:
 
-        form = Commande_D_Form()
-    return render(request, 'Proformas/steps/step2.html', {'form': form})
+            return redirect('commande')
+        else:
+            print(form.errors)
+
+    form = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=5)
+    formset = form(queryset=Commande.objects.none())
+    return render(request, 'Proformas/steps/step2.html', {'formset': formset, 'error': form.errors})
+

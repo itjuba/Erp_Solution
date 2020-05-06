@@ -18,6 +18,15 @@
                   <div class="table-responsive" >
                     <table class="table">
 
+{% for dict in formset.errors|slice:":1" %}
+    {% for error in dict.values %}
+                                    <div class="alert alert-danger">
+                <strong>   {{ error|first }}</strong>
+            </div>
+
+    {% endfor %}
+{% endfor %}
+
 
              <thead class=" text-primary"  >
                         <th>
