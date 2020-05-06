@@ -131,7 +131,7 @@ def step2(request):
         if form.is_valid():
             form.save()
 
-            return redirect('commande')
+            return redirect('step3')
         else:
             print(form.errors)
 
