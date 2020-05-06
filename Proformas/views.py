@@ -6,6 +6,7 @@ from .utils import render_to_pdf
 from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
 from django.views.generic import View
 from Client_Section.models import Client_Data
+from django.utils.html import strip_tags
 import datetime
 from .forms import Commande_Form,Commande_D_Form,Modalite_Form
 from django.core.files.storage import FileSystemStorage
@@ -14,6 +15,8 @@ from django.forms import modelformset_factory,formset_factory
 
 from django.template.loader import render_to_string
 from weasyprint import HTML
+from django.core.mail import EmailMessage
+import weasyprint
 # Create your views here.
 
 def html_to_pdf_view(request,pk):
@@ -78,15 +81,30 @@ def html_to_pdf_view(request,pk):
 
         }
         html_string = render_to_string('Proformas/command.html',context)
-
+        html_nadjib = render_to_string('Proformas/msg.html',context)
         html = HTML(string=html_string,base_url=request.build_absolute_uri())
-        html.write_pdf(target='/tmp/mypdf.pdf');
+        html.write_pdf(target='/tmp/Facture.pdf');
+
 
         fs = FileSystemStorage('/tmp')
         with fs.open('mypdf.pdf') as pdf:
           response = HttpResponse(pdf, content_type='application/pdf')
           response['Content-Disposition'] =  'filename="Commande.pdf"'
+          pdf = weasyprint.HTML(string=html_string, base_url='http://8d8093d5.ngrok.io/users/process/').write_pdf(
+              stylesheets=[weasyprint.CSS(string='body { font-family: serif}')])
+          to_emails = ['attignadjib@outlook.com']
+          subject = "SH INFOR FACTURE"
+          content = 'Porformas/msg.html'
+          plain_message = strip_tags(html_nadjib)
+          email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
+          email.attach_file('/tmp/mypdf.pdf')
+          # email.attach("Commande".format('user') + '.pdf', pdf, "application/pdf")
+          email.content_subtype = "html"  # Main content is now text/html
+          email.encoding = 'utf-8'
+          # email.encoding = 'us-ascii'
+          email.send()
         return response
+
 
 
 
