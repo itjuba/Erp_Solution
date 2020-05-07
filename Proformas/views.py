@@ -11,9 +11,13 @@ from .forms import Commande_Form,Commande_D_Form,Modalite_Form
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
-
 from django.template.loader import render_to_string
 from weasyprint import HTML
+from django.core.mail import EmailMessage
+import weasyprint
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.utils.html import strip_tags
 # Create your views here.
 
 def html_to_pdf_view(request,pk):
@@ -81,11 +85,24 @@ def html_to_pdf_view(request,pk):
 
         html = HTML(string=html_string,base_url=request.build_absolute_uri())
         html.write_pdf(target='/tmp/mypdf.pdf');
-
+        html_nadjib = render_to_string('Proformas/msg.html', context)
         fs = FileSystemStorage('/tmp')
         with fs.open('mypdf.pdf') as pdf:
-          response = HttpResponse(pdf, content_type='application/pdf')
-          response['Content-Disposition'] =  'filename="Commande.pdf"'
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'filename="Commande.pdf"'
+            pdf = weasyprint.HTML(string=html_string, base_url='http://8d8093d5.ngrok.io/users/process/').write_pdf(
+                stylesheets=[weasyprint.CSS(string='body { font-family: serif}')])
+            to_emails = ['attignadjib@outlook.com']
+            subject = "SH INFOR FACTURE"
+            content = 'Porformas/msg.html'
+            plain_message = strip_tags(html_nadjib)
+            email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
+            email.attach_file('/tmp/mypdf.pdf')
+            # email.attach("Commande".format('user') + '.pdf', pdf, "application/pdf")
+            email.content_subtype = "html"  # Main content is now text/html
+            email.encoding = 'utf-8'
+            # email.encoding = 'us-ascii'
+            email.send()
         return response
 
 
@@ -134,8 +151,10 @@ def step2(request):
             return redirect('step3')
         else:
             print(form.errors)
+            return render(request, 'Proformas/steps/step2.html', {'formset': form, 'error': form.errors})
 
-    form = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=5)
-    formset = form(queryset=Commande.objects.none())
-    return render(request, 'Proformas/steps/step2.html', {'formset': formset, 'error': form.errors})
+    else:
+      ss = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=5)
+      formset = ss(queryset=Commande.objects.none())
+    return render(request, 'Proformas/steps/step2.html', {'formset': formset})
 

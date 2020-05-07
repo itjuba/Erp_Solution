@@ -21,11 +21,20 @@
                 <div class="card-body">
                   <div class="table-responsive" >
                     <table class="table" id="book-table">
-{% for dict in formset.errors %}
+
+
+{% for dict in formset.errors|slice:":1" %}
     {% for error in dict.values %}
-        {{ error }}
+                      {% if forloop.last %}
+                                    <div class="alert alert-danger">
+                <strong>   {{ error|first }}</strong>
+            </div>
+                        {% endif %}
+
     {% endfor %}
 {% endfor %}
+
+
              <thead class=" text-primary"  >
                         <th>
                          Designation

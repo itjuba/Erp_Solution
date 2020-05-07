@@ -106,7 +106,23 @@ class AssociationForm2(forms.ModelForm):
         self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na';
         self.fields['Quantite'].widget.attrs['class'] = 'qu'
 
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Id_Achats = self.cleaned_data.get('Id_Achats')
+        Id_Article = self.cleaned_data.get('Id_Article')
+        Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
+        Quantite = self.cleaned_data.get('Quantite')
 
+        if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
+            raise ValidationError('Form Invalide !')
+
+        if Association.objects.filter(Id_Achats=Id_Achats).exists() and Association.objects.filter(
+                Id_Article=Id_Article).exists() and Association.objects.filter(
+                Prix_Unitaire=Prix_Unitaire).exists() and Association.objects.filter(
+                Quantite=Quantite).exists():
+            raise ValidationError('data exists ')
+
+        return cleaned_data
 class Payments_Form2(forms.ModelForm):
     class Meta:
         model = Payements

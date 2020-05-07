@@ -187,7 +187,7 @@ def update(request,pk):
 
 
 
-def step1(request):
+def step1_ach(request):
     if request.method == 'POST':
       form = AchatForm(request.POST or None)
       if form.is_valid():
@@ -202,7 +202,7 @@ def step1(request):
     return render(request, 'step1.html', {'form': form,'error':form.errors})
 
 
-def step2(request):
+def step2_ach(request):
     if request.method == 'POST':
         nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
         form = nadjib(request.POST)
@@ -213,10 +213,11 @@ def step2(request):
             return redirect('view')
         else:
             print(form.errors)
+            return render(request, 'step2.html', {'formset': form, 'error': form.errors})
 
-
-    form = modelformset_factory(Association, form=AssociationForm2, extra=5)
-    formset = form(queryset=Association.objects.none())
+    else:
+     form = modelformset_factory(Association, form=AssociationForm2, extra=5)
+     formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
     return render(request, 'step2.html', {'formset': formset,'error':form.errors})
 

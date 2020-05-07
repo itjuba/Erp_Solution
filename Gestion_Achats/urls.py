@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from  django.conf.urls.static import static
-from .views import find,GeneratePDF,payement_delete,payement,step1,update_payement,payement_create,update,achat_view_update,step2,ContactWizard,Achats_create2 ,Article_table,view,article_create,Achats_delete,Article_update,Article_delete,Achats_table,Achats_create,Achats_update
+from .views import find,step1_ach,step1_ach,step2_ach,GeneratePDF,payement_delete,payement,update_payement,payement_create,update,achat_view_update,ContactWizard,Achats_create2 ,Article_table,view,article_create,Achats_delete,Article_update,Article_delete,Achats_table,Achats_create,Achats_update
 from .forms import AchatForm,AssociationForm
 
 
@@ -23,8 +23,8 @@ urlpatterns = [
     path('achats_update_view/<int:pk>',achat_view_update,name='achats_update_view'),
 
     path('achats_delete/<int:pk>', Achats_delete, name='achats_delete'),
-    path('step1_ach/', step1, name='step1_ach'),
-    path('step2_ach/', step2, name='step2_ach'),
+    path('step1_ach/', step1_ach, name='step1_ach'),
+    path('step2_ach/', step2_ach, name='step2_ach'),
     path('update_achat/<int:pk>', update, name='update_achat'),
 
 

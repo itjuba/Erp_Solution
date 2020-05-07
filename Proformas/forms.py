@@ -30,7 +30,7 @@ class Commande_Form(forms.ModelForm):
         return cleaned_data
 
 class Commande_D_Form(forms.ModelForm):
-    Designation = forms.CharField()
+    Designation = forms.CharField(required=True)
     class Meta:
 
         model = Commande_Designation
@@ -42,6 +42,7 @@ class Commande_D_Form(forms.ModelForm):
         commande =  Commande.objects.latest('id')
         self.initial['Command'] = commande
 
+
     def clean(self):
             cleaned_data = self.cleaned_data
             Designation = self.cleaned_data.get('Designation')
@@ -51,6 +52,9 @@ class Commande_D_Form(forms.ModelForm):
             Montant_HT = self.cleaned_data.get('Montant_HT')
             Montant_TVA = self.cleaned_data.get('Montant_TVA')
             Montant_TTC = self.cleaned_data.get('Montant_TTC')
+
+            if not (Designation and Prix_Unitaire and Command and Quantite and Montant_HT and Montant_TVA and Montant_TTC):
+                raise ValidationError('Check your inputs!')
 
             if Commande_Designation.objects.filter(Designation=Designation).exists() and Commande_Designation.objects.filter(
                 Prix_Unitaire=Prix_Unitaire).exists() and Commande_Designation.objects.filter(
