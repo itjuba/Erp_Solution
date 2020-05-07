@@ -80,7 +80,8 @@ table, th, td {
             <p> NIS : {{NIS}}</p>
 
 
-<div>
+
+    <p style="text-align : center">FACTURE N : {{Numero_com}}</p>
             <table style="width:100%">
   <tr>
     <th>Ref</th>
@@ -98,13 +99,66 @@ table, th, td {
   </tr>
 
 </table>
-    <div style="float : right">
-        <p>Total HT:  {{Montant_HT}}</p>
-        <p>TVA     : {{Montant_TVA}}</p>
-        <p>Timber  : 0</p>
-        <p>Total TTC  : {{Montant_TTC}}</p>
 
-    </div>
+            {%   if modalite_payement%}
+            <p>MODALITE DE PAIEMENT :</p>
+            <p>{{modalite_payement}}</p>
+
+            {% endif%}
+
+
+             {%   if Arret_Facture%}
+                 <p>ARRET LA FACTURE A LA SOMME DE :</p>
+            <p>{{Arret_Facture}}</p>
+
+            {% endif%}
+
+
+
+              {%  if Formation%}
+              <p>FORMATION : {{Formation}}</p>
+
+            {% endif%}
+
+            {% if Echéancier_payement %}
+            <p>Echéancier de payement:</p>
+            <p>{{Echéancier_payement}}</p>
+            {% endif%}
+
+              {%  if Period_Réalisation%}
+              <p>Periode de réalisation : {{Period_Réalisation}}</p>
+
+            {% endif%}
+
+
+
+               {%  if Debut_realsiation%}
+         <p>Début de réalisation: {{Debut_realsiation}}</p>
+            {% endif%}
+
+              {%  if  Garantie%}
+         <p>Début de réalisation: {{Garantie}}</p>
+            {% endif%}
+            <br>
+            <div>
+     <table style="float:right">
+  <tr>
+    <th>Total HT</th>
+    <th>{{Montant_HT}}</th>
+  </tr>
+  <tr>
+    <td> TVA </td>
+    <td>{{Montant_TVA}}</td>
+  </tr>
+  <tr>
+    <td>Timber</td>
+    <td>0</td>
+  </tr>
+           <tr>
+    <td>Total ttc</td>
+    <td>{{Montant_TTC}}</td>
+  </tr>
+</table>
     <br><br><br><br><br><br><br><br>
 <p style="text-align : center">Nous restons à votre disposition pour tout renseignement complémentaire</p>
        </body>

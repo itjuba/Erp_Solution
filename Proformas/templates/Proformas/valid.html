@@ -1,0 +1,59 @@
+
+{% extends 'base.html'%}
+<!--{% load widget_tweaks %}-->
+{% load crispy_forms_tags %}
+{% block content %}
+
+ <div class="content" style="margin-left : 15px">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8">
+                                  <div><a  class="btn btn-warning" href="{% url 'step2'%}">Next</a> </div>
+
+                <br><br>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Validation Commande</h4>
+                </div>
+
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                        {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+                        <br><br><br><br><br>
+<form method="POST">
+    {% csrf_token %}
+
+                                      <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Validate_date </label>
+            {% render_field form.Validate_date class="form-control" %}
+      </div>
+
+
+    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />
+</form>
+
+<!--    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />-->
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ </div>
+
+{% endblock%}

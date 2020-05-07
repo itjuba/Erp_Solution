@@ -7,7 +7,7 @@ from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseR
 from django.views.generic import View
 from Client_Section.models import Client_Data
 import datetime
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -17,8 +17,39 @@ from django.core.mail import EmailMessage
 import weasyprint
 from django.template.loader import render_to_string
 from weasyprint import HTML
+
 from django.utils.html import strip_tags
 # Create your views here.
+
+def dat_val(request,pk):
+    # commande = Commande.objects.filter(id=pk)
+    if request.method == 'POST':
+        form = validat(request.POST)
+        if form.is_valid():
+            dat = form.data['Validate_date']
+            achh = Commande.objects.filter(id=pk).update(Date_validation=dat,validation=True)
+            return redirect('commande')
+
+    else:
+        form = validat()
+    return render(request,'Proformas/valid.html',{'form':form})
+
+
+
+
+def send_mail(request):
+    html_nadjib = render_to_string('Proformas/msg.html')
+    to_emails = ['attignadjib@outlook.com']
+    subject = "SH INFOR FACTURE"
+    email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
+    email.attach_file('/tmp/Facture.pdf')
+    email.content_subtype = "html"  # Main content is now text/html
+    email.encoding = 'utf-8'
+    email.send()
+
+    return HttpResponse('SENT')
+
+
 
 def html_to_pdf_view(request,pk):
         com = get_object_or_404(Commande,pk=pk)
@@ -56,10 +87,19 @@ def html_to_pdf_view(request,pk):
 
 
 
+        mod = Modalite.objects.get(Command=com.id)
+        modalite_payement = mod.modalite_payement
+        print(modalite_payement)
+        Arret_Facture = mod.Arret_Facture
+        Formation = mod.Formation
+        Period_Réalisation = mod.Period_Réalisation
+        Echéancier_payement = mod.Echéancier_payement
+        Debut_realsiation = mod.Debut_realsiation
+        Garantie = mod.Garantie
 
 
+        Numero_com  = com.Numero_commande
         client = com.Client
-        print(client)
         client_data = Client_Data.objects.get(id=client.id)
         adresse = client_data.adresse
         NIF = client_data.NIF
@@ -74,35 +114,37 @@ def html_to_pdf_view(request,pk):
         'Montant_HT': Montant_HT,
         'Montant_TVA': Montant_TVA,
         'Montant_TTC': Montant_TTC,
+        'Numero_com': Numero_com,
         'adresse': adresse,
         'NIF': NIF,
         'NIS': NIS,
         'raison_social': raison_social,
         'Date': datetime.date.today(),
+        'modalite_payement':modalite_payement,
+        'Arret_Facture':Arret_Facture,
+        'Formation': Formation,
+        'Echéancier_payement':Echéancier_payement,
+        'Period_Réalisation':Period_Réalisation,
+        'Debut_realsiation':Debut_realsiation,
+        'Garantie':Garantie,
 
         }
         html_string = render_to_string('Proformas/command.html',context)
 
         html = HTML(string=html_string,base_url=request.build_absolute_uri())
-        html.write_pdf(target='/tmp/mypdf.pdf');
+        html.write_pdf(target='/tmp/Facture.pdf');
         html_nadjib = render_to_string('Proformas/msg.html', context)
         fs = FileSystemStorage('/tmp')
-        with fs.open('mypdf.pdf') as pdf:
+        with fs.open('Facture.pdf') as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
-            response['Content-Disposition'] = 'filename="Commande.pdf"'
-            pdf = weasyprint.HTML(string=html_string, base_url='http://8d8093d5.ngrok.io/users/process/').write_pdf(
-                stylesheets=[weasyprint.CSS(string='body { font-family: serif}')])
-            to_emails = ['attignadjib@outlook.com']
-            subject = "SH INFOR FACTURE"
-            content = 'Porformas/msg.html'
-            plain_message = strip_tags(html_nadjib)
-            email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
-            email.attach_file('/tmp/mypdf.pdf')
-            # email.attach("Commande".format('user') + '.pdf', pdf, "application/pdf")
-            email.content_subtype = "html"  # Main content is now text/html
-            email.encoding = 'utf-8'
-            # email.encoding = 'us-ascii'
-            email.send()
+            response['Content-Disposition'] = 'filename="Facture.pdf"'
+            # to_emails = ['attignadjib@outlook.com']
+            # subject = "SH INFOR FACTURE"
+            # email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
+            # email.attach_file('/tmp/Facture.pdf')
+            # email.content_subtype = "html"  # Main content is now text/html
+            # email.encoding = 'utf-8'
+            # email.send()
         return response
 
 

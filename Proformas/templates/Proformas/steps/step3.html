@@ -43,6 +43,16 @@
             {% render_field form.Arret_Facture class="form-control" %}
       </div>
    </div>
+       <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Garantie</label>
+           {% render_field form.Garantie class="form-control" %}
+      </div>
+          <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Garantie &nbsp;</label>
+            {% render_field form.Garantie class="form-control" %}
+      </div>
+   </div>
       <div class="form-row">
       <div class="form-group col-md-6 mb-0">
           <label class="bmd-label-floating" for="form.id_for_label">Formation</label>
@@ -59,6 +69,10 @@
             {% render_field form.Echéancier_payement class="form-control" %}
       </div>
 
+        <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Debut_realsiation &nbsp;</label>
+            {% render_field form.Debut_realsiation class="form-control" %}
+      </div>
 
       </div>
         <div class="form-group col-md-6 mb-0">

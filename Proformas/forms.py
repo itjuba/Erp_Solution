@@ -73,9 +73,11 @@ class Modalite_Form(forms.ModelForm):
     Formation = forms.CharField(required=False)
     Period_Réalisation = forms.CharField(required=False)
     Echéancier_payement = forms.CharField(required=False)
+    Debut_realsiation = forms.CharField(required=False)
+    Garantie = forms.CharField(required=False)
     class Meta:
         model = Modalite
-        fields = ('modalite_payement','Arret_Facture','Formation','Period_Réalisation','Echéancier_payement','Command')
+        fields = ('modalite_payement','Arret_Facture','Formation','Period_Réalisation','Echéancier_payement','Debut_realsiation','Garantie','Formation','Command')
 
     def __init__(self, *args, **kwargs):
         super(Modalite_Form, self).__init__(*args, **kwargs)
@@ -101,3 +103,8 @@ class Modalite_Form(forms.ModelForm):
              raise ValidationError('data exists ')
 
         return cleaned_data
+
+
+
+class validat(forms.Form):
+    Validate_date = forms.DateField()
