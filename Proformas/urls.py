@@ -12,4 +12,6 @@ urlpatterns = [
     path('valid/<int:pk>',views.dat_val,name="valid"),
     path('pdf/<int:pk>',views.html_to_pdf_view,name="pdf"),
 
+
+
 ]

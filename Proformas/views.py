@@ -7,6 +7,7 @@ from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseR
 from django.views.generic import View
 from Client_Section.models import Client_Data
 import datetime
+import threading
 from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
@@ -36,16 +37,37 @@ def dat_val(request,pk):
 
 
 
+class EmailThread(threading.Thread):
+    def __init__(self, subject, html_content, recipient_list, sender):
+        self.subject = subject
+        self.recipient_list = recipient_list
+        self.html_content = html_content
+        self.sender = sender
+        threading.Thread.__init__(self)
+
+    def run(self):
+        msg = EmailMessage(self.subject, self.html_content, self.sender, self.recipient_list)
+        msg.attach_file('/tmp/Facture.pdf')
+        msg.content_subtype = "html"  # Main content is now text/html
+        msg.encoding = 'utf-8'
+        msg.send()
+
+
+def nadjib(subject, html_content, recipient_list, sender):
+        EmailThread(subject, html_content, recipient_list, sender).start()
+
+
 
 def send_mail(request):
     html_nadjib = render_to_string('Proformas/msg.html')
     to_emails = ['attignadjib@outlook.com']
     subject = "SH INFOR FACTURE"
-    email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
-    email.attach_file('/tmp/Facture.pdf')
-    email.content_subtype = "html"  # Main content is now text/html
-    email.encoding = 'utf-8'
-    email.send()
+    nadjib(subject, html_nadjib, to_emails, 'attignadjib@gmail.com')
+    # email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
+    # email.attach_file('/tmp/Facture.pdf')
+    # email.content_subtype = "html"  # Main content is now text/html
+    # email.encoding = 'utf-8'
+    # email.send()
 
     return HttpResponse('SENT')
 
