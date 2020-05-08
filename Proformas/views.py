@@ -75,12 +75,21 @@ def send_mail(request):
 
 def html_to_pdf_view(request,pk):
         com = get_object_or_404(Commande,pk=pk)
-        design = Commande_Designation.objects.filter(Command=com).values_list('Designation', flat=True)
-        prix = Commande_Designation.objects.filter(Command=com).values_list('Prix_Unitaire', flat=True)
-        qua = Commande_Designation.objects.filter(Command=com).values_list('Quantite', flat=True)
-        ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
-        tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
-        ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
+        if Commande_Designation.objects.filter(Command=pk):
+            design = Commande_Designation.objects.filter(Command=com).values_list('Designation', flat=True)
+            prix = Commande_Designation.objects.filter(Command=com).values_list('Prix_Unitaire', flat=True)
+            qua = Commande_Designation.objects.filter(Command=com).values_list('Quantite', flat=True)
+            ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
+            tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
+            ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
+        else :
+           design = ""
+           prix = ""
+           qua = ""
+           ht = ""
+           tva = ""
+           ttc = ""
+
         Designation = ''
         for x in design:
 
@@ -103,22 +112,32 @@ def html_to_pdf_view(request,pk):
         for x in tva:
             Montant_TVA = Montant_TVA +x
 
-            Montant_TTC = 0
-            for x in ttc:
+        Montant_TTC = 0
+        for x in ttc:
                 Montant_TTC = Montant_TTC +x
 
 
 
-        mod = Modalite.objects.get(Command=com.id)
-        modalite_payement = mod.modalite_payement
-        print(modalite_payement)
-        Arret_Facture = mod.Arret_Facture
-        Formation = mod.Formation
-        Period_Réalisation = mod.Period_Réalisation
-        Echéancier_payement = mod.Echéancier_payement
-        Debut_realsiation = mod.Debut_realsiation
-        Garantie = mod.Garantie
 
+        if Modalite.objects.filter(Command=com.id).exists():
+            mod = Modalite.objects.get(Command=com.id)
+            modalite_payement = mod.modalite_payement
+            print(modalite_payement)
+            Arret_Facture = mod.Arret_Facture
+            Formation = mod.Formation
+            Period_Réalisation = mod.Period_Réalisation
+            Echéancier_payement = mod.Echéancier_payement
+            Debut_realsiation = mod.Debut_realsiation
+            Garantie = mod.Garantie
+        else:
+            modalite_payement  = ''
+            print(modalite_payement)
+            Arret_Facture = ''
+            Formation = ''
+            Period_Réalisation = ''
+            Echéancier_payement = ''
+            Debut_realsiation = ''
+            Garantie = ''
 
         Numero_com  = com.Numero_commande
         client = com.Client
