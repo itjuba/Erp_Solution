@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Commande,Commande_Designation,Modalite
+from .models import Commande,Commande_Designation,Modalite,Facture
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from .utils import render_to_pdf
@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from Client_Section.models import Client_Data
 import datetime
 import threading
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -22,6 +22,91 @@ from weasyprint import HTML
 
 from django.utils.html import strip_tags
 # Create your views here.
+
+def save_facture_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        print(request.method=='POST')
+        if form.is_valid():
+
+            form.save()
+
+            data['form_is_valid'] = True
+            f = Facture.objects.all()
+            data['html_book_list'] = render_to_string('Proformas/facture/partial/partial_facture.html', {
+                'facture': f
+            })
+        else:
+            print(form.errors)
+
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def facture_update(request,pk):
+    facture = get_object_or_404(Facture, pk=pk)
+    if request.method == 'POST':
+        print(request.POST)
+        form = Facture_Form(request.POST, instance=facture)
+
+    else:
+        form = Facture_Form(instance=facture)
+
+
+    return save_facture_form(request, form,'Proformas/facture/partial/partial_update.html')
+
+
+
+def facture_delete(request,pk):
+    facture = get_object_or_404(Facture, pk=pk)
+    print(facture)
+    data = dict()
+    if request.method == 'POST':
+        facture.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        f = Facture.objects.all()
+        data['html_book_list'] = render_to_string('Proformas/facture/partial/partial_facture.html', {
+            'facture': f
+        })
+    else:
+        context = {'facture': facture,'id':pk}
+        data['html_form'] = render_to_string('Proformas/facture/partial/partial_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)
+
+def facture_view(request):
+    factur = Facture.objects.all()
+    return render(request,'Proformas/facture/partial_view.html',{'facture':factur})
+
+def Facture_create(request,pk):
+    command = get_object_or_404(Commande,pk=pk)
+    # payemnt = Payements.objects.all().values_list('files_id', flat=True)
+
+    if request.method == 'POST':
+        form = Facture_Form(request.POST or None)
+
+        ttc = command.Montant_TTC
+
+        if float(form.data['Montant_TTC']) > float(ttc):
+            error =  "le montant_ttc est superieur que le montant HT de la commande "
+            return render(request, 'Proformas/facture/facture_form.html', {'form': form,'errors':error})
+
+
+        if form.is_valid():
+            form.save()
+            return redirect('commande')
+        print(form.errors)
+    else:
+
+        form = Facture_Form()
+    return render(request, 'Proformas/facture/facture_form.html',{'form':form})
+
+
+
 
 def commande_deletee(request,pk):
         commande = get_object_or_404(Commande, pk=pk)

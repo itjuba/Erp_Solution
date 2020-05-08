@@ -21,16 +21,13 @@
                   <div class="col-md-12" id="col2" >
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Commande Table</h4>
-                  <p class="card-category"> Here is Commande informations</p>
+                  <h4 class="card-title ">Facture Table</h4>
+                  <p class="card-category"> Here is Facture informations</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table" id="book-table">
-                                                  <p>
-      <a class="btn btn-primary" href="{% url 'step1'%}"> Add Commande</a>
 
-  </p>
 
 
                       <thead class=" text-primary">
@@ -38,30 +35,29 @@
                          Date
                         </th>
                         <th>
-                         Client
+                         commande
                         </th>
                         <th>
-                          Numero commande
+                         Titre facture
+                        </th>
+                         <th>
+                         Numero facture
                         </th>
                         <th>
-                          Montant HT
+                         M  HT
                         </th>
                         <th>
-                          Montant TVA
+                          M TVA
                         </th>
                         <th>
-                          Montant TTC
+                          M TTC
                         </th>
                           <th>
-                          Type Service
+                         Etat
                         </th>
-                          <th>
-                          validation
-                        </th>
-
                       </thead>
                       <tbody>
-                    {% include 'Proformas/partial/partial_proformas.html' %}
+                    {% include 'Proformas/facture/partial/partial_facture.html' %}
                       </tbody>
                         <div class="modal fade" id="modal-book">
                     <div class="modal-dialog" style=" left: 10%">

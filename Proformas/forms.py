@@ -1,9 +1,15 @@
 from django import forms
-from .models import Commande_Designation,Commande,Modalite
+from .models import Commande_Designation,Commande,Modalite,Facture
 from django.forms import ValidationError
 
 from django.forms import ModelForm
 
+
+class Facture_Form(forms.ModelForm):
+    Titre_facture = forms.CharField()
+    class Meta:
+        model = Facture
+        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC')
 
 
 class Commande_Form2(forms.ModelForm):

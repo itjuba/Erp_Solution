@@ -1,0 +1,42 @@
+
+  {% for obj in facture %}
+
+
+                        <tr>
+
+                          <td>
+                            {{obj.Date}}
+                          </td>
+                          <td>
+                           {{obj.commande}}
+                          </td>
+                            <td>
+                           {{obj.Numero_facture}}
+                          </td>
+                          <td>
+                           {{obj.Titre_facture}}
+                          </td>
+                              <td>
+                            {{obj.Montant_HT}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TVA}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TTC}}
+                          </td>
+                          <td>
+                            {{obj.Etat}}
+                          </td>
+                            <td>
+
+        <a class=" bout  js-update-book "   data-url="{% url 'facture_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+
+        <a class=" bout js-delete-book" data-url="{% url 'delete_facture' obj.id %}" href="#"  style="color : #9c27b0;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+
+
+                        </tr>
+                      {% endfor%}
