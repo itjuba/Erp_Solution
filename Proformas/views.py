@@ -5,10 +5,11 @@ from django.template.loader import get_template
 from .utils import render_to_pdf
 from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
 from django.views.generic import View
+from django.http import JsonResponse
 from Client_Section.models import Client_Data
 import datetime
 import threading
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -22,19 +23,69 @@ from weasyprint import HTML
 from django.utils.html import strip_tags
 # Create your views here.
 
+def commande_deletee(request,pk):
+        commande = get_object_or_404(Commande, pk=pk)
+        data = dict()
+        if request.method == 'POST':
+            commande.delete()
+            data['form_is_valid'] = True  # This is just to play along with the existing code
+            com = Commande.objects.all()
+            data['html_book_list'] = render_to_string('Proformas/partial/partial_proformas.html', {
+                'c': com
+            })
+        else:
+            context = {'obj': commande}
+            data['html_form'] = render_to_string('Proformas/partial/parital_delete.html',
+                                                 context,
+                                                 request=request,
+                                                 )
+        return JsonResponse(data)
+
+
 def dat_val(request,pk):
-    # commande = Commande.objects.filter(id=pk)
+    commande = get_object_or_404(Commande,pk=pk)
     if request.method == 'POST':
-        form = validat(request.POST)
-        if form.is_valid():
-            dat = form.data['Validate_date']
-            achh = Commande.objects.filter(id=pk).update(Date_validation=dat,validation=True)
-            return redirect('commande')
-
+      form = Commande_Form2(request.POST, instance=commande)
     else:
-        form = validat()
-    return render(request,'Proformas/valid.html',{'form':form})
+        form = Commande_Form2(instance=commande)
 
+    return valid_save(request, form, pk, 'Proformas/partial/partial_valid.html')
+
+def valid_save(request, form,pk, template_name):
+        commande = Commande.objects.filter(id=pk)
+        data = dict()
+        if request.method == 'POST':
+            if form.is_valid():
+                dat = form.data['Date_validation']
+                achh = Commande.objects.filter(id=pk).update(Date_validation=dat, validation=True)
+                data['form_is_valid'] = True
+                command = Commande.objects.all()
+                data['html_book_list'] = render_to_string('Proformas/partial/partial_proformas.html', {
+                'c': command
+            })
+            else:
+                print(form.errors)
+                data['form_is_valid'] = False
+        context = {'form': form}
+        data['html_form'] = render_to_string('Proformas/partial/partial_valid.html',context,
+                                             request=request,
+                                             )
+        return JsonResponse(data)
+
+
+# def dat_val(request,pk):
+#     # commande = Commande.objects.filter(id=pk)
+#     if request.method == 'POST':
+#         form = validat(request.POST)
+#         if form.is_valid():
+#             dat = form.data['Validate_date']
+#             achh = Commande.objects.filter(id=pk).update(Date_validation=dat,validation=True)
+#             return redirect('commande')
+#
+#     else:
+#         form = validat()
+#     return render(request,'Proformas/valid.html',{'form':form})
+#
 
 
 class EmailThread(threading.Thread):

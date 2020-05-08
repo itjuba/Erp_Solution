@@ -5,11 +5,19 @@ from django.forms import ValidationError
 from django.forms import ModelForm
 
 
+
+class Commande_Form2(forms.ModelForm):
+
+    class Meta:
+        model = Commande
+        fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation','Date_validation')
+
+
 class Commande_Form(forms.ModelForm):
 
     class Meta:
         model = Commande
-        fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation')
+        fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation','Date_validation')
 
     def clean(self):
         cleaned_data = self.cleaned_data

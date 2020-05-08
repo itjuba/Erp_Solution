@@ -10,6 +10,7 @@ urlpatterns = [
     path('step3',views.step3,name="step3"),
     path('send/',views.send_mail,name="send"),
     path('valid/<int:pk>',views.dat_val,name="valid"),
+    path('delete_commande/<int:pk>',views.commande_deletee,name="delete_commande"),
     path('pdf/<int:pk>',views.html_to_pdf_view,name="pdf"),
 
 

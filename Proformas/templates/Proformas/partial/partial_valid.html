@@ -1,0 +1,12 @@
+<form method="post" action="{% url 'valid' form.instance.id %}" class="js-book-update-form">
+  {% csrf_token %}
+  {% load widget_tweaks %}
+  <div class="modal-body" >
+    {% include 'Proformas/valid.html'%}
+  <br><br>
+  <div style="pos">
+
+    <button    style="float : right"  type="submit" class="btn btn-primary ">Add Client</button>
+        <button  style="float : right" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</form>

@@ -33,6 +33,14 @@
                         <br><br><br><br><br>
 <form method="POST">
     {% csrf_token %}
+
+
+           <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Garantie</label>
+           {% render_field form.Garantie class="form-control" %}
+      </div>
+   </div>
    <div class="form-row">
       <div class="form-group col-md-6 mb-0">
           <label class="bmd-label-floating" for="form.id_for_label">modalite_payement</label>
@@ -43,16 +51,7 @@
             {% render_field form.Arret_Facture class="form-control" %}
       </div>
    </div>
-       <div class="form-row">
-      <div class="form-group col-md-6 mb-0">
-          <label class="bmd-label-floating" for="form.id_for_label">Garantie</label>
-           {% render_field form.Garantie class="form-control" %}
-      </div>
-          <div class="form-group col-md-6 mb-0">
-        <label  class="bmd-label-floating" for="form.id_for_label">Garantie &nbsp;</label>
-            {% render_field form.Garantie class="form-control" %}
-      </div>
-   </div>
+
       <div class="form-row">
       <div class="form-group col-md-6 mb-0">
           <label class="bmd-label-floating" for="form.id_for_label">Formation</label>

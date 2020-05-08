@@ -33,10 +33,11 @@
                           </td>
                             <td>
 
-            <a class=" bout  likes-button js-update-book "   data-url="{% url 'payement_update' obj.id %}" href="#" style="color : #9c27b0;" >
+        <a class=" bout likes-button js-update-book "   data-url="{% url 'valid' obj.id %}" href="#" style="color : #9c27b0;" >
             <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
 &nbsp
-        <a class=" bout js-delete-book" data-url="{% url 'payement_delete' obj.id %}" href="#"  style="color : #9c27b0;">
+
+        <a class=" bout js-delete-book" data-url="{% url 'delete_commande' obj.id %}" href="#"  style="color : #9c27b0;">
         <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
 &nbsp
 
@@ -44,11 +45,7 @@
           <i class="fa fa-file  w3-xxlarge"></i></a>
 &nbsp
 
-                                             <a class="  likes-button "    href="{% url 'valid' obj.id  %}" style="color : #9c27b0;" >
-          <i class="fa fa-file  w3-xxlarge"></i></a>
-&nbsp
-
-                            </td>
+                  </td>
 
                         </tr>
                       {% endfor%}

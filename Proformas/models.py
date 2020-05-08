@@ -56,3 +56,20 @@ class Commande_Designation(models.Model):
 
     def __str__(self):
         return self.Designation
+
+
+
+class Facture(models.Model):
+    Date = models.DateField()
+    Etat = models.BooleanField(default=False)
+    commande = models.ForeignKey(Commande,on_delete=models.CASCADE)
+    Titre_facture = models.CharField(max_length=200)
+    Numero_facture = models.CharField(max_length=200)
+    Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)
+    Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2)
+    Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+
+    def __str__(self):
+        return self.Titre_facture
