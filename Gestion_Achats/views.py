@@ -264,9 +264,6 @@ def view(request):
 
     name = Achats.objects.all().select_related()
     print(name)
-    # for p in Achats.objects.raw('SELECT Id_Fournis_id,id FROM Gestion_Achats_achats'):
-    #    print(p.Montant_TTC)
-    #    print(p.Id_Fournis_id)
 
 
     achat_articl = Achats.objects.all()

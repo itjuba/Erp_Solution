@@ -159,7 +159,7 @@ def save_facture_form(request, form, template_name):
 
             data['form_is_valid'] = True
             f = Facture.objects.all()
-            data['html_book_list'] = render_to_string('Proformas/facture/partial/partial_facture.html', {
+            data['html_book_list'] = render_to_string('Proformas/facture/partial/partial_facture2.html', {
                 'facture': f
             })
         else:
@@ -181,7 +181,7 @@ def facture_update(request,pk):
         form = Facture_Form(fac=pk,instance=facture)
 
 
-    return save_facture_form(request, form,'Proformas/facture/partial/partial_facture_payement.html')
+    return save_facture_form(request, form,'Proformas/facture/partial/partial_facture_model.html')
 
 
 

@@ -1,11 +1,6 @@
 {% load dat_tag %}
   {% for obj in facture %}
 
-<!--{% if not obj.Etat %}-->
-<!-- <div class="alert alert-danger">-->
-<!--            <strong class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>-->
-<!--        </div>-->
-<!--{% endif %}-->
 
                         <tr>
 
@@ -17,12 +12,15 @@
                           </td>
 
                           <td>
-                              {% if not obj|date %}
+                                 {% if not obj.Etat %}
                               <strong style="color : red;" class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>
 
                               {%else%}
                            {{obj.Titre_facture}}
                                  {% endif %}
+                          </td>
+                             <td>
+                           {{obj.Numero_facture}}
                           </td>
                               <td>
                             {{obj.Montant_HT}}
