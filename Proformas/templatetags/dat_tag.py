@@ -5,5 +5,6 @@ register = Library()
 
 @register.filter
 def date(obj):
-    if obj.Date_limite_payement == datetime.date.today() and obj.Etat==False:
-        return 'Not Payed'
+    if (obj.Date_limite_payement - datetime.date.today()).days == 5:
+       print('yes')
+       return 'Not Payed'
