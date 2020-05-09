@@ -16,10 +16,11 @@
                            {{obj.commande}}
                           </td>
                             <td>
-                           {{obj.Numero_facture}}
+                                  {{obj.Titre_facture}}
+
                           </td>
                           <td>
-                           {{obj.Titre_facture}}
+                          {{obj.Numero_facture}}
                           </td>
                               <td>
                             {{obj.Montant_HT}}
@@ -37,14 +38,13 @@
 
         <a class=" bout  js-update-book "   data-url="{% url 'facture_update' obj.id %}" href="#" style="color : #9c27b0;" >
             <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
-&nbsp
+
 
         <a class=" bout js-delete-book" data-url="{% url 'delete_facture' obj.id %}" href="#"  style="color : #9c27b0;">
         <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
 &nbsp
-
-        <a class=""  href="{% url 'create_facture_p' obj.id %}"  style="color : #9c27b0;">
-         <i class="fa fa-plus-circle w3-xxlarge"></i></a>
+    <a class="  likes-button "    href="{% url 'create_facture' obj.id  %}" style="color : #9c27b0;" >
+             <i class="fa fa-plus-circle w3-xxlarge"></i></a>
 
 
 

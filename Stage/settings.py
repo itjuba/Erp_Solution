@@ -143,6 +143,6 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = "attignadjib@gmail.com"
-EMAIL_HOST = socket.gethostbyname('smtp.gmail.com')
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS =True
 EMAIL_HOST_PASSWORD = "11051963"

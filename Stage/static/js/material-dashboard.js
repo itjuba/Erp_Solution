@@ -186,14 +186,14 @@ md = {
   },
 
 
-     showNotificationFail: function(from, align,couleur) {
+     showNotificationFail: function(from, align,couleur,msg) {
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
     color = Math.floor((Math.random() * 6) + 1);
 
     $.notify({
       icon: "add_alert",
-      message: "Invalid Form  !! "
+      message: msg
 
     }, {
       type: couleur,

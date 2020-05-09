@@ -19,9 +19,135 @@ from django.core.mail import EmailMessage
 import weasyprint
 from django.template.loader import render_to_string
 from weasyprint import HTML
+from .forms import Payments_Form_facture
+
 
 from django.utils.html import strip_tags
 # Create your views here.
+
+def payement_c(request,pk):
+    facture = get_object_or_404(Facture,pk=pk)
+    # payemnt = Payements.objects.all().values_list('files_id', flat=True)
+
+    if request.method == 'POST':
+        form = Payments_Form_facture(request.POST or None,facture=pk)
+
+        if form.is_valid():
+            form.save()
+            return redirect('facture')
+        print(form.errors)
+    else:
+
+        form = Payments_Form_facture(facture=pk)
+    return render(request, 'Gestion_Achats/payement/partial_payement_form.html',{'form':form})
+
+
+
+def html_to_pdf_view_facture(request, pk):
+    id_com = Facture.objects.get(id=pk)
+    com = get_object_or_404(Commande, id=id_com.commande.id)
+
+    if Commande_Designation.objects.filter(Command=com):
+        design = Commande_Designation.objects.filter(Command=com).values_list('Designation', flat=True)
+        prix = Commande_Designation.objects.filter(Command=com).values_list('Prix_Unitaire', flat=True)
+        qua = Commande_Designation.objects.filter(Command=com).values_list('Quantite', flat=True)
+        ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
+        tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
+        ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
+    else:
+        design = ""
+        prix = ""
+        qua = ""
+        ht = ""
+        tva = ""
+        ttc = ""
+
+    Designation = ''
+    for x in design:
+        print(x)
+        Designation = Designation + " " + x
+
+    Prix_Uni = 0
+    for x in prix:
+        Prix_Uni = Prix_Uni + x
+
+    Quantite = 0
+    for x in qua:
+        Quantite = Quantite + x
+
+    Montant_HT = 0
+    for x in ht:
+        Montant_HT = Montant_HT + x
+
+    Montant_TVA = 0
+    for x in tva:
+        Montant_TVA = Montant_TVA + x
+
+    Montant_TTC = 0
+    for x in ttc:
+        Montant_TTC = Montant_TTC + x
+
+    if Modalite.objects.filter(Command=com.id).exists():
+        mod = Modalite.objects.get(Command=com.id)
+        modalite_payement = mod.modalite_payement
+        print(modalite_payement)
+        Arret_Facture = mod.Arret_Facture
+        Formation = mod.Formation
+        Period_Réalisation = mod.Period_Réalisation
+        Echéancier_payement = mod.Echéancier_payement
+        Debut_realsiation = mod.Debut_realsiation
+        Garantie = mod.Garantie
+    else:
+        modalite_payement = ''
+        print(modalite_payement)
+        Arret_Facture = ''
+        Formation = ''
+        Period_Réalisation = ''
+        Echéancier_payement = ''
+        Debut_realsiation = ''
+        Garantie = ''
+
+    Numero_com = com.Numero_commande
+    client = com.Client
+    client_data = Client_Data.objects.get(id=client.id)
+    adresse = client_data.adresse
+    NIF = client_data.NIF
+    NIS = client_data.NIS
+    raison_social = client_data.Raison_social
+
+    context = {
+        'Designation': Designation,
+        'Prix_Uni': Prix_Uni,
+        'Quantite': Quantite,
+        'Montant_HT': Montant_HT,
+        'Montant_TVA': Montant_TVA,
+        'Montant_TTC': Montant_TTC,
+        'Numero_com': Numero_com,
+        'adresse': adresse,
+        'NIF': NIF,
+        'NIS': NIS,
+        'raison_social': raison_social,
+        'Date': datetime.date.today(),
+        'modalite_payement': modalite_payement,
+        'Arret_Facture': Arret_Facture,
+        'Formation': Formation,
+        'Echéancier_payement': Echéancier_payement,
+        'Period_Réalisation': Period_Réalisation,
+        'Debut_realsiation': Debut_realsiation,
+        'Garantie': Garantie,
+
+    }
+    html_string = render_to_string('Proformas/facture_pdf.html', context)
+
+    html = HTML(string=html_string, base_url=request.build_absolute_uri())
+    html.write_pdf(target='/tmp/Facture.pdf');
+    html_nadjib = render_to_string('Proformas/msg.html', context)
+    fs = FileSystemStorage('/tmp')
+    with fs.open('Facture.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="Proformas.pdf"'
+    return response
+
 
 def save_facture_form(request, form, template_name):
     data = dict()
@@ -49,13 +175,13 @@ def facture_update(request,pk):
     facture = get_object_or_404(Facture, pk=pk)
     if request.method == 'POST':
         print(request.POST)
-        form = Facture_Form(request.POST, instance=facture)
+        form = Facture_Form(request.POST, instance=facture,fac=pk)
 
     else:
-        form = Facture_Form(instance=facture)
+        form = Facture_Form(fac=pk,instance=facture)
 
 
-    return save_facture_form(request, form,'Proformas/facture/partial/partial_update.html')
+    return save_facture_form(request, form,'Proformas/facture/partial/partial_facture_payement.html')
 
 
 
@@ -87,12 +213,12 @@ def Facture_create(request,pk):
     # payemnt = Payements.objects.all().values_list('files_id', flat=True)
 
     if request.method == 'POST':
-        form = Facture_Form(request.POST or None)
+        form = Facture_Form(request.POST or None,fac=pk)
 
         ttc = command.Montant_TTC
 
         if float(form.data['Montant_TTC']) > float(ttc):
-            error =  "le montant_ttc est superieur que le montant HT de la commande "
+            error =  "le montant_ttc est superieur que le montant TTC de la commande "
             return render(request, 'Proformas/facture/facture_form.html', {'form': form,'errors':error})
 
 
@@ -102,7 +228,7 @@ def Facture_create(request,pk):
         print(form.errors)
     else:
 
-        form = Facture_Form()
+        form = Facture_Form(fac=pk)
     return render(request, 'Proformas/facture/facture_form.html',{'form':form})
 
 
@@ -183,7 +309,7 @@ class EmailThread(threading.Thread):
 
     def run(self):
         msg = EmailMessage(self.subject, self.html_content, self.sender, self.recipient_list)
-        msg.attach_file('/tmp/Facture.pdf')
+        msg.attach_file('/tmp/Proformas.pdf')
         msg.content_subtype = "html"  # Main content is now text/html
         msg.encoding = 'utf-8'
         msg.send()
@@ -309,19 +435,12 @@ def html_to_pdf_view(request,pk):
         html_string = render_to_string('Proformas/command.html',context)
 
         html = HTML(string=html_string,base_url=request.build_absolute_uri())
-        html.write_pdf(target='/tmp/Facture.pdf');
+        html.write_pdf(target='/tmp/Proformas.pdf');
         html_nadjib = render_to_string('Proformas/msg.html', context)
         fs = FileSystemStorage('/tmp')
-        with fs.open('Facture.pdf') as pdf:
+        with fs.open('Proformas.pdf') as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
-            response['Content-Disposition'] = 'filename="Facture.pdf"'
-            # to_emails = ['attignadjib@outlook.com']
-            # subject = "SH INFOR FACTURE"
-            # email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
-            # email.attach_file('/tmp/Facture.pdf')
-            # email.content_subtype = "html"  # Main content is now text/html
-            # email.encoding = 'utf-8'
-            # email.send()
+            response['Content-Disposition'] = 'filename="Proformas.pdf"'
         return response
 
 

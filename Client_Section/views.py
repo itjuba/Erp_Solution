@@ -94,7 +94,7 @@ def save_contact_form(request,Contact_form, template_name):
             })
         else:
 
-            print(Contact_form.errors)
+            # print(Contact_form.errors)
             data['form_is_valid'] = False
     context = {'form':Contact_form}
     data['html_form'] = render_to_string(template_name, context, request=request)

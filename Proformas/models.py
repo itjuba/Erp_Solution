@@ -1,7 +1,9 @@
 from django.db import models
 
 # Create your models here.
+from django.shortcuts import get_object_or_404
 
+import datetime
 from Client_Section.models import Client_Data
 
 
@@ -61,6 +63,8 @@ class Commande_Designation(models.Model):
 
 class Facture(models.Model):
     Date = models.DateField()
+    Date_payement = models.DateField(blank=True,null=True)
+    Date_limite_payement = models.DateField(blank=True,null=True)
     Etat = models.BooleanField(default=False)
     commande = models.ForeignKey(Commande,on_delete=models.CASCADE)
     Titre_facture = models.CharField(max_length=200)
@@ -71,5 +75,32 @@ class Facture(models.Model):
 
 
 
+
     def __str__(self):
         return self.Titre_facture
+
+    # def date_valid(self):
+    #     if self.Date_limite_payement == datetime.date.today():
+    #      return True
+
+
+#
+# class Payements2(models.Model):
+#    class Payement_Choic(models.TextChoices):
+#       Chéque = "Chéque"
+#       espèces = "espèces"
+#       virement = "virement bancaire"
+#
+#    Date = models.DateField()
+#    E_S = models.CharField(max_length=10)
+#    mode_de_payement = models.CharField(choices=Payement_Choic.choices, max_length=200)
+#    reference = models.IntegerField()
+#    Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)
+#    Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2)
+#    Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
+#    Numero_facture = models.IntegerField()
+#    Numero_payement = models.IntegerField()
+#
+#    def __str__(self):
+#       facture = get_object_or_404(Facture, pk=self.reference)
+#       return str(facture.Titre_facture)

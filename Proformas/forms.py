@@ -1,15 +1,50 @@
 from django import forms
 from .models import Commande_Designation,Commande,Modalite,Facture
 from django.forms import ValidationError
+from Gestion_Achats.models import Payements
+
 
 from django.forms import ModelForm
+class Payments_Form_facture(forms.ModelForm):
+    class Meta:
+        model = Payements
+        fields = ('Date', 'mode_de_payement', 'reference', 'Montant_HT','Montant_TVA','Montant_TTC', 'Numero_facture', 'Numero_payement','E_S')
+
+    def __init__(self, *args, **kwargs):
+        self.facture = kwargs.pop("facture")
+        super(Payments_Form_facture, self).__init__(*args, **kwargs)
+
+        facture = Facture.objects.get(id=self.facture)
+        self.initial['E_S'] = 'Vente'
+        self.initial['reference'] = facture.id
+        self.initial['Montant_HT'] = facture.Montant_HT
+        self.initial['Montant_TVA'] = facture.Montant_TVA
+        self.initial['Montant_TTC'] = facture.Montant_TTC
 
 
 class Facture_Form(forms.ModelForm):
     Titre_facture = forms.CharField()
     class Meta:
         model = Facture
-        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC')
+        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
+
+    def __init__(self, *args, **kwargs):
+        self.fac = kwargs.pop("fac")
+        super(Facture_Form, self).__init__(*args, **kwargs)
+        com = self.fac
+        commande = Facture.objects.get(id=self.fac)
+        com = Commande.objects.get(id=commande.commande.id)
+
+        self.initial['commande'] = com
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Montant_TTC = self.cleaned_data.get('Montant_TTC')
+        commande = self.cleaned_data.get('commande')
+        command = Commande.objects.get(id=commande.id)
+        ttc= command.Montant_TTC
+        if Montant_TTC > ttc:
+            raise ValidationError('KBIR')
 
 
 class Commande_Form2(forms.ModelForm):

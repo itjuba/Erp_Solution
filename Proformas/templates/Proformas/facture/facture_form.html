@@ -50,8 +50,6 @@
         <label  class="bmd-label-floating" for="form.id_for_label">Numero_facture &nbsp;</label>
             {% render_field form.Numero_facture class="form-control" %}
       </div>
-
-
     </div>
 
 
@@ -77,13 +75,18 @@
             {% render_field form.Montant_TTC class="form-control" %}
       </div>
 
-       </div>
 
 
           <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Date limite payement </label>
+            {% render_field form.Date_limite_payement class="form-control" %}
+      </div>
+                  </div>
+        <div class="form-group col-md-6 mb-0">
         <label  class="bmd-label-floating" for="form.id_for_label">commande </label>
             {% render_field form.commande class="form-control" %}
       </div>
+
 
     </div>
 

@@ -1,6 +1,7 @@
 from django.db import models
 from enum import Enum
 from Fournis_Section.models import Fournis_Data
+from Proformas.models import Facture
 # Create your models here.
 
 from django.shortcuts import get_object_or_404
@@ -62,5 +63,10 @@ class Payements(models.Model):
 
 
    def __str__(self):
-      payement = get_object_or_404(Achats, pk=self.reference)
-      return str(payement.Id_Fournis)
+
+      if  Achats.objects.filter(id=self.reference):
+         payement = Achats.objects.get(id=self.reference)
+         return str(payement.Id_Fournis)
+      else:
+         facture =  Facture.objects.get(id=self.reference)
+         return str(facture.Titre_facture)
