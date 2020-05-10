@@ -11,8 +11,8 @@
                            {{obj.commande}}
                           </td>
 
-                          <td>
-                                 {% if not obj.Etat %}
+                       <td>
+                              {% if not obj|date %}
                               <strong style="color : red;" class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>
 
                               {%else%}

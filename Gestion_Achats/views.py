@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-
+from decimal import Decimal
 from django.conf import settings
 from decimal import *
 from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
@@ -74,6 +74,7 @@ def save_payements_form(request, form, payement_ttc, id, template_name):
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
+            print(id)
             achat = get_object_or_404(Achats, pk=id)
             hsab = achat.Montant_pay
             total = hsab -payement_ttc
@@ -101,7 +102,7 @@ def update_payement(request, pk):
     payement_ttc = payement.Montant_TTC
     id = payement.reference
     print(id)
-    print(payement_ttc)
+    # print(payement_ttc)
     if request.method == 'POST':
         form = Payments_Form2(request.POST,instance=payement)
 
@@ -166,11 +167,31 @@ def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
     # ass = Association.objects.filter(Id_Achats=achat)
     form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
-    # formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
 
     if request.method == 'POST':
        formset = form(request.POST or None)
        if formset.is_valid():
+           ht = achat.Montant_HT
+           error = "la somme des prix est superieur que le montant ht"
+           p = 0
+           q = 0
+           n = formset.save(commit=False)
+           for x in n:
+
+               # print(data)
+               # print(data.get('Prix_Unitaire'))
+               # print(data.get('Quantite'))
+               # p = p + float(x.cleaned_data['Prix_Unitaire'])
+               # q = q + float(x.cleaned_data['Quantite'])
+               p = p + x.Prix_Unitaire
+               q = q + x.Quantite
+               print(p)
+               print(q)
+               if  ( p * q ) > Decimal(ht):
+                   return render(request, 'html_update.html', {'formset': formset, 'errors': error})
+           if( p * q ) > Decimal(ht):
+               return render(request, 'html_update.html', {'formset': formset, 'errors': error})
+
            formset.save()
            return redirect('view')
 

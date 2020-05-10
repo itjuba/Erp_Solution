@@ -78,11 +78,13 @@ class AssociationForm(forms.ModelForm):
         if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
             raise ValidationError('Form Invalide !')
 
-        if Association.objects.filter(Id_Achats=Id_Achats).exists() and Association.objects.filter(
-                Id_Article=Id_Article).exists() and Association.objects.filter(
-                Prix_Unitaire=Prix_Unitaire).exists() and Association.objects.filter(
-                Quantite=Quantite).exists():
-            raise ValidationError('data exists ')
+
+
+        # if Association.objects.filter(Id_Achats=Id_Achats).exists() and Association.objects.filter(
+        #         Id_Article=Id_Article).exists() and Association.objects.filter(
+        #         Prix_Unitaire=Prix_Unitaire).exists() and Association.objects.filter(
+        #         Quantite=Quantite).exists():
+        #     raise ValidationError('data exists ')
 
         return cleaned_data
 
@@ -144,14 +146,31 @@ class Payments_Form(forms.ModelForm):
         self.initial['reference'] = achat.id
         self.initial['Montant_HT'] = achat.Montant_HT
 
-    # def clean(self):
-    #     cleaned_data = self.cleaned_data
-    #     Montant_HT = self.cleaned_data.get('Montant_HT')
-    #     Montant_TTC = self.cleaned_data.get('Montant_TTC')
-    #     total = Montant_TTC - Montant_HT
-    #     if total<0:
-    #         Montant_pay = achat.Montant_pay
-    #         raise ValidationError(' rak depsit montant_ht ta3k ')
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Date = self.cleaned_data.get('Date')
+        reference = self.cleaned_data.get('reference')
+        mode_de_payement = self.cleaned_data.get('mode_de_payement')
+        Montant_HT = self.cleaned_data.get('Montant_HT')
+        Montant_TVA = self.cleaned_data.get('Montant_TVA')
+        Montant_TTC = self.cleaned_data.get('Montant_TTC')
+        Numero_facture = self.cleaned_data.get('Numero_facture')
+        Numero_payement = self.cleaned_data.get('Numero_payement')
+        E_S = self.cleaned_data.get('E_S')
+
+
+
+        if Payements.objects.filter(Date=Date).exists() and Payements.objects.filter(
+                reference=reference).exists() and Payements.objects.filter(
+            mode_de_payement=mode_de_payement).exists() and Payements.objects.filter(
+            Numero_facture=Numero_facture).exists() and Payements.objectsfilter(
+            Montant_HT=Montant_TVA).exists() and  Payements.objectsfilter(
+            Montant_TTC=Montant_TTC).exists() and  Payements.objectsfilter(
+            Numero_facture=Montant_TVA).exists() and  Payements.objectsfilter(
+            Numero_payement=Montant_TVA).exists() and  Payements.objectsfilter(
+            Montant_TTC=Montant_TVA).exists() and  Payements.objectsfilter(
+            Numero_payement=Numero_payement).exists() and Payements.objects.filter(E_S=E_S).exists():
+            raise ValidationError('data exists ')
 
 
 

@@ -26,6 +26,11 @@
 
     {% endfor %}
 {% endfor %}
+                                      {% if errors %}
+                         <div class="alert alert-danger">
+            <strong>{{ errors|escape }}</strong>
+        </div>
+                        {%endif%}
 
 
              <thead class=" text-primary"  >
