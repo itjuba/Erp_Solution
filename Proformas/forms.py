@@ -20,6 +20,8 @@ class Payments_Form_facture(forms.ModelForm):
         self.initial['Montant_HT'] = facture.Montant_HT
         self.initial['Montant_TVA'] = facture.Montant_TVA
         self.initial['Montant_TTC'] = facture.Montant_TTC
+        self.initial['Numero_facture'] = facture.Numero_facture
+
 
 
 class Facture_Form(forms.ModelForm):
