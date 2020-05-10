@@ -27,7 +27,7 @@ from django.utils.html import strip_tags
 
 def payement_c(request,pk):
     facture = get_object_or_404(Facture,pk=pk)
-    # payemnt = Payements.objects.all().values_list('files_id', flat=True)
+    # p = Payements.objects.all().values_list('files_id', flat=True)
 
     if request.method == 'POST':
         form = Payments_Form_facture(request.POST or None,facture=pk)
