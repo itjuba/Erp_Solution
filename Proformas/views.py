@@ -33,6 +33,8 @@ def payement_c(request,pk):
         form = Payments_Form_facture(request.POST or None,facture=pk)
 
         if form.is_valid():
+            facture = Facture.objects.filter(id=pk).update(Date_payement=form.data['Date'])
+            facture = Facture.objects.filter(id=pk).update(Etat=True)
             form.save()
             return redirect('facture')
         print(form.errors)
