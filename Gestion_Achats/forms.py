@@ -163,7 +163,7 @@ class Payments_Form(forms.ModelForm):
         if Payements.objects.filter(Date=Date).exists() and Payements.objects.filter(
                 reference=reference).exists() and Payements.objects.filter(
             mode_de_payement=mode_de_payement).exists() and Payements.objects.filter(
-            Numero_facture=Numero_facture).exists() and Payements.objectsfilter(
+            Numero_facture=Numero_facture).exists() and Payements.objects.filter(
             Montant_HT=Montant_TVA).exists() and  Payements.objectsfilter(
             Montant_TTC=Montant_TTC).exists() and  Payements.objectsfilter(
             Numero_facture=Montant_TVA).exists() and  Payements.objectsfilter(

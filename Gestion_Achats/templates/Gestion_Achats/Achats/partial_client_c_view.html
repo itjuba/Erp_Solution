@@ -1,7 +1,6 @@
   {% for obj in as %}
 
-
-                        <tr>
+       <tr>
                           <td>
                             {{obj.Id_Fournis}}
                           </td>
@@ -15,9 +14,13 @@
                             {{obj.Montant_TTC}}
                           </td>
                             <td>
+                            {{obj.Montant_pay}}
+                          </td>
+                                  <td>
                             {{obj.Date}}
                           </td>
                             <td>
+
 
              <a class="   js-update-book "    href="{% url 'update_achat' obj.id  %}" style="color : #9c27b0;" >
           <i class="fa fa-id-badge w3-xxlarge" aria-hidden="true"></i></a>
