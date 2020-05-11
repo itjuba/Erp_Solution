@@ -208,7 +208,30 @@ def facture_delete(request,pk):
 
 def facture_view(request):
     factur = Facture.objects.all()
-    return render(request,'Proformas/facture/partial_view.html',{'facture':factur})
+
+    factur_pay = Facture.objects.filter(Etat=True)
+    factur_np = Facture.objects.filter(Etat=False)
+    mhtg_p = 0
+    mhtg_np = 0
+    mhtg = 0
+    for x in factur_pay:
+        mhtg_p = mhtg_p + x.Montant_HT
+    for x in factur_np:
+        mhtg_np = mhtg_np + x.Montant_HT
+    for x in factur:
+        mhtg = mhtg + x.Montant_HT
+
+    print(mhtg_p)
+    print(mhtg_np)
+    print(mhtg)
+    context = {'facture':factur,
+               'mhtg_p':mhtg_p,
+               'mhtg_np':mhtg_np,
+               'mhtg':mhtg}
+
+    return render(request,'Proformas/facture/partial_view.html',context)
+
+
 
 def Facture_create(request,pk):
     command = get_object_or_404(Commande,pk=pk)

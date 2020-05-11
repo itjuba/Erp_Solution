@@ -47,7 +47,22 @@ class GeneratePDF(View):
 
 def payement(request):
     payement = Payements.objects.all()
-    return render(request, 'Gestion_Achats/payement/payement_table.html', {'p': payement})
+
+
+    pay_dep = Payements.objects.filter(E_S="Dépence")
+    pay_vente = Payements.objects.filter(E_S="Vente")
+    total = 0
+    for x in pay_dep:
+        total_d = total + x.Montant_HT
+    print(total_d)
+
+    for x in pay_vente:
+        total_v = total + x.Montant_HT
+    print(total_v)
+
+    diff = total_v - total_d
+    context = {'p': payement,'total_d':total_d,'total_v':total_v,'diff':diff}
+    return render(request, 'Gestion_Achats/payement/payement_table.html', context)
 
 def payement_delete(request, pk):
     payement = get_object_or_404(Payements, pk=pk)
