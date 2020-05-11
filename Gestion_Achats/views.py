@@ -208,7 +208,11 @@ def update(request,pk):
                print(' form zawjda !')
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
            formset.save()
-       return redirect('view')
+           return redirect('view')
+       else:
+           # formset._non_form_errors = "Date Exist !"
+           print(formset.errors)
+
 
     else:
         form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
