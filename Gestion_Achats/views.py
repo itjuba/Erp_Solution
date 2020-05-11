@@ -188,36 +188,27 @@ def update(request,pk):
        formset = form(request.POST or None)
        if formset.is_valid():
            ht = achat.Montant_HT
+           # print(ht)
            error = "la somme des prix est superieur que le montant ht"
-           p = 0
-           q = 0
-           n = formset.save(commit=False)
-           for x in n:
-               print(x.Prix_Unitaire)
+           sum = 0
+           for x in formset:
+               data = x.cleaned_data
+               # print(x.Prix_Unitaire)
                # print(data)
                # print(data.get('Prix_Unitaire'))
                # print(data.get('Quantite'))
-               # p = p + float(x.cleaned_data['Prix_Unitaire'])
-               # q = q + float(x.cleaned_data['Quantite'])
-               p = p + x.Prix_Unitaire
-               q = q + x.Quantite
-               print(p)
-               print(q)
-               if  ( p * q )>Decimal(ht):
-                   print('form lowla!')
-                   return render(request, 'html_update.html', {'formset': formset, 'errors': error})
-           print(p)
-           print(q)
-           if( p * q ) > Decimal(ht):
+               if data.get('Prix_Unitaire')  is not None and data.get('Quantite') is not None:
+                sum =  sum + (data.get('Prix_Unitaire') * data.get('Quantite'))
+                print(data.get('Prix_Unitaire'))
+                print(data.get('Quantite'))
+           print(sum)
+
+           if (sum > Decimal(ht)):
+               print(sum)
                print(' form zawjda !')
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
-
            formset.save()
-           return redirect('view')
-
-       else:
-           # formset._non_form_errors = "Date Exist !"
-           print(formset.errors)
+       return redirect('view')
 
     else:
         form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
