@@ -52,10 +52,11 @@ def payement(request):
     pay_dep = Payements.objects.filter(E_S="Dépence")
     pay_vente = Payements.objects.filter(E_S="Vente")
     total = 0
+    total_d = 0
     for x in pay_dep:
         total_d = total + x.Montant_HT
     print(total_d)
-
+    total_v =0
     for x in pay_vente:
         total_v = total + x.Montant_HT
     print(total_v)
