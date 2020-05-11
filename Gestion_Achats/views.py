@@ -192,7 +192,7 @@ def update(request,pk):
            q = 0
            n = formset.save(commit=False)
            for x in n:
-
+               print(x.Prix_Unitaire)
                # print(data)
                # print(data.get('Prix_Unitaire'))
                # print(data.get('Quantite'))
@@ -202,9 +202,13 @@ def update(request,pk):
                q = q + x.Quantite
                print(p)
                print(q)
-               if  ( p * q ) > Decimal(ht):
+               if  ( p * q )>Decimal(ht):
+                   print('form lowla!')
                    return render(request, 'html_update.html', {'formset': formset, 'errors': error})
+           print(p)
+           print(q)
            if( p * q ) > Decimal(ht):
+               print(' form zawjda !')
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
 
            formset.save()
@@ -219,7 +223,7 @@ def update(request,pk):
         formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
 
 
-    return render(request, 'html_update.html', {'formset': formset,'errors':formset.errors})
+    return render(request, 'html_update.html', {'formset': formset})
 
 
 

@@ -712,10 +712,12 @@ function goBack() {
 <!--        alert( "rak ghalet fe la7seb chikh " + total);-->
           var message = 'Le Total des articles ne correspond pas à le montant HT   : ' + total
           md.showNotificationDelete('top','center','danger',message);
-          document.getElementById("done").disabled = true
+<!--          document.getElementById("done").disabled = True;-->
+            $('#done').addClass('disabled');
           }
           else{
-            document.getElementById("done").disabled = false
+                      $('#done').removeClass('disabled');
+
           }
     });
 
