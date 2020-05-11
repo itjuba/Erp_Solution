@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
       <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <link
   href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
   rel="stylesheet"  type='text/css'>
@@ -724,9 +724,9 @@ function goBack() {
 <script>
      $('#step1').on("click", function(e) {
       var mont = $('.mont').val()
-      console.log(mont);
+<!--      console.log(mont);-->
       Cookies.set('montant',mont);
-      console.log(Cookies.get('montant'));
+<!--      console.log(Cookies.get('montant'));-->
 
     });
 
@@ -738,10 +738,29 @@ function goBack() {
 
  $('#changee').on("click", function(e) {
      $(this).toggleClass("change")
-<!--     Cookies.set('btt',true);-->
+
 
     });
 </script>
+
+<script>
+$(document).ready(function(){
+   //Jquery Code
+
+  $("[name='Montant_TVA']").on('keyup',function(){
+        var tva= $("[name='Montant_TVA']").val()
+        console.log(tva)
+        var total = (tva * $("[name='Montant_HT']").val())/100;
+        console.log(total);
+        $("[name='Montant_TTC']").html(total);
+        $('input[name=Montant_TTC]').val(total);
+         $('#label').addClass('is-focused');
+        });
+});
+
+</script>
+
+
 </body>
 
 </html>
