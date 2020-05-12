@@ -21,6 +21,10 @@
     <title>SH ERP</title>
   <style>
 
+  .nn {
+  color : black ;
+  font-weight: bold;
+  }
   .blink_me {
   animation: blinker 1s linear infinite;
 }
@@ -150,13 +154,13 @@ input:checked + .slider:before {
         <ul class="nav">
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'home' %}">
-              <i class="material-icons" style="color : black;" >dashboard</i>
+              <i class="material-icons wh" style="" >dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="#">
-              <i class="material-icons" style="color : black;" >person</i>
+              <i class="material-icons" style="" >person</i>
               <p>User Profile</p>
             </a>
           </li>
@@ -169,14 +173,14 @@ input:checked + .slider:before {
           <div id="cl" class="show">
           <li class="nav-item  ">
             <a class="nav-link" href="{% url 'client'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
 
               <p>Client List</p>
             </a>
           </li>
                 <li class="nav-item  ">
             <a class="nav-link" href="{% url 'contact'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
 
               <p>Client Contact List</p>
             </a>
@@ -192,7 +196,7 @@ input:checked + .slider:before {
           <div id="fournis" class="show">
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'fournis'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Fournis List</p>
             </a>
           </li>
@@ -205,63 +209,63 @@ input:checked + .slider:before {
             </div>
             <li class="nav-item ">
             <a class="nav-link" href="{% url 'article'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Article List </p>
             </a>
           </li>
                 <li class="nav-item ">
             <a class="nav-link" href="{% url 'achats'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Achats List </p>
             </a>
           </li>
             </li>
                 <li class="nav-item ">
             <a class="nav-link" href="{% url 'view'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Achats Article List </p>
             </a>
           </li>
                   <li class="nav-item ">
             <a class="nav-link" href="{% url 'commande'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Commande List </p>
             </a>
           </li>
                   <li class="nav-item ">
             <a class="nav-link" href="{% url 'facture'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Facture List </p>
             </a>
           </li>
                   <li class="nav-item ">
             <a class="nav-link" href="{% url 'payements'%}">
-              <i class="material-icons" style="color : black;" >content_paste</i>
+              <i class="material-icons" style="" >content_paste</i>
               <p>Payement List </p>
             </a>
           </li>
 
           <li class="nav-item ">
             <a class="nav-link " href="#">
-              <i class="material-icons" style="color : black;" >location_ons</i>
+              <i class="material-icons" style="" >location_ons</i>
               <p>Maps</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="#">
-              <i class="material-icons" style="color : black;" >notifications</i>
+              <i class="material-icons" style="" >notifications</i>
               <p>Notifications</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link " href="#">
-              <i class="material-icons" style="color : black;" >language</i>
+              <i class="material-icons" style="" >language</i>
               <p>RTL Support</p>
             </a>
-          </li>
+          </li>white
 <!--          <li class="nav-item active-pro ">-->
 <!--            <a class="nav-link " href="#">-->
-<!--              <i class="material-icons" style="color : black;" >unarchive</i>-->
+<!--              <i class="material-icons" style="" >unarchive</i>-->
 <!--              <p>Upgrade to PRO</p>-->
 <!--            </a>-->
 <!--          </li>-->
@@ -616,6 +620,12 @@ input:checked + .slider:before {
      $('div a').each(function() {
       if (this.href === path) {
        $(this).addClass('active');
+<!--       $('.wh').css("color", "white");-->
+<!--          $("i.start").siblings().css({"color": "white",  "font-weight": "bold";});-->
+
+
+
+
       }
      });
     });
@@ -749,13 +759,16 @@ function goBack() {
 $(document).ready(function(){
    //Jquery Code
 
-  $("[name='Montant_TVA']").on('keyup',function(){
-        var tva= $("[name='Montant_TVA']").val()
+  $("[name='tv']").on('keyup',function(){
+        var tva= $("[name='tv']").val()
+        var ht= $('input[name=Montant_HT]').val()
         console.log(tva)
         var total = (tva * $("[name='Montant_HT']").val())/100;
         console.log(total);
+        t = Number(total) + Number(ht);
+        console.log(t);
         $("[name='Montant_TTC']").html(total);
-        $('input[name=Montant_TTC]').val(total);
+        $('input[name=Montant_TTC]').val(t);
          $('#label').addClass('is-focused');
         });
 });
