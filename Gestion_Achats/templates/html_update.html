@@ -28,13 +28,18 @@
 <!--{% endfor %}-->
                         {% if formset.errors %}
     {% for form in formset %}
+                          {% if forloop.first %}
         {% for field in form %}
+
             {% if field.errors %}
+
                 <div class="alert alert-danger">
                     <strong>{{ field.label }}: {{ field.errors|first }}</strong>
                 </div>
             {% endif %}
+
         {% endfor %}
+                           {%endif%}
     {% endfor %}
     {% for error in formset.non_field_errors %}
         <div class="alert alert-danger">
