@@ -1,21 +1,61 @@
 from django.shortcuts import render,get_object_or_404,HttpResponse
-
+from django.utils import timezone
 from .models import Client_Data,Contact
 from django.forms import modelformset_factory
 from .forms import ClientForm,Contact_Form       
 from django.http import JsonResponse
+import datetime
+from Proformas.models import Facture
 from urllib.parse import parse_qs
 import json
 from django.contrib import messages
 from django.template.loader import render_to_string
 # Create your views here.
 
+def ajax(request):
+
+            data = {}
+            # data['labels'] = ["sebt", "had", "thnin", "tlata", "larba", "khmis", "djemaa"]
+            # data['data'] = [123,100,80,2,10,50,180]
+            days = 7
+            start_date = timezone.now() - datetime.timedelta(days=days - 1)
+            datetime_list = []
+            labels = []
+            salesItems = []
+
+            # new_time = start_date + datetime.timedelta(days=x)
+
+            for n in Facture.objects.filter(Etat=True):
+                datetime_list.append(n.Date_payement)
+                labels.append(n.Date_payement)
+                salesItems.append(n.Montant_HT)
+            print(labels)
+            data['labels'] = labels
+            data['data'] = salesItems
+            if request.is_ajax():
+             print('ajax')
+            return JsonResponse(data=data)
+
+
+
 def graph(request,*args,**kwargs):
-    data = {
-        'sales' : 100,
-        'customers':10
-    }
-    return JsonResponse(data)
+    data = {}
+    days = 7
+    stat_date = timezone.now() - datetime.timedelta(days=days - 1)
+    datetime_list = []
+    labels = []
+    salesItems = []
+    for x in range(0,days):
+        new_time = stat_date + datetime.timedelta(days=x)
+        datetime_list.append(new_time)
+        labels.append(new_time.strftime("%a"))
+        salesItems.append(100)
+    data['labels'] = labels
+    data['data'] = salesItems
+
+
+    return render(request,'Client_Section/home_client.html',{'data':data ,'cus':100})
+
 
 def home(request,*args,**kwargs):
     return render(request,'Client_Section/home_client.html',{'client':client})

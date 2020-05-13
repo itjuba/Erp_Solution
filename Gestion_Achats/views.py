@@ -19,6 +19,7 @@ import os
 from .utils import render_to_pdf
 from django.template.loader import get_template
 from Fournis_Section.models import Fournis_Data
+from Charge.models import Charge
 
 
 class GeneratePDF(View):
@@ -114,13 +115,15 @@ def save_payements_form(request, form, payement_ttc, id, template_name):
     if request.method == 'POST':
         if form.is_valid():
             print(id)
-            achat = get_object_or_404(Achats, pk=id)
-            hsab = achat.Montant_pay
-            total = hsab -payement_ttc
-            ttc_form = form.data['Montant_TTC']
-            s = float(total) + float(ttc_form)
+            if Achats.objects.filter(id=id):
+                achat = get_object_or_404(Achats, pk=id)
 
-            achh = Achats.objects.filter(id=id).update(Montant_pay=s)
+                hsab = achat.Montant_pay
+                total = hsab -payement_ttc
+                ttc_form = form.data['Montant_TTC']
+                s = float(total) + float(ttc_form)
+                achh = Achats.objects.filter(id=id).update(Montant_pay=s)
+                form.save()
             form.save()
 
             data['form_is_valid'] = True

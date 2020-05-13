@@ -1,5 +1,117 @@
 {% extends 'base.html' %}
 
+
+
+{% block javascript %}
+
+<script>
+$(document).ready(function(){
+  function renderChart(data,lab){
+  var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: lab,
+                datasets: [{
+                    label: '# Vente',
+                    data: data,
+                    backgroundColor : 'rgba(11,156,49,0.1)',
+                    borderColor : 'rgb(0,0,0)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            beginAtZero: true
+                        }
+                    }],
+                        xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            beginAtZero: true
+                        }
+                    }]
+
+
+                }
+            }
+  })
+
+  }
+
+
+
+$.ajax({
+  type: "GET",
+  url: '/client/ajax',
+  dataType: "json",
+  success : function(data){
+  console.log(data);
+  renderChart(data.data,data.labels);
+
+  },
+  error : function(xhr, ajaxOptions, thrownError){
+  console.log(xhr.status);
+   console.log(ajaxOptions);
+   console.log(thrownError);
+
+  }
+  });
+
+
+
+});
+
+
+
+
+
+
+
+</script>
+{% endblock %}
+
 {% block content%}
+<br><br><br><br><br><br><br>
+<!--<div class='row'>-->
+<!--    <div class='col-sm-12' url-endpoint='{% url "graph" %}'>-->
+<!--        <h1>Hello World</h1>-->
+<!--        <div class='col-sm-6'>-->
+<!--            <canvas id="myChart" width="400" height="400"></canvas>-->
+<!--        </div>-->
+<!--        <div class='col-sm-6'>-->
+<!--            <canvas id="myChart2" width="400" height="400"></canvas>-->
+<!--        </div>-->
+
+
+<!--    </div>-->
+<!--</div>-->
+
+
+
+   <div class="row">
+            <div class="col-md-8" >
+              <div class="card card-chart" style="margin-left: 45px">
+                <div class="card-header card-header-success">
+                  <div class="ct-chart" >
+                     <canvas id="myChart" width="1000" height="400"></canvas>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Daily Sales</h4>
+                  <p class="card-category">
+                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                  </div>
+                </div>
+              </div>
+            </div>
 
 {% endblock %}
