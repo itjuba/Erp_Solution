@@ -68,15 +68,15 @@ class AssociationForm(forms.ModelForm):
         super(AssociationForm, self).__init__(*args, **kwargs)
         # self.initial['Id_Achats'] = Achats.objects.latest('id')
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        Id_Achats = self.cleaned_data.get('Id_Achats')
-        Id_Article = self.cleaned_data.get('Id_Article')
-        Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
-        Quantite = self.cleaned_data.get('Quantite')
-
-        if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
-            raise ValidationError('Form Invalide !')
+    # def clean(self):
+    #     cleaned_data = self.cleaned_data
+    #     Id_Achats = self.cleaned_data.get('Id_Achats')
+    #     Id_Article = self.cleaned_data.get('Id_Article')
+    #     Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
+    #     Quantite = self.cleaned_data.get('Quantite')
+    #
+    #     if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
+    #         raise ValidationError('Check your inputs !')
 
 
 
@@ -86,7 +86,7 @@ class AssociationForm(forms.ModelForm):
         #         Quantite=Quantite).exists():
         #     raise ValidationError('data exists ')
 
-        return cleaned_data
+        # return cleaned_data
 
 
 
@@ -173,9 +173,6 @@ class Payments_Form(forms.ModelForm):
             raise ValidationError('data exists ')
 
         return cleaned_data
-
-
-
 
 
 

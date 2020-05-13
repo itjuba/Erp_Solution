@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'Client_Section.apps.ClientSectionConfig',
     'Fournis_Section.apps.FournisSectionConfig',
     'Gestion_Achats.apps.GestionAchatsConfig',
+    'Charge.apps.ChargeConfig',
     'Proformas.apps.ProformasConfig',
     'django.contrib.admin',
     'django.contrib.auth',

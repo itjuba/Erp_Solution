@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block javascript %}
+  <script src="{% static 'js/create_client.js' %}"></script>
+{% endblock %}
+
+
+{% block content%}
+
+
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+                <br><br>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Charge Table</h4>
+                  <p class="card-category"> Here is Charges informations</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="book-table">
+                           <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'create_charge' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Charge
+    </button>
+  </p>
+
+
+                      <thead class=" text-primary">
+                        <th>
+                          Date
+                        </th>
+                        <th>
+                          Date_limit
+                        </th>
+
+                        <th>
+                          Montant
+                        </th>
+                          <th>
+                          Description
+                        </th>
+                          <th>
+                          Designation_charge
+                        </th>
+                         <th>
+                          Etat
+                        </th>
+                      <th>
+                          Action
+                      </th>
+
+                      </thead>
+                      <tbody>
+                    {% include 'charge/partial/partial_view_charge.html' %}
+                      </tbody>
+                        <div class="modal fade" id="modal-book">
+                    <div class="modal-dialog" style=" left: 10%">
+                   <div class="modal-content"  >
+                  </div>
+                     </div>
+                        </div>
+                    </table>
+        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+
+      </footer>
+    </div>
+  </div>
+
+{% endblock%}
+

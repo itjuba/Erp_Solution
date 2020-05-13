@@ -91,6 +91,7 @@ class Commande_D_Form(forms.ModelForm):
 
         commande =  Commande.objects.latest('id')
         self.initial['Command'] = commande
+        self.fields['Prix_Unitaire'].widget.attrs["required"] = "true"
 
 
     def clean(self):

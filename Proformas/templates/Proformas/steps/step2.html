@@ -23,16 +23,38 @@
                     <table class="table" id="book-table">
 
 
-{% for dict in formset.errors|slice:":1" %}
-    {% for error in dict.values %}
-                      {% if forloop.last %}
-                                    <div class="alert alert-danger">
-                <strong>   {{ error|first }}</strong>
-            </div>
-                        {% endif %}
+<!--{% for dict in formset.errors|slice:":1" %}-->
+<!--    {% for error in dict.values %}-->
+<!--                      {% if forloop.last %}-->
+<!--                                    <div class="alert alert-danger">-->
+<!--                <strong>   {{ error|first }}</strong>-->
+<!--            </div>-->
+<!--                        {% endif %}-->
 
-    {% endfor %}
-{% endfor %}
+<!--    {% endfor %}-->
+<!--{% endfor %}-->
+<!--                            {% for form in formset %}-->
+
+<!--        {% for field in form %}-->
+
+<!--            {% if field.errors %}-->
+
+<!--                <div class="alert alert-danger">-->
+<!--                    <strong>{{ field.label }}: {{ field.errors|first }}</strong>-->
+<!--                </div>-->
+<!--            {% endif %}-->
+
+<!--        {% endfor %}-->
+<!--                      {% endfor %}-->
+                                                {% if formset.errors %}
+
+
+                <div class="alert alert-danger">
+                    <strong><p>Check Your inputs</p></strong>
+                </div>
+
+
+{% endif %}
 
 
              <thead class=" text-primary"  >

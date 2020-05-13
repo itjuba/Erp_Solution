@@ -11,41 +11,21 @@
                  <div><a  class="btn btn-warning" href="javascript:history.back(1)">back</a> </div>
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Step 2</h4>
+                  <h4 class="card-title ">Update Achats Article</h4>
                   <p class="card-category"> Here is Achats informations</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
                     <table class="table">
 
-<!--{% for dict in formset.errors|slice:":1" %}-->
-<!--    {% for error in dict.values %}-->
-<!--                                    <div class="alert alert-danger">-->
-<!--                <strong>  {{obj.}} {{ error|first }}</strong>-->
-<!--            </div>-->
-
-<!--    {% endfor %}-->
-<!--{% endfor %}-->
                         {% if formset.errors %}
-    {% for form in formset %}
-                          {% if forloop.first %}
-        {% for field in form %}
 
-            {% if field.errors %}
 
                 <div class="alert alert-danger">
-                    <strong>{{ field.label }}: {{ field.errors|first }}</strong>
+                    <strong><p>Check Your inputs</p></strong>
                 </div>
-            {% endif %}
 
-        {% endfor %}
-                           {%endif%}
-    {% endfor %}
-    {% for error in formset.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|first }}</strong>
-        </div>
-    {% endfor %}
+
 {% endif %}
 
                                       {% if errors %}

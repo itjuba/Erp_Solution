@@ -10,8 +10,14 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 # Create your views here.
 
+def graph(request,*args,**kwargs):
+    data = {
+        'sales' : 100,
+        'customers':10
+    }
+    return JsonResponse(data)
 
-def home(request):
+def home(request,*args,**kwargs):
     return render(request,'Client_Section/home_client.html',{'client':client})
 
 

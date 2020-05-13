@@ -5,13 +5,15 @@ from django.conf import settings
 from  django.conf.urls.static import static
 from .views import home,client,\
  client_create,client_update,client_delete,see,contact,Contact_create,\
-    contact_update,contact_delete
+    contact_update,contact_delete,graph
 
 
 
 
 urlpatterns = [
     path('',home,name='home'),
+    path('graph',graph,name='graph'),
+
     path('client/',client,name='client'),
     path('contact/',contact,name='contact'),
     path('create/',client_create,name='create'),

@@ -65,10 +65,8 @@ def payement(request):
     context = {'p': payement,'total_d':total_d,'total_v':total_v,'diff':diff}
     return render(request, 'Gestion_Achats/payement/payement_table.html', context)
 
-def payement_delete(request, pk):
+def payement_charge_delete(request, pk):
     payement = get_object_or_404(Payements, pk=pk)
-    achat = get_object_or_404(Achats, pk=payement.reference)
-    total =  achat.Montant_pay - payement.Montant_TTC
     data = dict()
     if request.method == 'POST':
         achh = Achats.objects.filter(id=payement.reference).update(Montant_pay=total)
@@ -77,6 +75,31 @@ def payement_delete(request, pk):
         books = Payements.objects.all()
         data['html_book_list'] = render_to_string('Gestion_Achats/payement/partial/partial_payement.html', {
             'payement': payement
+        })
+    else:
+        context = {'obj': payement}
+        data['html_form'] = render_to_string('Gestion_Achats/payement/partial/partial_payement_delete.html',
+            context,
+            request=request,
+        )
+    return JsonResponse(data)
+
+def payement_delete(request, pk):
+    payement = get_object_or_404(Payements, pk=pk)
+
+    if Achats.objects.filter(id=payement.reference):
+        achat = get_object_or_404(Achats, pk=payement.reference)
+        total =  achat.Montant_pay - payement.Montant_TTC
+    data = dict()
+    if request.method == 'POST':
+        if Achats.objects.filter(id=payement.reference):
+         achh = Achats.objects.filter(id=payement.reference).update(Montant_pay=total)
+
+        payement.delete()
+        data['form_is_valid'] = True  # This is just to play along with the existing code
+        payement = Payements.objects.all()
+        data['html_book_list'] = render_to_string('Gestion_Achats/payement/partial/partial_payement.html', {
+            'p': payement
         })
     else:
         context = {'obj': payement}
@@ -143,7 +166,7 @@ def payement_create(request,pk):
     # payemnt = Payements.objects.all().values_list('files_id', flat=True)
 
     if request.method == 'POST':
-        form = Payments_Form(request.POST or None,achat_id=pk)
+        form = Payments_Form(request.POST or None,charge=pk)
 
         Montant_pay = achat.Montant_pay
         # print(Montant_pay)
@@ -186,6 +209,8 @@ def update(request,pk):
 
     if request.method == 'POST':
        formset = form(request.POST or None)
+
+
        if formset.is_valid():
            ht = achat.Montant_HT
            # print(ht)

@@ -1,0 +1,41 @@
+  {% for obj in c %}
+
+                        <tr>
+                          <td>
+                            {{obj.Date}}
+                          </td>
+                          <td>
+                           {{obj.Date_limit}}
+                          </td>
+                          <td>
+                           {{obj.Montant}}
+                          </td>
+                              <td>
+                            {{obj.Description}}
+                          </td>
+                               <td>
+                            {{obj.Designation_charge}}
+                          </td>
+                               <td>
+                            {{obj.Etat}}
+                          </td>
+                            <td>
+
+
+            <a class=" bout likes-button js-update-book "   data-url="{% url 'charge_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+
+
+
+        <a class="js-delete-book bout" data-url="{% url 'charge_delete' obj.id %}" href="#"  style="color : #9c27b0;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+<a class="  likes-button  "   href="{% url 'charge_pay' obj.id %}" style="color : #9c27b0;" >
+             <i class="fa fa-plus-circle w3-xxlarge"></i></a>
+
+
+
+                            </td>
+
+                        </tr>
+                      {% endfor%}

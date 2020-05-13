@@ -2,6 +2,7 @@ from django.db import models
 from enum import Enum
 from Fournis_Section.models import Fournis_Data
 from Proformas.models import Facture
+from Charge.models import Charge
 # Create your models here.
 
 from django.shortcuts import get_object_or_404
@@ -30,8 +31,8 @@ class Achats(models.Model):
 
 class Association(models.Model):
    Id_Achats = models.ForeignKey(Achats, on_delete=models.CASCADE)
-   Id_Article = models.ForeignKey(Article, on_delete=models.CASCADE)
-   Prix_Unitaire = models.DecimalField(max_digits=10,decimal_places=2,default=0)
+   Id_Article = models.ForeignKey(Article,on_delete=models.CASCADE)
+   Prix_Unitaire = models.DecimalField(max_digits=10,decimal_places=2,default=0,null=False,blank=False)
    Quantite = models.IntegerField(default=1)
 
    def __str__(self):
@@ -63,8 +64,11 @@ class Payements(models.Model):
 
 
    def __str__(self):
+      if Charge.objects.filter(id=self.reference):
+         charge = Charge.objects.get(id=self.reference)
+         return str(charge.Description)
 
-      if  Achats.objects.filter(id=self.reference):
+      elif  Achats.objects.filter(id=self.reference):
          payement = Achats.objects.get(id=self.reference)
          return str(payement.Id_Fournis)
       else:
