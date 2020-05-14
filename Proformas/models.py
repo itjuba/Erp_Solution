@@ -77,7 +77,7 @@ class Facture(models.Model):
 
 
     def __str__(self):
-        return self.Titre_facture
+        return self.commande.Client.Raison_social
 
     # def date_valid(self):
     #     if self.Date_limite_payement == datetime.date.today():

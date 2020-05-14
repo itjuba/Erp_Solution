@@ -1,0 +1,61 @@
+{% load dat_tag %}
+  {% for obj in artists %}
+
+<!--{% if not obj.Etat %}-->
+<!-- <div class="alert alert-danger">-->
+<!--            <strong class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>-->
+<!--        </div>-->
+<!--{% endif %}-->
+
+                        <tr>
+
+                          <td>
+                            {{obj.Date}}
+                          </td>
+                          <td>
+                           {{obj.commande}}
+                          </td>
+
+                          <td>
+                              {% if  obj|date %}
+                              <strong style="color : red;" class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>
+
+                              {%else%}
+                           {{obj.Titre_facture}}
+                                 {% endif %}
+                          </td>
+                                 <td>
+                            {{obj.Numero_facture}}
+                          </td>
+                              <td>
+                            {{obj.Montant_HT}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TVA}}
+                          </td>
+                               <td>
+                            {{obj.Montant_TTC}}
+                          </td>
+                          <td>
+                            {{obj.Etat}}
+                          </td>
+                            <td>
+
+        <a class=" bout  js-update-book "   data-url="{% url 'facture_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+
+        <a class=" bout js-delete-book" data-url="{% url 'delete_facture' obj.id %}" href="#"  style="color : #9c27b0;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+
+        <a class=""  href="{% url 'create_facture_p' obj.id %}"  style="color : #9c27b0;">
+         <i class="fa fa-plus-circle w3-xxlarge"></i></a>
+&nbsp
+                                             <a class="  likes-button "    href="{% url 'pdf_facture' obj.id  %}" style="color : #9c27b0;" >
+          <i class="fa fa-file  w3-xxlarge"></i></a>
+
+
+
+                        </tr>
+                      {% endfor%}

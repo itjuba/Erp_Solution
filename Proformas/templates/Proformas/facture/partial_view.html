@@ -2,6 +2,8 @@
 {% load static %}
 {% block javascript %}
   <script src="{% static 'js/create_facture.js' %}"></script>
+
+
 {% endblock %}
 
 
@@ -63,7 +65,7 @@
                          Actions
                         </th>
                       </thead>
-                      <tbody>
+                      <tbody id="replaceable-content">
                     {% include 'Proformas/facture/partial/partial_facture.html' %}
                       </tbody>
                         <div class="modal fade" id="modal-book">

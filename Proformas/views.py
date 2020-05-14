@@ -25,6 +25,50 @@ from .forms import Payments_Form_facture
 from django.utils.html import strip_tags
 # Create your views here.
 
+def is_valid_queryparam(param):
+    return param != '' and param is not None
+
+
+def ajax_live(request):
+    ctx = {}
+    url_parameter = request.GET.get("q", 'None')
+    if url_parameter:
+        if Facture.objects.filter(Titre_facture__icontains=url_parameter):
+            artists = Facture.objects.filter(Titre_facture__icontains=url_parameter)
+
+        elif Client_Data.objects.get(Raison_social=url_parameter):
+            client = Client_Data.objects.get(Raison_social=url_parameter)
+            artists = Facture.objects.filter(commande__Client=client)
+
+        print(artists)
+    else:
+        artists = Facture.objects.all()
+        print(artists)
+
+    if request.is_ajax():
+        html = render_to_string(
+            template_name="Proformas/facture/ajax.html",
+            context={"artists": artists}
+        )
+
+        data_dict = {"html_from_view": html}
+        print(data_dict)
+
+        return JsonResponse(data=data_dict, safe=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def payement_c(request,pk):
     facture = get_object_or_404(Facture,pk=pk)
     # p = Payements.objects.all().values_list('files_id', flat=True)
