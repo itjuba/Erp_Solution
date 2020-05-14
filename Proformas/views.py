@@ -39,7 +39,7 @@ def ajax_live(request):
         elif Facture.objects.filter(Date__icontains=url_parameter):
             artists = Facture.objects.filter(Date__icontains=url_parameter)
 
-        elif Client_Data.objects.get(Raison_social=url_parameter):
+        elif Client_Data.objects.get(Raison_social__icontains=url_parameter):
             # client = get_object_or_404(Client_Data,Raison_social__icontains=url_parameter)
             client = Client_Data.objects.get(Raison_social__icontains=url_parameter)
             artists = Facture.objects.filter(commande__Client=client)

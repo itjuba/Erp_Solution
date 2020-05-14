@@ -33,6 +33,7 @@
     animation-iteration-count:infinite;
     animation-timing-function:ease-in-out;
     animation-direction: alternate;
+    background-color: #9c27b0;
   }
 
   .nn {
@@ -304,8 +305,8 @@ input:checked + .slider:before {
               <div class="input-group no-border">
 
                 <input type="text" value="" id="user-input" class="form-control" placeholder="Search...">
-                <button type="submit"  id="search-icon" class="btn btn-white btn-round btn-just-icon">
-                  <i class="material-icons" >search</i>
+                <button type="submit"   class="btn btn-white btn-round btn-just-icon">
+                  <i class="material-icons" id="search-icon" >search</i>
                   <div class="ripple-container"></div>
                 </button>
               </div>
@@ -359,6 +360,7 @@ input:checked + .slider:before {
 
 
       </nav>
+
     {% block content%}
 
 
