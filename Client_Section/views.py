@@ -6,11 +6,28 @@ from .forms import ClientForm,Contact_Form
 from django.http import JsonResponse
 import datetime
 from Proformas.models import Facture
+from Gestion_Achats.models import Payements
 from urllib.parse import parse_qs
 import json
 from django.contrib import messages
 from django.template.loader import render_to_string
 # Create your views here.
+
+
+def ajax_pay(request):
+    data = {}
+    labels = []
+    salesItems = []
+    for n in Payements.objects.filter(E_S='Dépence'):
+        labels.append(n.Date.strftime("%a"))
+        salesItems.append(n.Montant_HT)
+    print(labels)
+    data['labels'] = labels
+    data['data'] = salesItems
+    if request.is_ajax():
+        print('ajax')
+    return JsonResponse(data=data)
+
 
 def ajax(request):
 
@@ -27,7 +44,7 @@ def ajax(request):
 
             for n in Facture.objects.filter(Etat=True):
                 datetime_list.append(n.Date_payement)
-                labels.append(n.Date_payement)
+                labels.append(n.Date_payement.strftime("%a"))
                 salesItems.append(n.Montant_HT)
             print(labels)
             data['labels'] = labels
@@ -52,9 +69,31 @@ def graph(request,*args,**kwargs):
         salesItems.append(100)
     data['labels'] = labels
     data['data'] = salesItems
+    factur = Facture.objects.all()
 
+    factur_pay = Facture.objects.filter(Etat=True)
+    factur_np = Facture.objects.filter(Etat=False)
+    mhtg_p = 0
+    mhtg_np = 0
+    mhtg = 0
+    for x in factur_pay:
+        mhtg_p = mhtg_p + x.Montant_HT
+    for x in factur_np:
+        mhtg_np = mhtg_np + x.Montant_HT
+    for x in factur:
+        mhtg = mhtg + x.Montant_HT
 
-    return render(request,'Client_Section/home_client.html',{'data':data ,'cus':100})
+    print(mhtg_p)
+    print(mhtg_np)
+    print(mhtg)
+    context = {'facture': factur,
+               'mhtg_p': mhtg_p,
+               'mhtg_np': mhtg_np,
+               'mhtg': mhtg,
+               'data':data,
+               }
+
+    return render(request,'Client_Section/home_client.html',context)
 
 
 def home(request,*args,**kwargs):

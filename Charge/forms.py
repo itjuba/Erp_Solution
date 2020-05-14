@@ -31,24 +31,23 @@ class Payments_charge_Form(forms.ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         Date = self.cleaned_data.get('Date')
-        Date_limit = self.cleaned_data.get('Date_limit')
-        Etat = self.cleaned_data.get('Etat')
-        Montant = self.cleaned_data.get('Montant')
-        Description = self.cleaned_data.get('Description')
-        Designation_charge = self.cleaned_data.get('Designation_charge')
-        Numero_facture = self.cleaned_data.get('Numero_facture')
-        Numero_payement = self.cleaned_data.get('Numero_payement')
+        Montant_HT = self.cleaned_data.get('Montant_HT')
+        Montant_TVA = self.cleaned_data.get('Montant_TVA')
+        Montant_TTC = self.cleaned_data.get('Montant_TTC')
         E_S = self.cleaned_data.get('E_S')
+        reference = self.cleaned_data.get('reference')
+        Numero_payement = self.cleaned_data.get('Numero_payement')
+        mode_de_payement = self.cleaned_data.get('mode_de_payement')
+
 
 
 
         if Payements.objects.filter(Date=Date).exists() and Payements.objects.filter(
-                Date_limit=Date_limit).exists() and Payements.objects.filter(
-            Etat=Etat).exists() and Payements.objects.filter(
-            Numero_facture=Numero_facture).exists() and Payements.objects.filter(
-            Montant=Montant).exists() and  Payements.objects.filter(
-            Designation_charge=Designation_charge).exists() and  Payements.objects.filter(
-            Description=Description).exists():
+            Montant_HT=Montant_HT).exists() and Payements.objects.filter(Montant_TVA=Montant_TVA) and Payements.objects.filter(Montant_TTC=Montant_TTC) and Payements.objects.filter(
+            E_S=E_S).exists() and Payements.objects.filter(
+            reference=reference).exists() and  Payements.objects.filter(
+            Numero_payement=Numero_payement).exists() and  Payements.objects.filter(
+            mode_de_payement=mode_de_payement).exists():
             raise ValidationError('data exists ')
 
         return cleaned_data

@@ -4,6 +4,7 @@ from .models import Achats,Article,Association,Payements
 from django.forms.models import BaseModelFormSet
 from django.forms import modelformset_factory
 from django.forms import ValidationError
+from Charge.models import Charge
 from django.db.models import Sum
 
 class AchatForm(ModelForm):
@@ -140,8 +141,10 @@ class Payments_Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.form_achat_id = kwargs.pop("achat_id")
         super(Payments_Form, self).__init__(*args, **kwargs)
-
-        achat = Achats.objects.get(id=self.form_achat_id)
+        if Achats.objects.get(id=self.form_achat_id):
+         achat = Achats.objects.get(id=self.form_achat_id)
+        else :
+          charge = Charge.objects.get(id=self.form_achat_id)
         self.initial['E_S'] = 'Dépence'
         self.initial['reference'] = achat.id
         self.initial['Montant_HT'] = achat.Montant_HT

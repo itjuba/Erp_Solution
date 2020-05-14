@@ -25,13 +25,13 @@ var myChart = new Chart(ctx, {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            fontColor: "white",
+                            fontColor: "black",
                             beginAtZero: true
                         }
                     }],
                         xAxes: [{
                         ticks: {
-                            fontColor: "white",
+                            fontColor: "black",
                             beginAtZero: true
                         }
                     }]
@@ -43,15 +43,51 @@ var myChart = new Chart(ctx, {
 
   }
 
+  function renderChart1(data,lab){
+  var ctx = document.getElementById('myChart1');
+var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: lab,
+                datasets: [{
+                    label: '# Payements',
+                    data: data,
+                    backgroundColor : 'rgba(248, 148, 6, 0.6)',
+                    borderColor : 'rgb(0,0,0)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
 
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "black",
+                            beginAtZero: true
+                        }
+                    }],
+                        xAxes: [{
+                        ticks: {
+                            fontColor: "black",
+                            beginAtZero: true
+                        }
+                    }]
+
+
+                }
+            }
+  })
+
+  }
 
 $.ajax({
   type: "GET",
-  url: '/client/ajax',
+  url: '/client/ajax2',
   dataType: "json",
   success : function(data){
   console.log(data);
-  renderChart(data.data,data.labels);
+
+  renderChart1(data.data,data.labels);
 
   },
   error : function(xhr, ajaxOptions, thrownError){
@@ -63,42 +99,44 @@ $.ajax({
   });
 
 
+$.ajax({
+  type: "GET",
+  url: '/client/ajax',
+  dataType: "json",
+  success : function(data){
+  console.log(data);
+  renderChart(data.data,data.labels);
 
+
+  },
+  error : function(xhr, ajaxOptions, thrownError){
+  console.log(xhr.status);
+   console.log(ajaxOptions);
+   console.log(thrownError);
+
+  }
+  });
 });
-
-
-
-
-
-
-
 </script>
 {% endblock %}
+ <div class="content"  id="content">
+{% block content %}
 
-{% block content%}
-<br><br><br><br><br><br><br>
-<!--<div class='row'>-->
-<!--    <div class='col-sm-12' url-endpoint='{% url "graph" %}'>-->
-<!--        <h1>Hello World</h1>-->
-<!--        <div class='col-sm-6'>-->
-<!--            <canvas id="myChart" width="400" height="400"></canvas>-->
-<!--        </div>-->
-<!--        <div class='col-sm-6'>-->
-<!--            <canvas id="myChart2" width="400" height="400"></canvas>-->
-<!--        </div>-->
+<br><br><br>
+
+          <div class=" nadjib container change"  id="changee" style="margin-left : 25px; color : #9c27b0;" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
 
 
-<!--    </div>-->
-<!--</div>-->
-
-
-
-   <div class="row">
-            <div class="col-md-8" >
-              <div class="card card-chart" style="margin-left: 45px">
+   <div class="row" >
+            <div class="col-md-5 "style="margin-left: 45px"  >
+              <div class="card card-chart">
                 <div class="card-header card-header-success">
                   <div class="ct-chart" >
-                     <canvas id="myChart" width="1000" height="400"></canvas>
+                     <canvas id="myChart" width="600" height="400"></canvas>
                   </div>
                 </div>
                 <div class="card-body">
@@ -113,5 +151,73 @@ $.ajax({
                 </div>
               </div>
             </div>
+           <div class="col-md-5"  >
+              <div class="card card-chart" style="margin-left: 45px">
+                <div class="card-header card-header-warning">
+                  <div class="ct-chart" >
+                     <canvas id="myChart1" width="600" height="400"></canvas>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Daily Payaments</h4>
+                  <p class="card-category">
+                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                  </div>
+                </div>
+              </div>
+            </div>
+   </div>
+
+
+ <div class=" col-md-12">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Employees Stats</h4>
+                  <p class="card-category">New employees on 15th September, 2016</p>
+                </div>
+                  <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                        <thead class=" text-primary">
+                        <th>
+                         Date
+                        </th>
+                        <th>
+                         commande
+                        </th>
+                        <th>
+                         Titre facture
+                        </th>
+                         <th>
+                         Numero facture
+                        </th>
+                        <th>
+                         M  HT
+                        </th>
+                        <th>
+                          M TVA
+                        </th>
+                        <th>
+                          M TTC
+                        </th>
+                          <th>
+                         Etat
+                        </th>
+                          <th>
+                         Actions
+                        </th>
+
+                      </thead>
+                        <tbody>
+                    {% include 'Proformas/facture/partial/partial_facture.html' %}
+                      </tbody>
+                  </table>
+              </div>
+              </div>
+ </div>
+ </div>
 
 {% endblock %}

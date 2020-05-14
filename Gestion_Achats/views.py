@@ -51,16 +51,18 @@ def payement(request):
 
 
     pay_dep = Payements.objects.filter(E_S="Dépence")
+    print(pay_dep)
     pay_vente = Payements.objects.filter(E_S="Vente")
     total = 0
     total_d = 0
     for x in pay_dep:
-        total_d = total + x.Montant_HT
+        total_d = total_d + x.Montant_HT
+        print(x.Montant_HT)
     print(total_d)
     total_v =0
     for x in pay_vente:
-        total_v = total + x.Montant_HT
-    print(total_v)
+        total_v = total_v + x.Montant_HT
+
 
     diff = total_v - total_d
     context = {'p': payement,'total_d':total_d,'total_v':total_v,'diff':diff}
@@ -169,7 +171,7 @@ def payement_create(request,pk):
     # payemnt = Payements.objects.all().values_list('files_id', flat=True)
 
     if request.method == 'POST':
-        form = Payments_Form(request.POST or None,charge=pk)
+        form = Payments_Form(request.POST or None,achat_id=pk)
 
         Montant_pay = achat.Montant_pay
         # print(Montant_pay)

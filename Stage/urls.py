@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
+from Client_Section.views import graph
 from  django.conf.urls.static import static
 
 urlpatterns = [
@@ -25,4 +26,5 @@ urlpatterns = [
     path('achat_article/',include('Gestion_Achats.urls')),
     path('commande/',include('Proformas.urls')),
     path('charge/',include('Charge.urls')),
+    path('home/',graph,name="homme"),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

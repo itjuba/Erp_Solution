@@ -5,7 +5,7 @@ from django.conf import settings
 from  django.conf.urls.static import static
 from .views import home,client,\
  client_create,client_update,client_delete,see,contact,Contact_create,\
-    contact_update,contact_delete,graph,ajax
+    contact_update,contact_delete,graph,ajax,ajax_pay
 
 
 
@@ -14,6 +14,8 @@ urlpatterns = [
     path('',home,name='home'),
     path('graph',graph,name='graph'),
     path('ajax',ajax,name='ajax'),
+    path('ajax2',ajax_pay,name='ajax2'),
+
 
     path('client/',client,name='client'),
     path('contact/',contact,name='contact'),
