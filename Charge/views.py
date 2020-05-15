@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from .forms import Payments_charge_Form
 from django.template.loader import render_to_string
 from .forms import Payments_charge_Form
+from Gestion_Achats.models import Payements
+
 # Create your views here.
 
 
@@ -77,17 +79,23 @@ def charge_update(request,pk):
 
 
 def charge_delete(request, pk):
-    book = get_object_or_404(Charge, pk=pk)
+    charge = get_object_or_404(Charge, pk=pk)
+
     data = dict()
     if request.method == 'POST':
-        book.delete()
+        if get_object_or_404(Payements, reference=charge.id):
+            payement = get_object_or_404(Payements, reference=charge.id)
+            payement.delete()
+        charge.delete()
+
+
         data['form_is_valid'] = True  # This is just to play along with the existing code
         charge = Charge.objects.all()
         data['html_book_list'] = render_to_string('charge/partial/partial_view_charge.html', {
             'c': charge
         })
     else:
-        context = {'obj': book}
+        context = {'obj': charge}
         data['html_form'] = render_to_string('charge/partial/partial_charge_delete.html',
             context,
             request=request,
@@ -115,7 +123,7 @@ def payement_charge_create(request,pk):
 
         if form.is_valid():
             pay  = form.cleaned_data['Montant_TTC'] + Montant_pay
-
+            charge = Charge.objects.filter(id=pk).update(Etat=True)
             form.save()
             return redirect('charge_view')
         print(form.errors)

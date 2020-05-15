@@ -71,6 +71,6 @@ class Payements(models.Model):
       elif  Achats.objects.filter(id=self.reference):
          payement = Achats.objects.get(id=self.reference)
          return str(payement.Id_Fournis)
-      else:
+      elif Facture.objects.get(id=self.reference):
          facture =  Facture.objects.get(id=self.reference)
-         return str(facture.Titre_facture)
+         return str(facture.__str__())

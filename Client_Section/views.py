@@ -57,18 +57,19 @@ def ajax(request):
 
 def graph(request,*args,**kwargs):
     data = {}
-    days = 7
-    stat_date = timezone.now() - datetime.timedelta(days=days - 1)
-    datetime_list = []
-    labels = []
-    salesItems = []
-    for x in range(0,days):
-        new_time = stat_date + datetime.timedelta(days=x)
-        datetime_list.append(new_time)
-        labels.append(new_time.strftime("%a"))
-        salesItems.append(100)
-    data['labels'] = labels
-    data['data'] = salesItems
+    # days = 7
+    # stat_date = timezone.now() - datetime.timedelta(days=days - 1)
+    # datetime_list = []
+    # labels = []
+    # salesItems = []
+    # for x in range(0,days):
+    #     new_time = stat_date + datetime.timedelta(days=x)
+    #     datetime_list.append(new_time)
+    #     labels.append(new_time.strftime("%a"))
+    #     print(labels.append(new_time.strftime("%a")))
+    #     salesItems.append(100)
+    # data['labels'] = labels
+    # data['data'] = salesItems
     factur = Facture.objects.all()
 
     factur_pay = Facture.objects.filter(Etat=True)

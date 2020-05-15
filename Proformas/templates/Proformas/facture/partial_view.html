@@ -47,7 +47,7 @@ user_input.on('keyup', function () {
 </script>
 {% endblock %}
 
-  <div class="content"  id="content">
+  <div class="content"  >
 {% block content%}
       <br><br><br>
                 <div class=" nadjib container change"  id="changee" style="margin-right : 100%; color : #9c27b0;" onclick="myFunction(this)">
@@ -56,7 +56,7 @@ user_input.on('keyup', function () {
   <div class="bar3"></div>
 </div>
 
-        <div class="container-fluid" >
+        <div class="container-fluid" id="content" >
           <div class="row" >
             <div class="col-md-12" >
                   <div class="col-md-12" id="col2" >
@@ -74,6 +74,9 @@ user_input.on('keyup', function () {
                       <thead class=" text-primary">
                        <th>
                          Date
+                        </th>
+                        <th>
+                         Client
                         </th>
                         <th>
                          commande

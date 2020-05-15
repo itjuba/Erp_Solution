@@ -74,14 +74,9 @@ class Facture(models.Model):
     Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
 
 
-
-
     def __str__(self):
         return self.commande.Client.Raison_social
 
-    # def date_valid(self):
-    #     if self.Date_limite_payement == datetime.date.today():
-    #      return True
 
 
 #

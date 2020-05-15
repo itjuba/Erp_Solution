@@ -8,9 +8,12 @@ class ChargeForm(ModelForm):
     Description = forms.CharField()
     class Meta:
         model = Charge
-        fields = ('Date', 'Date_limit','Etat','Montant','Description','Designation_charge')
+        fields = ('Date', 'Date_limit','Montant','Description','Designation_charge')
 
+    def __init__(self, *args, **kwargs):
+        super(ChargeForm, self).__init__(*args, **kwargs)
 
+        self.initial['Etat'] = False
 
 class Payments_charge_Form(forms.ModelForm):
     class Meta:
@@ -22,7 +25,8 @@ class Payments_charge_Form(forms.ModelForm):
         super(Payments_charge_Form, self).__init__(*args, **kwargs)
 
         charge = Charge.objects.get(id=self.charge)
-        self.initial['E_S'] = 'Dépence'
+        self.initial['E_S'] = 'Charge'
+        self.initial['Montant_TVA'] = 0
         self.initial['reference'] = charge.id
         self.initial['Montant_HT'] = charge.Montant
         self.initial['Montant_TTC'] = charge.Montant
