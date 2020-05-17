@@ -66,7 +66,7 @@ class Facture(models.Model):
     Date_payement = models.DateField(blank=True,null=True)
     Date_limite_payement = models.DateField(blank=True,null=True)
     Etat = models.BooleanField(default=False)
-    commande = models.ForeignKey(Commande,on_delete=models.CASCADE)
+    commande = models.ForeignKey(Commande,on_delete=models.CASCADE,unique=True)
     Titre_facture = models.CharField(max_length=200)
     Numero_facture = models.CharField(max_length=200)
     Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)

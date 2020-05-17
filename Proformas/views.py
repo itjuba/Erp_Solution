@@ -190,12 +190,12 @@ def html_to_pdf_view_facture(request, pk):
     html_string = render_to_string('Proformas/facture_pdf.html', context)
 
     html = HTML(string=html_string, base_url=request.build_absolute_uri())
-    html.write_pdf(target='/tmp/Facture.pdf');
+    html.write_pdf(target='/tmp/{username}.{filename}'.format(username=raison_social,filename='facture')+ '.pdf');
     html_nadjib = render_to_string('Proformas/msg.html', context)
     fs = FileSystemStorage('/tmp')
-    with fs.open('Facture.pdf') as pdf:
+    with fs.open('{username}.{filename}'.format(username=raison_social,filename='facture')+ '.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'filename="Proformas.pdf"'
+        response['Content-Disposition'] = 'filename="Facture.pdf"'
     return response
 
 
@@ -508,10 +508,10 @@ def html_to_pdf_view(request,pk):
         html_string = render_to_string('Proformas/command.html',context)
 
         html = HTML(string=html_string,base_url=request.build_absolute_uri())
-        html.write_pdf(target='/tmp/Proformas.pdf');
+        html.write_pdf(target='/tmp/{username}.{filename}'.format(username=raison_social,filename='proformas')+ '.pdf');
         html_nadjib = render_to_string('Proformas/msg.html', context)
         fs = FileSystemStorage('/tmp')
-        with fs.open('Proformas.pdf') as pdf:
+        with fs.open('{username}.{filename}'.format(username=raison_social,filename='proformas')+ '.pdf') as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             response['Content-Disposition'] = 'filename="Proformas.pdf"'
         return response

@@ -99,6 +99,25 @@ table, th, td {
   </tr>
 
 </table>
+            <br>
+              <table style="float:right">
+  <tr>
+    <th>Total HT</th>
+    <th>{{Montant_HT}}</th>
+  </tr>
+  <tr>
+    <td> TVA </td>
+    <td>{{Montant_TVA}}</td>
+  </tr>
+  <tr>
+    <td>Timber</td>
+    <td>0</td>
+  </tr>
+           <tr>
+    <td>Total ttc</td>
+    <td>{{Montant_TTC}}</td>
+  </tr>
+</table>
 
             {%   if modalite_payement%}
             <p>MODALITE DE PAIEMENT :</p>
@@ -141,25 +160,8 @@ table, th, td {
             {% endif%}
             <br>
             <div>
-     <table style="float:right">
-  <tr>
-    <th>Total HT</th>
-    <th>{{Montant_HT}}</th>
-  </tr>
-  <tr>
-    <td> TVA </td>
-    <td>{{Montant_TVA}}</td>
-  </tr>
-  <tr>
-    <td>Timber</td>
-    <td>0</td>
-  </tr>
-           <tr>
-    <td>Total ttc</td>
-    <td>{{Montant_TTC}}</td>
-  </tr>
-</table>
-    <br><br><br><br><br><br><br><br>
+
+    <br><br><br>
 <p style="text-align : center">Nous restons à votre disposition pour tout renseignement complémentaire</p>
        </body>
 </html>
