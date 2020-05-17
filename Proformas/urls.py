@@ -21,7 +21,7 @@ urlpatterns = [
     path('delete_facture/<int:pk>',views.facture_delete,name="delete_facture"),
     path('update_facture/<int:pk>',views.facture_update,name="facture_update"),
     path('create_facture/<int:pk>',views.Facture_create,name="create_facture"),
-    path('create_facture_p/<int:pk>',views.payement_c,name="create_facture_p"),
+    path('create_payements_f/<int:pk>',views.payement_c,name="create_payements_f"),
     path('pdf/<int:pk>',views.html_to_pdf_view,name="pdf"),
 
     path('pdf_facture/<int:pk>',views.html_to_pdf_view_facture,name="pdf_facture"),

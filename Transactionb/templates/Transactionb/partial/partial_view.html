@@ -1,0 +1,59 @@
+{% load edit_tag %}
+  {% for obj in t %}
+
+                        <tr>
+                          <td>
+                            {{obj.Date}}
+                          </td>
+                          <td>
+                           {{obj.Date_transaction}}
+                          </td>
+                            <td>
+                           {{obj.validation}}
+                          </td>
+                            <td>
+                           {{obj.E_S}}
+                          </td>
+                            <td>
+                           {{obj.mode_de_payement}}
+                          </td>
+                            <td>
+                           {{obj.reference}}
+                          </td>
+                          </td>
+                          <td>
+                           {{obj.Montant_HT}}
+                          </td>
+                            <td>
+                           {{obj.Montant_TVA}}
+                          </td>
+                            <td>
+                           {{obj.Montant_TTC}}
+                          </td>
+                              <td>
+                            {{obj.Numero_facture}}
+                          </td>
+                          <td>
+                             {{obj.Numero_payement}}
+                           </td>
+                           <td>
+
+
+{% if not obj|edit %}
+            <a class=" bout likes-button js-update-book "   data-url="{% url 'trans_update' obj.id %}" href="#" style="color : #9c27b0;" >
+            <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
+
+{%endif%}
+
+        <a class="js-delete-book bout" data-url="{% url 'trans_delete' obj.id %}" href="#"  style="color : #9c27b0;">
+        <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+&nbsp
+<a class="  likes-button  "   href="{% url 'charge_pay' obj.id %}" style="color : #9c27b0;" >
+             <i class="fa fa-plus-circle w3-xxlarge"></i></a>
+
+
+
+                            </td>
+
+                        </tr>
+                      {% endfor%}

@@ -20,12 +20,13 @@ class Transactionb(models.Model):
 
 
     def __str__(self):
-        return str(self.reference)
+        return str(self.Date)
 
 def create_t(sender, instance, created, *args, **kwargs):
   pay = instance
   if created:
-    Transactionb.objects.bulk_create([
-        Transactionb(Date=instance.Date,Numero_facture=instance.Numero_facture,Numero_payement=instance.Numero_payement,reference=instance.reference,Montant_HT=instance.Montant_HT,Montant_TVA=instance.Montant_TVA,Montant_TTC=instance.Montant_TTC,mode_de_payement=instance.mode_de_payement,E_S=instance.E_S)])
+    if instance.mode_de_payement =="Chéque" or instance.mode_de_payement == "virement":
+        Transactionb.objects.bulk_create([
+            Transactionb(Date=instance.Date,Numero_facture=instance.Numero_facture,Numero_payement=instance.Numero_payement,reference=instance.reference,Montant_HT=instance.Montant_HT,Montant_TVA=instance.Montant_TVA,Montant_TTC=instance.Montant_TTC,mode_de_payement=instance.mode_de_payement,E_S=instance.E_S)])
 
 post_save.connect(create_t, sender=Payements)

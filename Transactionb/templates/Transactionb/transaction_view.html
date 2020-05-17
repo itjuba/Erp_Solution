@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block javascript %}
+  <script src="{% static 'js/create_client.js' %}"></script>
+{% endblock %}
+
+<div class="content" >
+{% block content%}
+<br><br><br>
+                <div class=" nadjib container change"  id="changee" style="margin-left : 10px; color : #9c27b0;" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+
+        <div class="container-fluid"  id="content">
+          <div class="row">
+            <div class="col-md-12">
+                <br><br>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Transaction Table</h4>
+                  <p class="card-category"> Here is Transaction informations</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="book-table">
+                           <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'trans_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New Transaction
+    </button>
+  </p>
+
+
+                      <thead class=" text-primary">
+                        <th>
+                          Date
+                        </th>
+                        <th>
+                          Date transaction
+                        </th>
+
+                        <th>
+                          validation
+                        </th>
+                          <th>
+                          ES
+                        </th>    <th>
+                          mode payement
+                        </th>
+                          <th>
+                          reference
+                        </th>
+                         <th>
+                          MHT
+                        </th>
+                        <th>
+                          MTVA
+                        </th>
+                        <th>
+                          MTTC
+                        </th>
+                        <th>
+                          Numero_facture
+                        </th>
+                        <th>
+                          Numero_payement
+                        </th>
+                      <th>
+                          Action
+                      </th>
+
+                      </thead>
+                      <tbody>
+                    {% include 'Transactionb/partial/partial_view.html' %}
+                      </tbody>
+                        <div class="modal fade" id="modal-book">
+                    <div class="modal-dialog" style=" left: 10%">
+                   <div class="modal-content"  >
+                  </div>
+                     </div>
+                        </div>
+                    </table>
+        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+
+      </footer>
+    </div>
+  </div>
+
+{% endblock%}
+

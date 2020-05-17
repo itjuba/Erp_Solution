@@ -37,7 +37,7 @@ $(function () {
         }
         else {
           console.log('error');
-          md.showNotificationFail('bottom','left','warning');
+          md.showNotificationFail('bottom','left','warning','please enter a valid email adresse !');
           $("#modal-book .modal-content").html(data.html_form);
         }
       }
