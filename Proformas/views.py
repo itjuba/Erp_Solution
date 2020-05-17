@@ -373,31 +373,35 @@ def valid_save(request, form,pk, template_name):
 
 
 class EmailThread(threading.Thread):
-    def __init__(self, subject, html_content, recipient_list, sender):
+    def __init__(self, subject, html_content, recipient_list, sender,name):
         self.subject = subject
         self.recipient_list = recipient_list
         self.html_content = html_content
         self.sender = sender
         threading.Thread.__init__(self)
+        self.name= name
+
 
     def run(self):
         msg = EmailMessage(self.subject, self.html_content, self.sender, self.recipient_list)
-        msg.attach_file('/tmp/Proformas.pdf')
+        msg.attach_file('/tmp/{username}.{filename}'.format(username=self.name,filename='proformas')+ '.pdf')
         msg.content_subtype = "html"  # Main content is now text/html
         msg.encoding = 'utf-8'
         msg.send()
 
 
-def nadjib(subject, html_content, recipient_list, sender):
-        EmailThread(subject, html_content, recipient_list, sender).start()
+def nadjib(subject, html_content, recipient_list, sender,name):
+        EmailThread(subject, html_content, recipient_list, sender,name).start()
 
 
 
-def send_mail(request):
+def send_mail(request,pk):
+    commande = get_object_or_404(Commande,id=pk)
+    name  = commande.Client.Raison_social
     html_nadjib = render_to_string('Proformas/msg.html')
     to_emails = ['attignadjib@outlook.com']
     subject = "SH INFOR FACTURE"
-    nadjib(subject, html_nadjib, to_emails, 'attignadjib@gmail.com')
+    nadjib(subject, html_nadjib, to_emails, 'attignadjib@gmail.com',name)
     # email = EmailMessage(subject, html_nadjib, from_email='attignadjib@gmail.com', to=to_emails)
     # email.attach_file('/tmp/Facture.pdf')
     # email.content_subtype = "html"  # Main content is now text/html

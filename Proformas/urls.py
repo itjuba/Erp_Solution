@@ -12,7 +12,7 @@ urlpatterns = [
     path('step2',views.step2,name="step2"),
     path('step3',views.step3,name="step3"),
 
-    path('send/',views.send_mail,name="send"),
+    path('send/<int:pk>',views.send_mail,name="send"),
 
     path('valid/<int:pk>',views.dat_val,name="valid"),
 
