@@ -10,5 +10,6 @@ urlpatterns = [
     path('trans_delete/<int:pk>',views.trans_delete,name='trans_delete'),
     path('trans_update/<int:pk>',views.trans_update,name='trans_update'),
     path('trans_create',views.trans_create,name='trans_create'),
+    path('trans_valid/<int:pk>',views.trans_validation,name='trans_valid'),
 
 ]

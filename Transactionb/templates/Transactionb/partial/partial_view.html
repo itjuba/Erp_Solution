@@ -42,18 +42,18 @@
 {% if not obj|edit %}
             <a class=" bout likes-button js-update-book "   data-url="{% url 'trans_update' obj.id %}" href="#" style="color : #9c27b0;" >
             <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
-
-{%endif%}
-
-        <a class="js-delete-book bout" data-url="{% url 'trans_delete' obj.id %}" href="#"  style="color : #9c27b0;">
+&nbsp;
+    <a class="js-delete-book bout" data-url="{% url 'trans_delete' obj.id %}" href="#"  style="color : #9c27b0;">
         <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
-&nbsp
-<a class="  likes-button  "   href="{% url 'charge_pay' obj.id %}" style="color : #9c27b0;" >
-             <i class="fa fa-plus-circle w3-xxlarge"></i></a>
-
+{%endif%}
+                                  <a class="js-delete-book bout" data-url="{% url 'trans_valid' obj.id %}" href="#"  style="color : #9c27b0;">
+        <i class="fa fa-check-circle w3-xxlarge" aria-hidden="true"></i></a>
 
 
                             </td>
+
+
+
 
                         </tr>
                       {% endfor%}

@@ -20,6 +20,7 @@ from .utils import render_to_pdf
 from django.template.loader import get_template
 from Fournis_Section.models import Fournis_Data
 from Charge.models import Charge
+from Transactionb.models import Transactionb
 
 
 class GeneratePDF(View):
@@ -72,10 +73,10 @@ def payement_charge_delete(request, pk):
     payement = get_object_or_404(Payements, pk=pk)
     data = dict()
     if request.method == 'POST':
-        achh = Achats.objects.filter(id=payement.reference).update(Montant_pay=total)
+        # achh = Achats.objects.filter(id=payement.reference).update(Montant_pay=total)
         payement.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
-        books = Payements.objects.all()
+        payement = Payements.objects.all()
         data['html_book_list'] = render_to_string('Gestion_Achats/payement/partial/partial_payement.html', {
             'payement': payement
         })
@@ -97,6 +98,9 @@ def payement_delete(request, pk):
     if request.method == 'POST':
         if Achats.objects.filter(id=payement.reference):
          achh = Achats.objects.filter(id=payement.reference).update(Montant_pay=total)
+        if Transactionb.objects.filter(reference=payement.reference):
+            print('true')
+            trans = Transactionb.objects.filter(reference=payement.reference).update(Date_transaction=None,validation='rejeté')
 
         payement.delete()
         data['form_is_valid'] = True  # This is just to play along with the existing code
@@ -270,7 +274,7 @@ def step1_ach(request):
 
 def step2_ach(request):
     if request.method == 'POST':
-        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
+        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5)
         form = nadjib(request.POST)
         # ha = form.cleaned_data
         # id = ha['Id_Achats']
