@@ -274,32 +274,21 @@ def step1_ach(request):
 
 def step2_ach(request):
     if request.method == 'POST':
-        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5)
+        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=1)
         form = nadjib(request.POST)
-        # ha = form.cleaned_data
-        # id = ha['Id_Achats']
-        # ach = get_object_or_404(Achats, pk=id)
-        # n = 0
-        # for b in form:
-        #     a = float(b.data['Prix_Unitaire'])
-        #     c = float(b.data['Quantite'])
-        #     n = n + (a * c)
-        # print(n)
-        # if n > ach.Montant_HT:
-        #     error = "le montant_ttc est superieur que le montant paye 2 "
-        #     return render(request, 'step2.html', {'form': form, 'error': form.errors})
-
         if form.is_valid():
             form.save()
 
-            return redirect('view')
+            return redirect('step2_ach')
         else:
             print(form.errors)
             return render(request, 'step2.html', {'formset': form, 'error': form.errors})
 
     else:
-     form = modelformset_factory(Association, form=AssociationForm2, extra=5)
-     formset = form(queryset=Association.objects.none())
+     id = Achats.objects.latest('id')
+     print(id.id)
+     form = modelformset_factory(Association, form=AssociationForm2, extra=1)
+     formset = form(queryset=Association.objects.filter(Id_Achats=id.id))
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
     return render(request, 'step2.html', {'formset': formset,'error':form.errors})
 

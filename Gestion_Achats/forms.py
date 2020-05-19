@@ -7,6 +7,20 @@ from django.forms import ValidationError
 from Charge.models import Charge
 from django.db.models import Sum
 
+TOTAL_FORM_COUNT = 'TOTAL_FORMS'
+INITIAL_FORM_COUNT = 'INITIAL_FORMS'
+MIN_NUM_FORM_COUNT = 'MIN_NUM_FORMS'
+MAX_NUM_FORM_COUNT = 'MAX_NUM_FORMS'
+ORDERING_FIELD_NAME = 'ORDER'
+DELETION_FIELD_NAME = 'DELETE'
+
+# default minimum number of forms in a formset
+DEFAULT_MIN_NUM = 0
+
+# default maximum number of forms in a formset, to prevent memory exhaustion
+DEFAULT_MAX_NUM = 1000
+
+
 class AchatForm(ModelForm):
     # Date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -121,11 +135,11 @@ class AssociationForm2(forms.ModelForm):
         if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
             raise ValidationError('Form Invalide !')
 
-        if Association.objects.filter(Id_Achats=Id_Achats).exists() and Association.objects.filter(
-                Id_Article=Id_Article).exists() and Association.objects.filter(
-                Prix_Unitaire=Prix_Unitaire).exists() and Association.objects.filter(
-                Quantite=Quantite).exists():
-            raise ValidationError('data exists ')
+        # if Association.objects.filter(Id_Achats=Id_Achats).exists() and Association.objects.filter(
+        #         Id_Article=Id_Article).exists() and Association.objects.filter(
+        #         Prix_Unitaire=Prix_Unitaire).exists() and Association.objects.filter(
+        #         Quantite=Quantite).exists():
+        #     raise ValidationError('data exists ')
 
         return cleaned_data
 class Payments_Form2(forms.ModelForm):
