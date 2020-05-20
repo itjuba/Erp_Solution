@@ -273,24 +273,39 @@ def step1_ach(request):
 
 
 def step2_ach(request):
+    nadjib = modelformset_factory(Association, form=AssociationForm2, extra=1)
     if request.method == 'POST':
-        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=1)
-        form = nadjib(request.POST)
-        if form.is_valid():
-            form.save()
+        if 'add_row' in request.POST:
+            cp = request.POST.copy()
+            cp['formset-TOTAL_FORMS'] = int(cp['formset-TOTAL_FORMS']) + 1
+            form = nadjib(cp, prefix='formset')
 
-            return redirect('step2_ach')
-        else:
+            if 'submit' in request.POST:
+                form.save()
+                return redirect('view')
+            return render(request, 'step2.html', {'formset': form})
+        elif 'submit' in request.POST:
+            print("submit !")
+            form = nadjib(request.POST,prefix='formset')
+            if form.is_valid():
+                form.save()
+
+
+                return redirect('view')
             print(form.errors)
-            return render(request, 'step2.html', {'formset': form, 'error': form.errors})
+            # return render(request, 'step2.html', {'formset': form, 'error': form.errors})
 
     else:
      id = Achats.objects.latest('id')
-     print(id.id)
-     form = modelformset_factory(Association, form=AssociationForm2, extra=1)
-     formset = form(queryset=Association.objects.filter(Id_Achats=id.id))
-    # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
-    return render(request, 'step2.html', {'formset': formset,'error':form.errors})
+     # print(id.id)
+     # form = modelformset_factory(Association, form=AssociationForm2, extra=1)
+     print('1')
+     new_car = nadjib(queryset=Association.objects.filter(Id_Achats=id.id),prefix='formset')
+     return render(request, 'step2.html', {'formset': new_car})
+    print('2')
+    id = Achats.objects.latest('id')
+    new_car = nadjib(queryset=Association.objects.filter(Id_Achats=id.id),prefix='formset')
+    return render(request, 'step2.html', {'formset': new_car})
 
 
 class ContactWizard(SessionWizardView):

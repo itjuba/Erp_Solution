@@ -25,7 +25,7 @@ class Transactionb(models.Model):
 def create_t(sender, instance, created, *args, **kwargs):
   pay = instance
   if created:
-    if instance.mode_de_payement =="Chéque" or instance.mode_de_payement == "virement":
+    if instance.mode_de_payement =="Chéque" or instance.mode_de_payement == "virement bancaire":
         Transactionb.objects.bulk_create([
             Transactionb(Date=instance.Date,Numero_facture=instance.Numero_facture,Numero_payement=instance.Numero_payement,reference=instance.reference,Montant_HT=instance.Montant_HT,Montant_TVA=instance.Montant_TVA,Montant_TTC=instance.Montant_TTC,mode_de_payement=instance.mode_de_payement,E_S=instance.E_S)])
 

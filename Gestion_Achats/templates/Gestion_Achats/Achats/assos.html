@@ -1,15 +1,18 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
 <form method="POST" >
-    <button id="done" class="btn btn-primary disabled" type="submit">Ajouter</button>
+    <button id="done" class="btn btn-primary disabled" name="submit" type="submit">Ajouter</button>
+
 
     {% csrf_token %}
     {{ formset.management_form }}
 {{ formset.management_data}}
     {% for form in formset.forms %}
+
     <tr>
         {% for field in form.visible_fields %}
         <td>
+
              {# Include the hidden fields in the form #}
             {% if forloop.first %}
             {% for hidden in form.hidden_fields %}
@@ -20,8 +23,16 @@
             {{  field }}
 
         </td>
+
         {% endfor %}
+
     </tr>
+
     {% endfor %}
+    <td>
+           <input title='Add a new car model' class="btn btn-success" type='submit' name='add_row' value='Add' />
+
+    </td>
+
 
 </form>
