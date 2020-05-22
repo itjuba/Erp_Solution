@@ -70,7 +70,11 @@ class Payements(models.Model):
 
       elif  Achats.objects.filter(id=self.reference):
          payement = Achats.objects.get(id=self.reference)
-         return str(payement.Id_Fournis)
-      elif Facture.objects.get(id=self.reference):
-         facture =  Facture.objects.get(id=self.reference)
+         if payement.Id_Fournis:
+          return str(payement.Id_Fournis)
+         else:
+            return str(payement.Date)
+
+      elif Facture.objects.get(commande=self.reference):
+         facture =  Facture.objects.get(commande=self.reference)
          return str(facture.__str__())

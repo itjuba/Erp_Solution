@@ -75,7 +75,10 @@ class Facture(models.Model):
 
 
     def __str__(self):
-        return self.commande.Client.Raison_social
+        if self.commande.Client.Raison_social:
+         return self.commande.Client.Raison_social
+        else :
+            return str(self.Date)
 
 
 

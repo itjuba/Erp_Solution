@@ -7,8 +7,8 @@ register = Library()
 @register.filter
 def edit(obj):
     if Payements.objects.filter(reference=obj.reference).exists():
-        print("true")
+        # print("true")
         return True
     else:
-        print('false')
+        # print('false')
         return False
