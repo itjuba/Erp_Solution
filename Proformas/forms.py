@@ -12,15 +12,16 @@ class Payments_Form_facture(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.facture = kwargs.pop("facture")
+        print(self.facture)
         super(Payments_Form_facture, self).__init__(*args, **kwargs)
-
         facture = Facture.objects.get(id=self.facture)
+        print(facture.commande)
         self.initial['E_S'] = 'Vente'
-        self.initial['reference'] = facture.id
+        self.initial['reference'] = facture.commande_id
         self.initial['Montant_HT'] = facture.Montant_HT
         self.initial['Montant_TVA'] = facture.Montant_TVA
         self.initial['Montant_TTC'] = facture.Montant_TTC
-        self.initial['Numero_facture'] = facture.Montant_TTC
+        self.initial['Numero_facture'] = facture.Numero_facture
 
 
 
@@ -34,8 +35,9 @@ class Facture_Form(forms.ModelForm):
         self.fac = kwargs.pop("fac")
         super(Facture_Form, self).__init__(*args, **kwargs)
         com = self.fac
+        print(com)
         # commande = Facture.objects.get(id=self.fac)
-        com = Commande.objects.get(id=self.fac)
+        # com = Commande.objects.get(id=self.fac)
         self.initial['commande'] = com
 
     def clean(self):

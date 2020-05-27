@@ -22,14 +22,19 @@
                           </td>
                             <td>
 
-             <a class="  likes-button js-update-book "    href="{% url 'update_achat' obj.id  %}" style="color : #9c27b0;" >
+             <a class="   js-update-book "    href="{% url 'update_achat' obj.id  %}" style="color : #9c27b0;" >
           <i class="fa fa-id-badge w3-xxlarge" aria-hidden="true"></i></a>
 &nbsp
-                                            <a class="  likes-button js-update-book "   data-url="{% url 'achats_update_view' obj.id %}" href="#" style="color : #9c27b0;" >
+                                            <a class=" bout  likes-button js-update-book "   data-url="{% url 'achats_update_view' obj.id %}" href="#" style="color : #9c27b0;" >
             <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
 &nbsp
-<a class="  likes-button js-update-book "   data-url="{% url 'achats_delete' obj.id %}" href="#" style="color : #9c27b0;" >
+<a class="  bout  likes-button js-update-book "   data-url="{% url 'achats_delete' obj.id %}" href="#" style="color : #9c27b0;" >
             <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
+
+                                &nbsp
+<a class="  likes-button  "   href="{% url 'payement_create' obj.id %}" style="color : #9c27b0;" >
+             <i class="fa fa-plus-circle w3-xxlarge"></i></a>
+
 
                             </td>
                         </tr>

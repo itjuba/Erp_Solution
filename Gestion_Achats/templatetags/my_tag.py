@@ -5,5 +5,5 @@ register = Library()
 
 @register.filter
 def achat(obj):
-    print(obj.__str__())
-    return obj.__str__()
+    print(obj.name())
+    return obj.name()

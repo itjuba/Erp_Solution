@@ -50,44 +50,44 @@ def Transaction_View(request):
 
     mt_vent_v = 0
     for x in trans_vent_v:
-        mt_vent_v = float(mt_vent_v) + float(x.Montant_HT)
+        mt_vent_v = float(mt_vent_v) + float(x.Montant_TTC)
 
     mt_vent_nv=0
     for x in trans_vent_nv:
-        mt_vent_nv = float(mt_vent_nv) + float(x.Montant_HT)
+        mt_vent_nv = float(mt_vent_nv) + float(x.Montant_TTC)
 
     mt_vent_nvr=0
     for x in trans_vent_nvr:
-        mt_vent_nvr = float(mt_vent_nvr) + float(x.Montant_HT)
+        mt_vent_nvr = float(mt_vent_nvr) + float(x.Montant_TTC)
 
     mt_dep_v = 0
     for x in trans_dep_v:
-        mt_dep_v = float(mt_dep_v) + float(x.Montant_HT)
+        mt_dep_v = float(mt_dep_v) + float(x.Montant_TTC)
 
     mt_dep_nv = 0
     for x in trans_dep_nv:
-        mt_dep_nv = float(mt_dep_nv) + float(x.Montant_HT)
+        mt_dep_nv = float(mt_dep_nv) + float(x.Montant_TTC)
     mt_dep_nvr = 0
     for x in trans_dep_nvr:
-        mt_dep_nvr = float(mt_dep_nvr) + float(x.Montant_HT)
+        mt_dep_nvr = float(mt_dep_nvr) + float(x.Montant_TTC)
 
     mt_charge_nv = 0
     for x in trans_charge_nv:
-           mt_charge_nv = float(mt_charge_nv) + float(x.Montant_HT)
+           mt_charge_nv = float(mt_charge_nv) + float(x.Montant_TTC)
     print(mt_charge_nv)
 
     mt_charge_nvr = 0
     for x in trans_charge_nvr:
-           mt_charge_nvr = float(mt_charge_nvr) + float(x.Montant_HT)
+           mt_charge_nvr = float(mt_charge_nvr) + float(x.Montant_TTC)
 
 
     mt_charge_v = 0
     for x in trans_charge_v:
-        mt_charge_v = float(mt_charge_v) + float(x.Montant_HT)
+        mt_charge_v = float(mt_charge_v) + float(x.Montant_TTC)
     print(mt_charge_v)
 
     montant_sortie_v = mt_charge_v + mt_dep_v
-    montant_sortie_nv = mt_charge_nv + mt_dep_nv + mt_charge_nvr +  mt_dep_nvr
+    montant_sortie_nv = mt_charge_nv + mt_dep_nv
     context = {'t':trans,'mt_vent_v':mt_vent_v,'mt_vent_nv':mt_vent_nv,'mt_dep_v':mt_dep_v,'mt_dep_nv':mt_dep_nv,
                'mt_charge_nv':mt_charge_nv,'mt_charge_v':mt_charge_v,'montant_sortie_v':montant_sortie_v,'montant_sortie_nv':montant_sortie_nv}
     return render(request,'Transactionb/transaction_view.html',context)

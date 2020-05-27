@@ -1,4 +1,5 @@
 {% load dat_tag %}
+{% load my_tag%}
   {% for obj in artists %}
 
 <!--{% if not obj.Etat %}-->
@@ -11,6 +12,9 @@
 
                           <td>
                             {{obj.Date}}
+                          </td>
+                            <td>
+                            {{obj|achat}}
                           </td>
                           <td>
                            {{obj.commande}}

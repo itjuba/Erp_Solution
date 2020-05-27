@@ -37,7 +37,9 @@ $(function () {
         }
         else {
           console.log('error');
-          md.showNotificationFail('bottom','left','warning');
+          console.log(data.errors.errors)
+          console.log(data.errors)
+          md.showNotificationFail('bottom','left','warning',data.errors);
           $("#modal-book .modal-content").html(data.html_form);
         }
       }

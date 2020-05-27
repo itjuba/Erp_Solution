@@ -42,6 +42,7 @@ class AchatForm(ModelForm):
                 Id_Fournis=Id_Fournis).exists() and Achats.objects.filter(
                 Montant_HT=Montant_HT).exists() and Achats.objects.filter(
                 Montant_TVA=Montant_TVA).exists() and Achats.objects.filter(Montant_TTC=Montant_TTC).exists():
+            # {'error': [ValidationError([u'Data Exist !.']},
             raise ValidationError('data exists ')
 
         return cleaned_data
@@ -121,9 +122,9 @@ class AssociationForm2(forms.ModelForm):
         super(AssociationForm2, self).__init__(*args, **kwargs)
         self.initial['Id_Achats'] = Achats.objects.latest('id')
         self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na ';
-        self.fields['Id_Achats'].widget.attrs['class'] = 'form-control';
         self.fields['Id_Article'].widget.attrs['class'] = 'form-control';
         self.fields['Quantite'].widget.attrs['class'] = 'qu l'
+        self.fields['Id_Achats'].widget = forms.HiddenInput()
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -133,7 +134,7 @@ class AssociationForm2(forms.ModelForm):
         Quantite = self.cleaned_data.get('Quantite')
 
         if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
-            raise ValidationError('Form Invalide !')
+            raise ValidationError('Form Invalide!')
 
         # if Association.objects.filter(Id_Achats=Id_Achats).exists() and Association.objects.filter(
         #         Id_Article=Id_Article).exists() and Association.objects.filter(

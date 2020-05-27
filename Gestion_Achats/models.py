@@ -26,7 +26,10 @@ class Achats(models.Model):
    Montant_pay =  models.DecimalField(max_digits=10,decimal_places=2,default=0)
 
    def __str__(self):
-         return str(self.Id_Fournis.Raison_social)
+         return str(self.id)
+
+   def name(self):
+      return str(self.Id_Fournis.Raison_social)
 
 
 class Association(models.Model):

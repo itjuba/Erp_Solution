@@ -26,7 +26,7 @@ class Commande(models.Model):
     validation = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.Numero_commande
+        return str(self.id)
 
 
 class Modalite(models.Model):
