@@ -80,7 +80,11 @@ class Facture(models.Model):
         else :
             return str(self.Date)
 
-
+    def name(self):
+        if self.commande.Client.Raison_social:
+            return self.commande.Client.Raison_social
+        else:
+            return str(self.Date)
 
 #
 # class Payements2(models.Model):
