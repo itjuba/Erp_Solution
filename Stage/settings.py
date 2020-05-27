@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'Charge.apps.ChargeConfig',
     'Proformas.apps.ProformasConfig',
     'Caisse.apps.CaisseConfig',
+    'Accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

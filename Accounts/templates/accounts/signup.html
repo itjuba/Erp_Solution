@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+{% load static%}
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script src="{% static 'js/login.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link href="{% static 'css/material-dashboard.css'%}" rel="stylesheet" />
+    <style>
+        .center{
+        margin-left :100px;
+        color : #9c27b0;
+        }
+    </style>
+</head>
+<body>
+ <div class="container">
+<!--        <div class="row">-->
+<!--            <div class="col-sm-4"></div>-->
+<!--            <div class="col-sm-4">-->
+<!--                 <a class="btn big-login" data-toggle="modal" href="javascript:void(0)" onclick="openLoginModal();">Log in</a>-->
+<!--                 <a class="btn big-register" data-toggle="modal" href="javascript:void(0)" onclick="openRegisterModal();">Register</a></div>-->
+<!--            <div class="col-sm-4"></div>-->
+<!--        </div>-->
+
+		 <div class="modal fade login" id="loginModal">
+		      <div class="modal-dialog login animated">
+                    <div class="modal-body">
+                        <br><br><br>
+                        <div class="box">
+                             <div class="modal-content">
+                               <div class="card">
+                <div class="card-header card-header-primary" style="height : 140px">
+                 <h4  style="text-align: center">Login</h4>
+                </div>
+                <div class="card-body">
+                                <div class="form loginBox">
+<!--                                    <form method="" action="" accept-charset="UTF-8">-->
+<!--                                    <input class="form-control" type="text" placeholder="Email" >-->
+<!--                                    <input  class="form-control" type="text" placeholder="Password">-->
+<!--                                    <input class="btn"  style="color : white" type="button" value="Login" onclick="loginAjax()">-->
+<!--                                    </form>-->
+                                    {{form.as_table}}
+                               <a class="center"  style=" color :#9c27b0;" type="button" onclick="loginAjax()">LET'S GO</a>
+
+                                </div>
+                             </div>
+                        </div>
+                        <div class="box">
+                            <div class="content registerBox" style="display:none;">
+                             <div class="form">
+                                <form method="" html="{:multipart=>true}" data-remote="true" action="" accept-charset="UTF-8">
+                                <input id="email" class="form-control" type="text" placeholder="Email" name="email">
+                                <input id="password" class="form-control" type="password" placeholder="Password" name="password">
+                                <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
+                                <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="modal-footer">
+                        <div class="forgot login-footer">
+                            <span>Looking to
+                                 <a href="javascript: showRegisterForm();">create an account</a>
+                            ?</span>
+                        </div>
+                        <div class="forgot register-footer" style="display:none">
+                             <span>Already have an account?</span>
+                             <a href="javascript: showLoginForm();">Login</a>
+                        </div>
+                    </div>
+    		      </div>
+		      </div>
+
+    </div>  </div>
+
+
+<script src="{% static 'js/core/jquery.min.js'%}"></script>
+  <script src="{% static 'js/core/popper.min.js'%}"></script>
+  <script src="{% static 'js/core/bootstrap-material-design.min.js'%}"></script>
+ <script type="text/javascript">
+    $(document).ready(function(){
+        openLoginModal();
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

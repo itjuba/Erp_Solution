@@ -28,5 +28,6 @@ urlpatterns = [
     path('charge/',include('Charge.urls')),
     path('transaction/',include('Transactionb.urls')),
     path('Caisse/',include('Caisse.urls')),
+    path('account/',include('Accounts.urls')),
     path('home/',graph,name="homme"),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
