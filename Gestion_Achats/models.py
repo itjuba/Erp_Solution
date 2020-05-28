@@ -64,9 +64,10 @@ class Payements(models.Model):
    Numero_facture = models.IntegerField()
    Numero_payement =  models.IntegerField()
 
+   def  __str__(self):
+     return str(self.Date)
 
-
-   def __str__(self):
+   def name(self):
       if Charge.objects.filter(id=self.reference):
          charge = Charge.objects.get(id=self.reference)
          return str(charge.Description)

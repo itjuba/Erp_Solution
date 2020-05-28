@@ -2606,7 +2606,6 @@ select.form-control-lg:not([size]):not([multiple]),
   background-color: #6ec071;
 }
 
-
 .was-validated .custom-control-input:valid:focus~.custom-control-label::before,
 .custom-control-input.is-valid:focus~.custom-control-label::before {
   box-shadow: 0 0 0 1px #fafafa, 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
@@ -12839,7 +12838,7 @@ fieldset[disabled][disabled] .has-warning .form-control,
 
 .was-validated .has-warning .is-focused .custom-control-input:valid:checked~.custom-control-label::before,
 .has-warning .is-focused .custom-control-input.is-valid:checked~.custom-control-label::before {
- /* background-color: #ffad33;*/
+  background-color: #ffad33;
 }
 
 .was-validated .has-warning .is-focused .custom-control-input:valid:focus~.custom-control-label::before,
@@ -12849,7 +12848,7 @@ fieldset[disabled][disabled] .has-warning .form-control,
 
 .was-validated .has-warning .is-focused .custom-file-input:valid~.custom-file-label,
 .has-warning .is-focused .custom-file-input.is-valid~.custom-file-label {
- /* border-color: #ff9800;*/
+  border-color: #ff9800;
 }
 
 .was-validated .has-warning .is-focused .custom-file-input:valid~.custom-file-label::before,
@@ -17545,7 +17544,7 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 .card.bg-warning,
 .card.card-rotate.bg-warning .front,
 .card.card-rotate.bg-warning .back {
-  /*background: linear-gradient(60deg, #ffa726, #fb8c00);*/
+  background: linear-gradient(60deg, #ffa726, #fb8c00);
 }
 
 .card .card-header-danger .card-icon,
@@ -19754,76 +19753,4 @@ Copyright (c) 2015 Daniel Eden
   }
 }
 
-
-.login .modal-dialog{
-    width: 350px;
-}
-.login .modal-footer{
-    border-top: 0;
-    margin-top: 0px;
-    padding: 10px 20px 20px;
-}
-.login .modal-header {
-    border: 0 none;
-    padding: 15px 15px 15px;
-/*     padding: 11px 15px; */
-}
-
-.login .division {
-    float: none;
-    margin: 0 auto 18px;
-    overflow: hidden;
-    position: relative;
-    text-align: center;
-    width: 100%;
-}
-.login .division .line {
-    border-top: 1px solid ;
-    position: absolute;
-    top: 10px;
-    width: 34%;
-}
-.login .division .line.l {
-    left: 0;
-}
-.login .division .line.r {
-    right: 0;
-}
-.login .division span {
-
-    font-size: 17px;
-}
-.login .box .social {
-    float: none;
-    margin: 0 auto 30px;
-    text-align: center;
-}
-
-.login .social .circle{
-
-    border-radius: 100px;
-    display: inline-block;
-    margin: 0 17px;
-    padding: 15px;
-}
-.login .social .circle .fa{
-    font-size: 16px;
-}
-
-.login .forgot {
-    margin-left: 0;
-    overflow: hidden;
-    text-align: center;
-    width: 100%;
-}
-
-
-
-@media (max-width:400px){
-    .login .modal-dialog{
-        width: 100%;
-    }
-}
-
-.
 /*# sourceMappingURL=dashboard-free.css.map */

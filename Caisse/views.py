@@ -1,11 +1,37 @@
 from django.shortcuts import render
 from django.shortcuts import render,get_object_or_404,HttpResponse,redirect
 from .models import Caisse
-from .forms import Caisse_Form
+from .forms import Caisse_Form,TransactionForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-# Create your views here.
+from Transactionb.models import Transactionb
 
+
+
+def alim(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        print(request.method=='POST')
+        if form.is_valid():
+
+            form.save()
+
+            data['form_is_valid'] = True
+        else:
+            print(form.errors)
+
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+def alim_caisse(request):
+    if request.method == 'POST':
+        form = TransactionForm(request.POST)
+    else:
+        form = TransactionForm()
+
+    return alim(request, form, 'caisse/partial/partial_alimentation.html')
 
 
 def caisse_view(request):

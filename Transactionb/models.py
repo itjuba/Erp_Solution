@@ -10,12 +10,12 @@ class Transactionb(models.Model):
     Date_transaction = models.DateField(null=True,blank=True)
     validation = models.CharField(max_length=200,null=True,blank=True)
     E_S = models.CharField(max_length=10)
-    mode_de_payement = models.CharField( max_length=200)
-    reference = models.IntegerField()
+    mode_de_payement = models.CharField( max_length=200,blank=True)
+    reference = models.IntegerField(blank=True,null=True)
     Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)
     Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2)
     Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
-    Numero_facture = models.IntegerField()
+    Numero_facture = models.IntegerField(blank=True,null=True)
     Numero_payement = models.IntegerField()
 
 

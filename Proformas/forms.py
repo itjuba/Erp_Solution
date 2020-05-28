@@ -2,6 +2,8 @@ from django import forms
 from .models import Commande_Designation,Commande,Modalite,Facture
 from django.forms import ValidationError
 from Gestion_Achats.models import Payements
+from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseRedirect
+
 
 
 from django.forms import ModelForm
@@ -22,6 +24,17 @@ class Payments_Form_facture(forms.ModelForm):
         self.initial['Montant_TVA'] = facture.Montant_TVA
         self.initial['Montant_TTC'] = facture.Montant_TTC
         self.initial['Numero_facture'] = facture.Numero_facture
+
+    def clean(self):
+        print('fuck you')
+        idp = self.facture
+        fac = get_object_or_404(Facture,id=idp)
+        print(fac.commande_id)
+        print(idp)
+        pay = Payements.objects.filter(reference=fac.commande_id)
+        if pay:
+            raise ValidationError('the payment for this facture exist !')
+
 
 
 
