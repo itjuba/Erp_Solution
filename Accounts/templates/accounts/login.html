@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+{% load static%}
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script src="{% static 'js/login.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <script src="{% static 'js/core/jquery.min.js'%}"></script>
+  <script src="{% static 'js/core/popper.min.js'%}"></script>
+  <script src="{% static 'js/core/bootstrap-material-design.min.js'%}"></script>
+    <link href="{% static 'css/material-dashboard.css'%}" rel="stylesheet" />
+    <style>
+
+    input[type=text] {
+  border: 2px solid red;
+  border-radius: 4px;
+}
+        .center{
+        margin-left :130px;
+        color : #9c27b0;
+        }
+    </style>
+</head>
+<body>
+ <nav class="navbar navbar-expand-sm bg-light bg-warning">
+        <ul class="navbar-nav mr-auto" style="margin-left:30px">
+     <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Login Page
+                </a>
+            </li>
+           </ul>
+        <ul class="navbar-nav ml-auto" style="margin-right : 30px">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                 <i class="material-icons " style="" >dashboard</i>  Dashboard
+
+                </a>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                 <i class="material-icons " style="" >person</i>  Register
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                                 <i class="material-icons " style="" >login</i> Login
+                </a>
+            </li>
+        </ul>
+    </nav>
+ <div class="container">
+		 <div class="modal fade login" id="loginModal">
+		      <div class="modal-dialog login animated">
+                    <div class="modal-body" style="width : 400px">
+                        <br><br><br>
+                        <div class="box">
+                             <div class="card">
+                             <div class="modal-content">
+
+                <div class="card-header card-header-warning" style="height : 100px">
+                 <h4  class="card-title" style="text-align: center"> Login Page</h4>
+                </div>
+                <div class="card-body">
+                                <div class="form loginBox">
+                                    <form id="my_form" method="POST" action="">
+                                    {% csrf_token %}
+                                        <br><br>
+                                    {{form}}
+                                        <br><br>
+
+                               <a class="center"  style=" color :#ffae42;font-weight:bold" href="javascript:{}" onclick="document.getElementById('my_form').submit();">LET'S GO</a>
+                                  </form>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="box">
+                            <div class="content registerBox" style="display:none;">
+                             <div class="form">
+                                <form method="" html="{:multipart=>true}" data-remote="true" action="" accept-charset="UTF-8">
+                                <input id="email" class="form-control" type="text" placeholder="Email" name="email">
+                                <input id="password" class="form-control" type="password" placeholder="Password" name="password">
+                                <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
+                                <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+
+<!--                    <div class="modal-footer">-->
+<!--                        <div  style="margin-right : 60px" class="forgot login-footer">-->
+<!--                            <span>Looking to-->
+<!--                                 <a href="javascript: showRegisterForm();">create an account</a>-->
+<!--                            ?</span>-->
+<!--                        </div>-->
+<!--                        <div class="forgot register-footer" style="display:none">-->
+<!--                             <span >Already have an account?</span>-->
+<!--                             <a href="javascript: showLoginForm();">Login</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+    		      </div>
+		      </div>
+
+    </div>  </div>
+
+
+
+ <script type="text/javascript">
+    $(document).ready(function(){
+        openLoginModal();
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

@@ -14,10 +14,10 @@
 
 body{
 
-background-color : black;
+background-image: url("http://www.ohmancorp.com/images/Win8BackGround-303030.png");
+
 
 }
-
 .animated {
   -webkit-animation-duration: 1s;
 	   -moz-animation-duration: 1s;
@@ -194,14 +194,15 @@ background-color : black;
     color: #FFFFFF;
 }
 .login .box .form input[type="text"], .login .box .form input[type="password"] {
-    border-radius: 3px;
-    border: none;
     color: #333333;
     font-size: 16px;
     height: 46px;
     margin-bottom: 5px;
     padding: 13px 12px;
     width: 100%;
+    border: 2px solid #ffae42;
+    border-radius: 4px;
+}
 }
 
 

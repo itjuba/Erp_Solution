@@ -10,7 +10,6 @@ User = get_user_model()
 
 
 
-
 def signup(request):
     form = LoginForm(request.POST or None)
     if form.is_valid():
@@ -26,22 +25,30 @@ def signup(request):
 
 
 def Login(request):
-     form = LoginForm(request.POST or None)
-     print(request.user.is_authenticated)
-     if form.is_valid():
-        print(form.cleaned_data)
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
+       form = LoginForm(request.POST or None)
+       if request.method == 'POST':
+
+         form = LoginForm(request.POST or None)
+         print(request.user.is_authenticated)
+         print(form.is_bound)
+         print(form.is_valid())
+         if form.is_valid():
+            print(form.cleaned_data)
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
 
 
-        print(request.user.is_authenticated)
-        user = authenticate(request,username=username,password=password)
-        if user is not  None:
-            auth.login(request,user)
-            return redirect('/')
-        else:
-            print('error')
-     return render(request,'accounts/login.html',{'form' : form})
+            print(request.user.is_authenticated)
+            user = authenticate(request,username=username,password=password)
+            if user is not  None:
+                auth.login(request,user)
+                return redirect('homme')
+            else:
+                print('error')
+         else:
+             print(form.errors)
+             print('invalid')
+       return render(request,'accounts/login.html',{'form' : form})
 
 
 def logout(request):
