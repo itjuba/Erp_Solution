@@ -347,7 +347,10 @@ input:checked + .slider:before {
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                  <form  method="POST" action="{% url 'logout' %}">
+                     {% csrf_token %}
+                    <button class="dropdown-item" type="submit" name="submit">Log out</button>
+                    </form>
                 </div>
               </li>
               <li>

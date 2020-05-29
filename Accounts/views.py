@@ -44,7 +44,8 @@ def Login(request):
                 auth.login(request,user)
                 return redirect('homme')
             else:
-                print('error')
+                error = 'Wrong password or username !'
+                return render(request, 'accounts/login.html', {'form': form,'er':error})
          else:
              print(form.errors)
              print('invalid')

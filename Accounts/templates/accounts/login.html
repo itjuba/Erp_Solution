@@ -73,6 +73,11 @@
                 </div>
                 <div class="card-body">
                                 <div class="form loginBox">
+                                    {% if er%}
+                                   <div class="alert alert-danger">
+                                  <strong>   {{ er }}</strong>
+                                      </div>
+                                    {%endif%}
                                     <form id="my_form" method="POST" action="">
                                     {% csrf_token %}
                                         <br><br>

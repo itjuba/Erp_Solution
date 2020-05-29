@@ -149,6 +149,7 @@ LOGIN_URL = '/account/login'
 LOGIN_EXEMPT_URLS = (
     r'^account/logout/$',
     r'^account/signup/$',
+    'admin/',
 
 )
 
