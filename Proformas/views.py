@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from Client_Section.models import Client_Data
 import datetime
 import threading
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -225,10 +225,10 @@ def facture_update(request,pk):
     facture = get_object_or_404(Facture, pk=pk)
     if request.method == 'POST':
         print(request.POST)
-        form = Facture_Form(request.POST, instance=facture,fac=pk)
+        form = Facture_Form2(request.POST, instance=facture)
 
     else:
-        form = Facture_Form(fac=pk,instance=facture)
+        form = Facture_Form2(instance=facture)
 
 
     return save_facture_form(request, form,'Proformas/facture/partial/partial_facture_model.html')
@@ -395,7 +395,7 @@ class EmailThread(threading.Thread):
 def send_mail(request,pk):
     commande = get_object_or_404(Commande,id=pk)
     name  = commande.Client.Raison_social
-    html_nadjib = render_to_string('Proformas/msg.html')
+    html_nadjib = render_to_string('Proformas/msg.html',{'raison_social':name,'Date':datetime.date.today()})
     to_emails = ['attignadjib@outlook.com']
     subject = "SH INFOR FACTURE"
     sender = 'attignadjib@gmail.com'
@@ -551,20 +551,59 @@ def step1(request):
 
 
 def step2(request):
+    nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
     if request.method == 'POST':
-        nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=5, can_delete=True)
-        form = nadjib(request.POST)
-
+        if 'add-row' in request.POST:
+            cp = request.POST.copy()
+            cp['form-TOTAL_FORMS'] = int(cp['form-TOTAL_FORMS']) + 1
+            form = nadjib(cp, prefix='form')
+            return render(request, 'Proformas/steps/step2.html', {'formset': form})
+        form = nadjib(request.POST, prefix='form')
         if form.is_valid():
             form.save()
 
             return redirect('step3')
         else:
+            print('not valide')
             print(form.errors)
-            return render(request, 'Proformas/steps/step2.html', {'formset': form, 'error': form.errors})
+
+
+            return render(request, 'Proformas/steps/step2.html', {'formset': form})
 
     else:
-      ss = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=5)
-      formset = ss(queryset=Commande.objects.none())
-    return render(request, 'Proformas/steps/step2.html', {'formset': formset})
 
+        formset = nadjib(queryset=Commande.objects.none(),prefix='form')
+        return render(request, 'Proformas/steps/step2.html', {'formset': formset})
+
+
+
+
+def save_commande_form_update(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        print(request.method=='POST')
+        if form.is_valid():
+
+            form.save()
+
+            data['form_is_valid'] = True
+            commande = Commande.objects.all()
+            data['html_book_list'] = render_to_string('Proformas/partial/partial_proformas.html', {
+                'c': commande
+            })
+        else:
+            print(form.errors)
+
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+def commande_update(request,pk):
+    commande = get_object_or_404(Commande,pk=pk)
+    if request.method == 'POST':
+        form = Commande_Form2(request.POST,instance=commande)
+    else:
+        form = Commande_Form2(instance=commande)
+
+    return save_commande_form_update(request, form, 'Proformas/partial/parital_commande_update.html')

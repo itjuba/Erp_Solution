@@ -259,6 +259,17 @@ input:checked + .slider:before {
               <p>Payement List </p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'charge_view'%}">
+              <i class="material-icons" style="" >content_paste</i>
+              <p>Charge List </p>
+            </a>
+          </li>   <li class="nav-item ">
+            <a class="nav-link" href="{% url 'transaction_view'%}">
+              <i class="material-icons" style="" >content_paste</i>
+              <p>Transaction bancaire </p>
+            </a>
+          </li>
 
           <li class="nav-item ">
             <a class="nav-link " href="#">
@@ -779,37 +790,9 @@ function goBack() {
     });
 </script>
 
-<script>
-$(document).ready(function(){
-   //Jquery Code
+<script src="{% static 'js/tva.js' %}"></script>
 
-  $("[name='tv']").on('keyup',function(){
-        var tva= $("[name='tv']").val()
-        var ht= $('input[name=Montant_HT]').val()
-        console.log(tva)
-        var total = (tva * $("[name='Montant_HT']").val())/100;
-        console.log(total);
-        t = Number(total) + Number(ht);
-        console.log(t);
-        $("[name='Montant_TTC']").html(total);
-        $('input[name=Montant_TTC]').val(t);
-         $('#label').addClass('is-focused');
-        });
-});
 
-</script>
-
-<script>
-
-<!--$('input[type="number"]').each(function(){-->
-<!--   if($(this).val()!=""){-->
-<!--      md.showNotificationFail('bottom','left','warning','Check your input');-->
-<!--            $('#done').addClass('disabled');-->
-<!--            console.log('yes');-->
-<!--    }-->
-<!-- });-->
-
-</script>
 
 
 

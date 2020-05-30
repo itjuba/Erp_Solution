@@ -86,6 +86,7 @@ $(function () {
           setTimeout(function() { $("#display").hide(); }, 5000);
         }
         else {
+         md.showNotificationFail('bottom','left','warning',data.errors);
           $("#modal-book .modal-content").html(data.html_form);
         }
       }

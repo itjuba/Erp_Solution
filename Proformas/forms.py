@@ -36,6 +36,11 @@ class Payments_Form_facture(forms.ModelForm):
             raise ValidationError('the payment for this facture exist !')
 
 
+class Facture_Form2(forms.ModelForm):
+    Titre_facture = forms.CharField()
+    class Meta:
+        model = Facture
+        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
 
 
 class Facture_Form(forms.ModelForm):
@@ -49,9 +54,19 @@ class Facture_Form(forms.ModelForm):
         super(Facture_Form, self).__init__(*args, **kwargs)
         com = self.fac
         print(com)
-        # commande = Facture.objects.get(id=self.fac)
-        # com = Commande.objects.get(id=self.fac)
+        commande = get_object_or_404(Commande,id=self.fac)
+
+        # if get_object_or_404(Facture,id=com):
+        #   facture = get_object_or_404(Facture,id=com)
+        #   commande = get_object_or_404(Commande,id=facture.commande_id)
+
+        com = Commande.objects.get(id=self.fac)
         self.initial['commande'] = com
+        self.initial['Montant_HT'] = commande.Montant_HT
+        self.initial['Montant_TTC'] = com.Montant_TTC
+        self.initial['Montant_TVA'] = com.Montant_TVA
+
+
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -86,18 +101,19 @@ class Commande_Form(forms.ModelForm):
         Montant_TTC = self.cleaned_data.get('Montant_TTC')
         validation = self.cleaned_data.get('validation')
 
-        if Commande.objects.filter(Date=Date).exists() and Commande.objects.filter(
-            Client=Client).exists() and Commande.objects.filter(
-            Numero_commande=Numero_commande).exists() and Commande.objects.filter(
-            Montant_HT=Montant_HT).exists() and Commande.objects.filter(Montant_TVA=Montant_TVA).exists() and Commande.objects.filter(Montant_TTC=Montant_TTC).exists() and Commande.objects.filter(validation=validation).exists():
-             raise ValidationError('data exists ')
+        # if Commande.objects.filter(Date=Date).exists() and Commande.objects.filter(
+        #     Client=Client).exists() and Commande.objects.filter(
+        #     Numero_commande=Numero_commande).exists() and Commande.objects.filter(
+        #     Montant_HT=Montant_HT).exists() and Commande.objects.filter(Montant_TVA=Montant_TVA).exists() and Commande.objects.filter(Montant_TTC=Montant_TTC).exists() and Commande.objects.filter(validation=validation).exists():
+        #      raise ValidationError('data exists ')
 
         return cleaned_data
+
+
 
 class Commande_D_Form(forms.ModelForm):
     Designation = forms.CharField(required=True)
     class Meta:
-
         model = Commande_Designation
         fields = ('Designation','Prix_Unitaire','Command','Quantite','Montant_HT','Montant_TVA','Montant_TTC')
 
@@ -106,7 +122,7 @@ class Commande_D_Form(forms.ModelForm):
 
         commande =  Commande.objects.latest('id')
         self.initial['Command'] = commande
-        self.fields['Prix_Unitaire'].widget.attrs["required"] = "true"
+        # self.fields['Prix_Unitaire'].widget.attrs["required"] = "true"
 
 
     def clean(self):

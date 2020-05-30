@@ -1,0 +1,69 @@
+<!--{% load widget_tweaks %}-->
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+   <div class="form-row " >
+       <div class="form-group col-md-6 mb-0">
+                            <label class="bmd-label-floating" for="form.id_for_label">Date</label>
+           {% render_field form.Date class="form-control" %}
+      </div>
+         <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Date_validation </label>
+            {% render_field form.Date_validation class="form-control" %}
+      </div>
+
+
+
+    </div>
+
+      <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">Numero_commande</label>
+           {% render_field form.Numero_commande class="form-control" %}
+      </div>
+       <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_HT</label>
+            {% render_field form.Montant_HT class="form-control" %}
+      </div>
+      </div>
+          <div class="form-row" >
+      <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">Montant_TVA</label>
+           {% render_field form.Montant_TVA class="form-control" %}
+      </div>
+
+                <div class="form-group col-md-6 mb-0">
+            <label  class="bmd-label-floating" for="{{field.id_for_label}}">Montant_TTC</label>
+            {% render_field form.Montant_TTC class="form-control" %}
+      </div>
+
+       </div>
+
+ <div class="form-row" >
+          <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Type_Service </label>
+            {% render_field form.Type_Service class="form-control" %}
+      </div>
+
+  <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Client &nbsp;</label>
+            {% render_field form.Client class="form-control" %}
+      </div>
+
+ </div>
+
+
+
+ <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">validation   {% render_field form.validation class="form-control" %}</label>
+
+      </div>
+
+    </div>
+
+<!--  {% for error in form.errors %}-->
+<!--      <p class="help-block">{{ error }}</p>-->
+<!--    {% endfor %}-->
+{% endblock %}

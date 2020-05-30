@@ -28,7 +28,8 @@ class TransactionForm(ModelForm):
         super(TransactionForm, self).__init__(*args, **kwargs)
         self.initial['mode_de_payement'] ="Chéque"
         self.initial['Numero_facture'] = ""
-        self.initial['E_S'] = "E"
+        self.initial['validation'] = "Validé"
+        self.initial['E_S'] = "Sortie"
         self.fields['reference'].required = False
         self.fields['Numero_facture'].required = False
 

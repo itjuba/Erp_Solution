@@ -4,21 +4,39 @@
 
 {% block content %}
 
-    <div class="form-row">
+       <div class="col-md-4" style="margin-left : auto;margin-right:auto;">
+                          <label for="">TVA</label>
+                        <input   class="form-control" type="text" name="tv">
+                            </div>
+    <br>
+ <div class="form-row">
       <div class="form-group col-md-6 mb-0">
-          <label class="bmd-label-floating" for="form.id_for_label">Date</label>
-           {% render_field form.Date class="form-control" %}
+        <label class="bmd-label-floating" for="form.id_for_label">Montant_HT</label>
+           {% render_field form.Montant_HT class="form-control" %}
       </div>
+            <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TVA</label>
+           {% render_field form.Montant_TVA class="form-control" %}
+      </div>
+    </div>
+    <div class="form-row">
+                   <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">Montant_TTC</label>
+           {% render_field form.Montant_TTC class="form-control" %}
+      </div>
+
+
       <div class="form-group col-md-6 mb-0">
             <label  class="bmd-label-floating" for="{{field.id_for_label}}">Date_transaction</label>
             {% render_field form.Date_transaction class="form-control" %}
       </div>
     </div>
        <div class="form-row">
-      <div class="form-group col-md-6 mb-0">
-        <label class="bmd-label-floating" for="form.id_for_label">validation</label>
-           {% render_field form.validation class="form-control" %}
+              <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Date</label>
+           {% render_field form.Date class="form-control" %}
       </div>
+
       <div class="form-group col-md-6 mb-0">
         <label  class="bmd-label-floating" for="form.id_for_label">E_S</label>
            {% render_field form.E_S class="form-control" %}
@@ -33,20 +51,16 @@
         <label  class="bmd-label-floating" for="form.id_for_label">reference</label>
            {% render_field form.reference class="form-control" %}
       </div>
-    </div>   <div class="form-row">
-      <div class="form-group col-md-6 mb-0">
-        <label class="bmd-label-floating" for="form.id_for_label">Montant_HT</label>
-           {% render_field form.Montant_HT class="form-control" %}
+    </div>
+
+    <div class="form-row">
+
+
+       <div class="form-group col-md-6 mb-0">
+        <label class="bmd-label-floating" for="form.id_for_label">validation</label>
+           {% render_field form.validation class="form-control" %}
       </div>
-            <div class="form-group col-md-6 mb-0">
-        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TVA</label>
-           {% render_field form.Montant_TVA class="form-control" %}
-      </div>
-    </div>   <div class="form-row">
-      <div class="form-group col-md-6 mb-0">
-        <label class="bmd-label-floating" for="form.id_for_label">Montant_TTC</label>
-           {% render_field form.Montant_TTC class="form-control" %}
-      </div>
+
             <div class="form-group col-md-6 mb-0">
         <label  class="bmd-label-floating" for="form.id_for_label">Numero_facture</label>
            {% render_field form.Numero_facture class="form-control" %}

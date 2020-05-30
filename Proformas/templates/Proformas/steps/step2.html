@@ -25,11 +25,11 @@
 
 <!--{% for dict in formset.errors|slice:":1" %}-->
 <!--    {% for error in dict.values %}-->
-<!--                      {% if forloop.last %}-->
+
 <!--                                    <div class="alert alert-danger">-->
 <!--                <strong>   {{ error|first }}</strong>-->
 <!--            </div>-->
-<!--                        {% endif %}-->
+
 
 <!--    {% endfor %}-->
 <!--{% endfor %}-->
@@ -46,15 +46,37 @@
 
 <!--        {% endfor %}-->
 <!--                      {% endfor %}-->
-                                                {% if formset.errors %}
+
+<!--                        {% for field in formset %}-->
+<!--                                              <div class="alert alert-danger">-->
+<!--                          <strong><p>   {{ field.errors|striptags }}</p></strong>-->
+<!-- </div>-->
 
 
-                <div class="alert alert-danger">
-                    <strong><p>Check Your inputs</p></strong>
-                </div>
+<!--{% endfor %}-->
 
+<!--{% for form in formset.forms %}-->
+<!--                         <div class="alert alert-danger">-->
+<!--                          <strong><p>  {{ form.non_field_errors }}</p></strong>-->
+<!-- </div>-->
+<!--{% endfor %}-->
+{% for dict in formset.errors|slice:":1" %}
+    {% for error in dict.values %}
+                      {% if forloop.last %}
+                                    <div class="alert alert-danger">
+                <strong>   {{ error|first }}</strong>
+            </div>
+                        {% endif %}
 
-{% endif %}
+    {% endfor %}
+{% endfor %}
+
+<!--     {% if error %}-->
+
+<!--                <div class="alert alert-danger">-->
+<!--                    <strong><p>{{error}}</p></strong>-->
+<!--                </div>-->
+<!--{% endif %}-->
 
 
              <thead class=" text-primary"  >

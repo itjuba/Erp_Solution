@@ -24,6 +24,11 @@ urlpatterns = [
     path('create_payements_f/<int:pk>',views.payement_c,name="create_payements_f"),
     path('pdf/<int:pk>',views.html_to_pdf_view,name="pdf"),
 
+
+
+    path('commande_update/<int:pk>',views.commande_update,name="update_commande"),
+
+
     path('pdf_facture/<int:pk>',views.html_to_pdf_view_facture,name="pdf_facture"),
 
 

@@ -32,14 +32,12 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
-          md.showNotificationSuccess('top','center','success','Achats Created Successfully !');
+          md.showNotificationSuccess('top','center','success','Charge Created Successfully !');
           console.log("success");
         }
         else {
           console.log('error');
-          console.log(data.errors.errors)
-          console.log(data.errors)
-          md.showNotificationFail('bottom','left','warning',data.errors);
+          md.showNotificationFail('bottom','left','warning','please enter a valid email adresse !');
           $("#modal-book .modal-content").html(data.html_form);
         }
       }
@@ -59,7 +57,7 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
-          md.showNotificationDelete('top','center','danger','Achats Deleted Successfully !');
+          md.showNotificationDelete('top','center','danger','Charge Deleted Successfully !');
           setTimeout(function() { $("#display").hide(); }, 5000);
         }
         else {
@@ -82,11 +80,10 @@ $(function () {
         if (data.form_is_valid) {
           $("#book-table tbody").html(data.html_book_list);
           $("#modal-book").modal("hide");
-          md.showNotificationUpdate('top','center','primary','Achats Updated Successfully');
+          md.showNotificationUpdate('top','center','primary','Charge Updated Successfully');
           setTimeout(function() { $("#display").hide(); }, 5000);
         }
         else {
-         md.showNotificationFail('bottom','left','warning',data.errors);
           $("#modal-book .modal-content").html(data.html_form);
         }
       }

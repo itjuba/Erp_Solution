@@ -419,6 +419,7 @@ def save_Achats_form(request, form, template_name):
             })
         else:
             print(form.errors)
+            data['errors'] = form.non_field_errors()
             data['form_is_valid'] = False
     context = {'form': form}
     data['html_form'] = render_to_string(template_name, context, request=request)
