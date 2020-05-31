@@ -68,17 +68,21 @@ class Payements(models.Model):
      return str(self.Date)
 
    def name(self):
-      if Charge.objects.filter(id=self.reference):
+      if Charge.objects.filter(id=self.reference).exists():
          charge = Charge.objects.get(id=self.reference)
          return str(charge.Description)
 
-      elif  Achats.objects.filter(id=self.reference):
+      elif  Achats.objects.filter(id=self.reference).exists():
          payement = Achats.objects.get(id=self.reference)
          if payement.Id_Fournis:
           return str(payement.Id_Fournis)
          else:
             return str(payement.Date)
 
-      elif Facture.objects.get(commande=self.reference):
+
+      elif Facture.objects.filter(commande=self.reference).exists():
+         print('yes')
          facture =  Facture.objects.get(commande=self.reference)
          return str(facture.__str__())
+      else:
+         return self.reference

@@ -74,8 +74,8 @@ class Facture_Form(forms.ModelForm):
         commande = self.cleaned_data.get('commande')
         command = Commande.objects.get(id=commande.id)
         ttc= command.Montant_TTC
-        if Montant_TTC > ttc:
-            raise ValidationError('KBIR')
+        # if Montant_TTC > ttc:
+        #     raise ValidationError('le montant ttc facture > montant ttc commmande ')
 
 
 class Commande_Form2(forms.ModelForm):
