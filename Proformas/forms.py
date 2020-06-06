@@ -73,6 +73,9 @@ class Facture_Form(forms.ModelForm):
         Montant_TTC = self.cleaned_data.get('Montant_TTC')
         commande = self.cleaned_data.get('commande')
         command = Commande.objects.get(id=commande.id)
+        print(commande.id)
+        if Facture.objects.filter(commande=commande.id).exists():
+            raise ValidationError('exist déja !')
         ttc= command.Montant_TTC
         # if Montant_TTC > ttc:
         #     raise ValidationError('le montant ttc facture > montant ttc commmande ')

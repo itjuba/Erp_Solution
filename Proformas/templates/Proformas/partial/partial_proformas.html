@@ -1,4 +1,4 @@
-
+{% load tag %}
   {% for obj in c %}
 
 
@@ -44,11 +44,11 @@
              <a class="  likes-button "    href="{% url 'pdf' obj.id  %}" style="color : #9c27b0;" >
           <i class="fa fa-file  w3-xxlarge"></i></a>
 &nbsp
-
+    {% if  obj|filter %}
              <a class="  likes-button "    href="{% url 'create_facture' obj.id  %}" style="color : #9c27b0;" >
              <i class="fa fa-plus-circle w3-xxlarge"></i></a>
 
-
+    {% endif %}
 
                   </td>
 
