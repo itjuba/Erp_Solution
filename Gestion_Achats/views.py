@@ -273,39 +273,25 @@ def step1_ach(request):
 
 
 def step2_ach(request):
-    nadjib = modelformset_factory(Association, form=AssociationForm2, extra=1)
-    if request.method == 'POST':
-        if 'add_row' in request.POST:
-            cp = request.POST.copy()
-            cp['formset-TOTAL_FORMS'] = int(cp['formset-TOTAL_FORMS']) + 1
-            form = nadjib(cp, prefix='formset')
+   ach = Achats.objects.latest('id')
+   Art = Article.objects.all()
+   if request.method == 'POST':
+       if   request.POST['article'] and request.POST['prix'] and request.POST['quantite']:
+         commande_d = Association()
+         print(request.POST['article'])
+         if Article.objects.filter(Description= request.POST['article']).exists():
+          artt = get_object_or_404(Article,Description = request.POST['article'])
+         commande_d.Id_Article = artt
+         commande_d.Id_Achats = Achats.objects.latest('id')
+         commande_d.Prix_Unitaire = request.POST['prix']
+         commande_d.Quantite = request.POST['quantite']
+         commande_d.save()
+         return redirect('view')
+       else:
+           error = 'please check your inputs ! '
+           return render(request, 'step2.html', { 'art': Art , 'er': error })
 
-            if 'submit' in request.POST:
-                form.save()
-                return redirect('view')
-            return render(request, 'step2.html', {'formset': form})
-        elif 'submit' in request.POST:
-            print("submit !")
-            form = nadjib(request.POST,prefix='formset')
-            if form.is_valid():
-                form.save()
-
-
-                return redirect('view')
-            print(form.errors)
-            # return render(request, 'step2.html', {'formset': form, 'error': form.errors})
-
-    else:
-     id = Achats.objects.latest('id')
-     # print(id.id)
-     # form = modelformset_factory(Association, form=AssociationForm2, extra=1)
-     print('1')
-     new_car = nadjib(queryset=Association.objects.filter(Id_Achats=id.id),prefix='formset')
-     return render(request, 'step2.html', {'formset': new_car})
-    print('2')
-    id = Achats.objects.latest('id')
-    new_car = nadjib(queryset=Association.objects.filter(Id_Achats=id.id),prefix='formset')
-    return render(request, 'step2.html', {'formset': new_car})
+   return render(request, 'step2.html', {'id_achat':ach , 'art': Art})
 
 
 class ContactWizard(SessionWizardView):

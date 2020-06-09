@@ -1,38 +1,26 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
-<form method="POST" >
+<form method="POST" action="{% url 'step2_ach'%}" >
+      {% csrf_token %}
     <button id="done" class="btn btn-primary disabled" name="submit" type="submit">Ajouter</button>
+      <tr>
 
+          <td>
+                 <select  required="true" name="article" id="article" class="form-control">
+                 <option selected></option>
+                        {% for obj in art %}
+                 <option  value="{{obj}}">{{obj}}</option>
+                         {%endfor%}
 
-    {% csrf_token %}
-    {{ formset.management_form }}
-{{ formset.management_data}}
-    {% for form in formset.forms %}
+             </select>
 
-    <tr>
-        {% for field in form.visible_fields %}
-        <td>
-
-             {# Include the hidden fields in the form #}
-            {% if forloop.first %}
-            {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-            {% endfor %}
-            {% endif %}
-
-            {{  field }}
-
-        </td>
-
-        {% endfor %}
-
-    </tr>
-
-    {% endfor %}
-    <td>
-           <input title='Add a new car model' class="btn btn-success" type='submit' name='add_row' value='Add' />
-
-    </td>
-
+          </td>
+          <td>
+                 <input class="na"  required="true" min="0" max="10" step="0.01" value="0.00"  type="number" id="prix"  name="prix">
+          </td>
+          <td>
+                 <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">
+          </td>
+      </tr>
 
 </form>

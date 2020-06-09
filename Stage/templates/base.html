@@ -422,225 +422,9 @@ input:checked + .slider:before {
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{% static 'js/material-dashboard.js'%}" type="text/javascript"></script>
 
-<script>
-  $('#add_more').click(function() {
-	var form_idx = $('#id_form-TOTAL_FORMS').val();
-	$('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
-	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-});
+<script src="{% static 'js/add_form_button.js' %}"></script>
+<script src="{% static 'asynch_filtre.js' %}">
 </script>
-<script>
-  $(document).ready(function() {
-
-      $('.search').click(function(){
- var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
- var el= this;
- const artists_div = $('#replaceable-content')
-     var title = $('.da option:selected').val();
-      var price = $('.price').val();
-       var date = $('.date').val();
-       console.log(title)
-       console.log(price)
-       console.log(date)
-
-      $.ajax({
-               type: "POST",
-               url: '/search/ajax/',
-               data: JSON.stringify({'title' : title,'price':price,'date':date}),
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "X-CSRFToken": csrftoken
-            },
-
-               success: function(response) {
-                    artists_div.fadeTo('slow', 0).promise().then(() => {
-                // replace the HTML contents
-                artists_div.html(response['html_from_view'])
-                // fade-in the div with new contents
-                artists_div.fadeTo('slow', 1)
-            })
-
-                },
-                error: function(rs, e) {
-                       alert(rs.responseText);
-                }
-          });
-    })
-    });
-</script>
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
-
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
-
-        $full_page = $('.full-page');
-
-        $sidebar_responsive = $('body > .navbar-collapse');
-
-        window_width = $(window).width();
-
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
-
-        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-            $('.fixed-plugin .dropdown').addClass('open');
-          }
-
-        }
-
-        $('.fixed-plugin a').click(function(event) {
-          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
-          }
-        });
-
-        $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
-          var i = $(this)
-          console.log(i)
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-color', new_color);
-          }
-
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data-color', new_color);
-          }
-        });
-
-        $('.fixed-plugin .background-color .badge').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('background-color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-background-color', new_color);
-          }
-        });
-
-        $('.fixed-plugin .img-holder').click(function() {
-          $full_page_background = $('.full-page-background');
-
-          $(this).parent('li').siblings().removeClass('active');
-          $(this).parent('li').addClass('active');
-
-
-          var new_image = $(this).find("img").attr('src');
-
-          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            $sidebar_img_container.fadeOut('fast', function() {
-              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-              $sidebar_img_container.fadeIn('fast');
-            });
-          }
-
-          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-            $full_page_background.fadeOut('fast', function() {
-              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-              $full_page_background.fadeIn('fast');
-            });
-          }
-
-          if ($('.switch-sidebar-image input:checked').length == 0) {
-            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-          }
-        });
-
-        $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
-
-          $input = $(this);
-
-          if ($input.is(':checked')) {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar_img_container.fadeIn('fast');
-              $sidebar.attr('data-image', '#');
-            }
-
-            if ($full_page_background.length != 0) {
-              $full_page_background.fadeIn('fast');
-              $full_page.attr('data-image', '#');
-            }
-
-            background_image = true;
-          } else {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar.removeAttr('data-image');
-              $sidebar_img_container.fadeOut('fast');
-            }
-
-            if ($full_page_background.length != 0) {
-              $full_page.removeAttr('data-image', '#');
-              $full_page_background.fadeOut('fast');
-            }
-
-            background_image = false;
-          }
-        });
-
-        $('.switch-sidebar-mini input').change(function() {
-          $body = $('body');
-
-          $input = $(this);
-
-          if (md.misc.sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            md.misc.sidebar_mini_active = false;
-
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
-
-          } else {
-
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
-
-            setTimeout(function() {
-              $('body').addClass('sidebar-mini');
-
-              md.misc.sidebar_mini_active = true;
-            }, 300);
-          }
-
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
-
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
-
-        });
-      });
-    });
-  </script>
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
@@ -649,173 +433,41 @@ input:checked + .slider:before {
     });
   </script>
 
-<script>
-    jQuery(function($) {
-     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
-     $('div a').each(function() {
-      if (this.href === path) {
-       $(this).addClass('active');
-<!--       $('.wh').css("color", "white");-->
-<!--          $("i.start").siblings().css({"color": "white",  "font-weight": "bold";});-->
 
 
 
 
-      }
-     });
-    });
-
-
-</script>
-
-
-<!--<script>-->
-
-
-<!--    if(Cookies.get('id') && !($('#cl').hasClass('show'))){-->
-<!--      $('#cl').addClass(Cookies.get("id"));}-->
-<!--Cookies.remove('id');-->
-<!--  $('.dropdown-btn').on("click",function(){-->
-<!--           Cookies.set("id", "show");-->
-<!--&lt;!&ndash;           Cookies.remove('id');&ndash;&gt;-->
-
-
-<!--})-->
-<!--</script>-->
 
   {% block javascript %}
     {% endblock %}
 
-
-<script>
-      $('.nadjib').on("click",function(){
-    if($('#sidebar').hasClass('attig')){
-    console.log('yes');
-        $('#sidebar').animate({
-               left: '-300px'
-            }, 600);
-            $('#sidebar').removeClass('attig')
-<!--            $('#content').addClass('cardd');-->
-            $('.main-panel ').animate({
-                left: '-275px',
-
-            }, 600);
-                 $('#content').animate({
-                   width:'1250px',
-
-
-            }, 600);
-
-
-
-
-    }
-
-
-  else{
-     $('#sidebar').animate({
-                left: '0px'
-            }, 600);
-              $('#sidebar').addClass('attig')
-                $('#content').removeClass('cardd');
-            $('.main-panel').animate({
-                left: '0',
-
-            }, 600);
-                   $('#content').animate({
-                   width:'1000px',
-
-
-            }, 600);
-  }
-
-
-  });
-</script>
-
-<script>
-function goBack() {
-  window.history.back();
-}
-</script>
-
-<script>
-
-
-   $('#step2').on("click", function(e) {
-      e.preventDefault();
-        var total = 0;
-        $('.qu').each(function(ind) {
-            var prix = $('.na').eq(ind).val();
-            var quantite = $(this).val();
-            prix = (isNaN(prix) || (prix == '') )?0:parseInt(prix);
-            quantite = (isNaN(quantite) || (quantite == ''))?0:parseInt(quantite);
-            total += prix * quantite;
-        });
-        var sah = Cookies.get('montant')
-        if (total > sah){
-<!--        alert( "rak ghalet fe la7seb chikh " + total);-->
-          var message = 'Le Total des articles ne correspond pas à le montant HT   : ' + total
-          md.showNotificationDelete('top','center','danger',message);
-<!--          document.getElementById("done").disabled = True;-->
-            $('#done').addClass('disabled');
-          }
-          else{
-                      $('#done').removeClass('disabled');
-
-          }
-    });
-
-</script>
-
-<script>
-     $('#step1').on("click", function(e) {
-      var mont = $('.mont').val()
-<!--      console.log(mont);-->
-      Cookies.set('montant',mont);
-<!--      console.log(Cookies.get('montant'));-->
-
-    });
-
-</script>
-<script>
-  $(".bout").removeAttr("href").css("cursor","pointer");
-</script>
-<script>
-
- $('#changee').on("click", function(e) {
-     $(this).toggleClass("change")
-
-
-    });
-</script>
-
+<script src="{% static 'js/responsive_sidebare_code.js' %}"></script>
+<script src="{% static 'js/button_href_color.js' %}"></script>
+<script src="{% static 'js/sidebar_animation.js' %}"></script>
+<script src="{% static 'js/back_button.js' %}"></script>
+<script src="{% static 'js/montant_check_step2_ach.js' %}"></script>
+<script src="{% static 'js/montant_cookie.js' %}"></script>
+<script src="{% static 'js/button-href-delete.js' %}"></script>
 <script src="{% static 'js/tva.js' %}"></script>
+<script src="{% static 'js/close_button.js' %}"></script>
 
 
-
-
-
-<!--<script>-->
-<!--$(function () {-->
-<!--    var submitButton = $("#myForm input[type='submit']").attr("disabled", true);-->
-<!--    $("#myForm input.required").change(function () {-->
-<!--        var valid = true;-->
-<!--        $.each($("#myForm input.required"), function (index, value) {-->
-<!--            alert("comes here");-->
-<!--            if(!$(value).val()){-->
-<!--               valid = false;-->
-<!--            }-->
-<!--        });-->
-<!--        if(valid){-->
-<!--            console.log("valid");-->
-<!--            alert("valid");-->
-<!--        }-->
-<!-- -->
-<!--    });-->
-<!--});-->
-
-<!--</script>-->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#add").click(function() {
+          $('#mytable tbody>tr:last').clone(true).insertAfter('#mytable tbody>tr:last');
+          return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#add").click(function() {
+          $('#book-table tbody>tr:last').clone(true).insertAfter('#book-table tbody>tr:last');
+          return false;
+        });
+    });
+</script>
 
 
 

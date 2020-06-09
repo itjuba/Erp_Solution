@@ -17,19 +17,17 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                    <table class="table">
-{% for dict in formset.errors|slice:":1" %}
-    {% for error in dict.values %}
-                      {% if forloop.last %}
+                    <table class="table" id="mytable">
+
+                        {% if er%}
                                     <div class="alert alert-danger">
-                <strong>   {{ error|first }}</strong>
+                <strong>   {{ er }}</strong>
             </div>
                         {% endif %}
 
-    {% endfor %}
-{% endfor %}
 
              <thead class=" text-primary"  >
+
 
                         <th>
                           Article
@@ -43,12 +41,12 @@
                       </thead>
 
                       </thead>
-                    <tbody >
-
+                    <tbody>
                       {% include 'Gestion_Achats/Achats/assos.html' %}
-
                       </tbody>
+
                     </table>
+                     <button  class="btn btn-primary" id="add" >Add new row</button>
 
 
                 </div>

@@ -551,29 +551,25 @@ def step1(request):
 
 
 def step2(request):
-    nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
-    if request.method == 'POST':
-        if 'add-row' in request.POST:
-            cp = request.POST.copy()
-            cp['form-TOTAL_FORMS'] = int(cp['form-TOTAL_FORMS']) + 1
-            form = nadjib(cp, prefix='form')
-            return render(request, 'Proformas/steps/step2.html', {'formset': form})
-        form = nadjib(request.POST, prefix='form')
-        if form.is_valid():
-            form.save()
+        commande = Commande.objects.latest('id')
+        if request.method == 'POST':
+            if request.POST['designation'] and request.POST['prix'] and request.POST['quantite'] and request.POST['commande'] and request.POST['mnt_ht'] and request.POST['mnt_tva'] and request.POST['mnt_ttc']:
+                commande_d = Commande_Designation()
+                if Commande.objects.filter(id=request.POST['commande']).exists():
+                    com = get_object_or_404(Commande, id=request.POST['commande'])
+                commande_d.Designation = request.POST['designation']
+                commande_d.Prix_Unitaire = request.POST['prix']
+                commande_d.Command =  commande
+                commande_d.Montant_HT = request.POST['mnt_ht']
+                commande_d.Montant_TTC = request.POST['mnt_ttc']
+                commande_d.Montant_TVA = request.POST['mnt_tva']
+                commande_d.save()
+                return redirect('step3')
+            else :
+                er = 'check yout inputs :'
+                return render(request, 'Proformas/steps/step2.html', {'com': commande ,'ers' :er})
 
-            return redirect('step3')
-        else:
-            print('not valide')
-            print(form.errors)
-
-
-            return render(request, 'Proformas/steps/step2.html', {'formset': form})
-
-    else:
-
-        formset = nadjib(queryset=Commande.objects.none(),prefix='form')
-        return render(request, 'Proformas/steps/step2.html', {'formset': formset})
+        return render(request, 'Proformas/steps/step2.html',{'com': commande} )
 
 
 

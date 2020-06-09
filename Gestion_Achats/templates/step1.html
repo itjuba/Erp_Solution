@@ -16,7 +16,7 @@
 
                 <div class="card-body" style="margin-left:25px">
                   <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" >
                         {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -34,13 +34,14 @@
 
                         <br><br><br><br><br>
 
-<form method="POST">
+<form method="POST" >
     {% csrf_token %}
          <div class="col-md-4" style="margin-left : auto;margin-right:auto;">
                           <label for="">TVA%</label>
                         <input   class="form-control" type="text" name="tv">
                             </div>
     <br><br>
+    <div style="margin-left : 25px" >
    <div class="form-row">
         <div class="form-group col-md-6 mb-0">
           <label class="bmd-label-floating" for="form.id_for_label">Montant_HT</label>
@@ -70,6 +71,7 @@
 
 
     <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />
+        </div>
 </form>
 
 <!--    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />-->

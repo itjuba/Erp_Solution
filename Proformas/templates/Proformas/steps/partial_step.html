@@ -1,31 +1,40 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
 <form method="POST" id="myform" >
-    <button id="done" class="btn btn-primary" type="submit">Ajouter</button>
+        {% csrf_token %}
 
-    {% csrf_token %}
-    {{ formset.management_form }}
-{{ formset.management_data}}
-    {% for form in formset.forms %}
-    <tr >
-        {% for field in form.visible_fields %}
-        <td>
-             {# Include the hidden fields in the form #}
-            {% if forloop.first %}
-            {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-            {% endfor %}
-            {% endif %}
-            {{  field }}
+    <button id="done" class="btn btn-primary disabled" type="submit">Ajouter</button>
 
-        </td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-      <td>
-           <input title='Add a new car model' class="btn btn-success" type='submit' name='add-row' value='Add' />
+        <tr>
+             <td>
+         <input class="na"  required="true"   type="text" id="designation"  name="designation">
+          </td>
 
-    </td>
+          <td>
+         <input class="na"  required="true" min="0" max="10" step="0.01" value="0.00"  type="number" id="prix"  name="prix">
+          </td>
 
+          <td>
+     <select  required="true" name="commande" id="article" class="form-control">
+                 <option selected>{{com}}</option>
+
+                 <option  value="{{com}}"></option>
+
+
+             </select>          </td>
+
+          <td>
+                 <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">
+          </td>
+               <td>
+         <input class="na"  required="true" min="0" max="10" step="0.01" value="0.00"  type="number" id="mnt_ht"  name="mnt_ht">
+          </td>
+               <td>
+         <input class="na"  required="true" min="0" max="10" step="0.01" value="0.00"  type="number" id="mnt_tva"  name="mnt_tva">
+          </td>
+               <td>
+         <input class="na"  required="true" min="0" max="10" step="0.01" value="0.00"  type="number" id="mnt_ttc"  name="mnt_ttc">
+          </td>
+      </tr>
 
 </form>
