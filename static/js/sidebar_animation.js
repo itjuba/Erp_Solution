@@ -34,7 +34,7 @@
 
             }, 600);
                    $('#content').animate({
-                   width:'1000px',
+//                   width:'1000px',
 
 
             }, 600);

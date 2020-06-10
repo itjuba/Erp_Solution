@@ -277,13 +277,15 @@ def step2_ach(request):
    Art = Article.objects.all()
    if request.method == 'POST':
        if   request.POST['article'] and request.POST['prix'] and request.POST['quantite']:
+         prix = float(request.POST['prix'] )
+         prix    = str(round(prix ,2))
+         print(prix)
          commande_d = Association()
-         print(request.POST['article'])
          if Article.objects.filter(Description= request.POST['article']).exists():
           artt = get_object_or_404(Article,Description = request.POST['article'])
          commande_d.Id_Article = artt
          commande_d.Id_Achats = Achats.objects.latest('id')
-         commande_d.Prix_Unitaire = request.POST['prix']
+         commande_d.Prix_Unitaire = prix
          commande_d.Quantite = request.POST['quantite']
          commande_d.save()
          return redirect('view')

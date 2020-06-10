@@ -6,7 +6,9 @@ from .forms import ClientForm,Contact_Form
 from django.http import JsonResponse
 import datetime
 from Proformas.models import Facture
-from Gestion_Achats.models import Payements
+from django.db.models import Count
+from Gestion_Achats.models import Payements,Achats,Association,Article
+from Transactionb.models import Transactionb
 from urllib.parse import parse_qs
 import json
 from django.contrib import messages
@@ -14,18 +16,48 @@ from django.template.loader import render_to_string
 # Create your views here.
 
 
-def ajax_pay(request):
+def ajax_trans(request):
     data = {}
+    days = 7
+    start_date = timezone.now() - datetime.timedelta(days=days - 1)
+
+    datetime_list = []
     labels = []
     salesItems = []
-    for n in Payements.objects.filter(E_S='Dépence'):
-        labels.append(n.Date.strftime("%a"))
-        salesItems.append(n.Montant_HT)
+    d = Transactionb.objects.filter(validation='validé').order_by('Date')
+    print(d)
+    for n in Transactionb.objects.filter(validation='validé').order_by('Date'):
+        for x in range(0, days):
+            new_time = start_date + datetime.timedelta(days=x)
+            datetime_list.append(new_time)
+            if (n.Date == new_time.date()):
+                labels.append(new_time.strftime("%a"))
+                salesItems.append(n.Montant_HT)
     print(labels)
     data['labels'] = labels
     data['data'] = salesItems
-    if request.is_ajax():
-        print('ajax')
+    # print(salesItems)
+    # print(labels)
+    return JsonResponse(data=data)
+
+
+def ajax_pay(request):
+    data = {}
+    days = 7
+    start_date = timezone.now() - datetime.timedelta(days=days - 1)
+
+    datetime_list = []
+    labels = []
+    salesItems = []
+    for n in Payements.objects.filter(E_S='Dépence').order_by('Date'):
+        for x in range(0, days):
+            new_time = start_date + datetime.timedelta(days=x)
+            datetime_list.append(new_time)
+            if (n.Date == new_time.date()):
+                labels.append(new_time.strftime("%a"))
+                salesItems.append(n.Montant_HT)
+    data['labels'] = labels
+    data['data'] = salesItems
     return JsonResponse(data=data)
 
 
@@ -36,21 +68,27 @@ def ajax(request):
             # data['data'] = [123,100,80,2,10,50,180]
             days = 7
             start_date = timezone.now() - datetime.timedelta(days=days - 1)
+
             datetime_list = []
             labels = []
             salesItems = []
 
-            # new_time = start_date + datetime.timedelta(days=x)
 
-            for n in Facture.objects.filter(Etat=True):
-                datetime_list.append(n.Date_payement)
-                labels.append(n.Date_payement.strftime("%a"))
-                salesItems.append(n.Montant_HT)
-            print(labels)
+            for n in Payements.objects.filter(E_S='Vente').order_by('Date'):
+                for x in range(0,days):
+                    new_time = start_date + datetime.timedelta(days=x)
+                    datetime_list.append(new_time)
+                    # print(new_time.date())
+                    # print(n.Date)
+                    if (n.Date == new_time.date()):
+                        labels.append(new_time.strftime("%a"))
+                        salesItems.append(n.Montant_HT)
+                # datetime_list.append(n.Date)
+                # labels.append(n.Date)
+                # salesItems.append(n.Montant_HT)
             data['labels'] = labels
             data['data'] = salesItems
-            if request.is_ajax():
-             print('ajax')
+            # if request.is_ajax():
             return JsonResponse(data=data)
 
 
@@ -84,15 +122,33 @@ def graph(request,*args,**kwargs):
     for x in factur:
         mhtg = mhtg + x.Montant_HT
 
-    print(mhtg_p)
-    print(mhtg_np)
-    print(mhtg)
+
+    top_client = Client_Data.objects.values_list('Raison_social').annotate(truck_count=Count('Raison_social')).order_by(
+        '-truck_count')[0]
+    x = top_client[0]
+    pay_vente = Payements.objects.filter(E_S="Vente")
+    total_v = 0
+    for d in pay_vente:
+        total_v = total_v + d.Montant_HT
+
+
+    top_p = Association.objects.values_list('Id_Article').annotate(truck_count=Count('Id_Article')).order_by(
+        '-truck_count')[0]
+    p = top_p[0]
+    produit_top = get_object_or_404(Article,id=p)
+    prod = produit_top.Designation
     context = {'facture': factur,
                'mhtg_p': mhtg_p,
                'mhtg_np': mhtg_np,
                'mhtg': mhtg,
                'data':data,
+               'top_c': x,
+               'rev': total_v,
+               'top_p':prod
                }
+
+    # print(top_client[0])
+
 
     return render(request,'Client_Section/home_client.html',context)
 
@@ -113,7 +169,6 @@ def contact(request):
 
 def see(request,slug):
     data = dict()
-    print(request.POST)
     ProductFormSet = modelformset_factory(Contact, fields=('Nom','post','Tel','email','contact_type','client'), extra=0)
     client = get_object_or_404(Client_Data, slug=slug)
 

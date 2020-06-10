@@ -171,6 +171,8 @@ class Payments_Form(forms.ModelForm):
         self.initial['E_S'] = 'Dépence'
         self.initial['reference'] = achat.id
         self.initial['Montant_HT'] = achat.Montant_HT
+        self.initial['Montant_TVA'] = achat.Montant_HT
+        self.initial['Montant_TTC'] = achat.Montant_HT
 
     def clean(self):
         cleaned_data = self.cleaned_data

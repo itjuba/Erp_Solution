@@ -4,8 +4,8 @@
 {% block javascript %}
   <script src="{% static 'js/create_payments.js' %}"></script>
 {% endblock %}
+<div class="content" >
 
- <div class="content" >
 {% block content%}
      <br><br><br>
 
@@ -14,11 +14,10 @@
   <div class="bar2"></div>
   <div class="bar3"></div>
 </div>
-     <div class="container"  id="content">
+     <div class="container">
 
-        <div class="container-fluid">
+        <div class="container-fluid"   id="content">
           <div class="row">
-            <div class="col-md-12">
                   <div class="col-md-12" id="col2" >
               <div class="card">
                 <div class="card-header card-header-primary">
@@ -71,7 +70,7 @@
                     {% include 'Gestion_Achats/payement/partial/partial_payement.html' %}
                       </tbody>
                         <div class="modal fade" id="modal-book">
-                    <div class="modal-dialog" style=" left: 10%">
+                    <div class="modal-dialog" style="">
                    <div class="modal-content"  >
                   </div>
                      </div>
@@ -81,7 +80,6 @@
                 </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -90,7 +88,7 @@
 
       </footer>
     </div>
-  </div>
+
 
 {% endblock%}
 

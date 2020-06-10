@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 
 {% block javascript %}
-
+<script src="{% static 'js/create_facture.js' %}"></script>
 <script>
 $(document).ready(function(){
   function renderChart(data,lab){
@@ -49,7 +49,7 @@ var myChart = new Chart(ctx, {
             data: {
                 labels: lab,
                 datasets: [{
-                    label: '# Vente',
+                    label: '# Transaction Bancaire',
                     data: data,
                     backgroundColor : 'rgba(11,156,49,0.1)',
                     borderColor : 'rgb(0,0,0)',
@@ -86,7 +86,7 @@ var myChart = new Chart(ctx, {
             data: {
                 labels: lab,
                 datasets: [{
-                    label: '# Payements',
+                    label: '# Dépence',
                     data: data,
                     backgroundColor : 'rgba(248, 148, 6, 0.6)',
                     borderColor : 'rgb(0,0,0)',
@@ -154,7 +154,7 @@ $.ajax({
   });
   $.ajax({
   type: "GET",
-  url: '/client/ajax',
+  url: '/client/ajax_trans',
   dataType: "json",
   success : function(data){
   console.log(data);
@@ -192,9 +192,9 @@ $.ajax({
                   <div class="card-icon">
                     <i class="material-icons">content_copy</i>
                   </div>
-                  <p class="card-category">Used Space</p>
-                  <h3 class="card-title">49/50
-                    <small>GB</small>
+                  <p class="card-category">Top Product</p>
+                  <h3 class="card-title">{{top_p|slice:11}}
+                    <small></small>
                   </h3>
                 </div>
                 <div class="card-footer">
@@ -212,7 +212,7 @@ $.ajax({
                     <i class="material-icons">store</i>
                   </div>
                   <p class="card-category">Revenue</p>
-                  <h3 class="card-title">$34,245</h3>
+                  <h3 class="card-title">{{rev}}Dz</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -227,8 +227,8 @@ $.ajax({
                   <div class="card-icon">
                     <i class="material-icons">info_intline</i>
                   </div>
-                  <p class="card-category">Fixed Issues</p>
-                  <h3 class="card-title">75</h3>
+                  <p class="card-category">Top  Clients</p>
+                  <h3 class="card-title">{{top_c}}</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -243,12 +243,12 @@ $.ajax({
                   <div class="card-icon">
                     <i class="fa fa-facebook"></i>
                   </div>
-                  <p class="card-category">Followers</p>
-                  <h3 class="card-title">+245</h3>
+                  <p class="card-category">Page Facebook</p>
+                    <a  href="https://web.facebook.com/SHInformatiqu/?_rdc=1&_rdr">Sh Informatique</a>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
+                    <i class="material-icons">update</i> Follow Us
                   </div>
                 </div>
               </div>
@@ -263,7 +263,7 @@ $.ajax({
                   </div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Daily Sales</h4>
+                  <h4 class="card-title">Weekly Sales</h4>
                   <p class="card-category">
                     <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
                 </div>
@@ -282,7 +282,7 @@ $.ajax({
                   </div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Daily Payaments</h4>
+                  <h4 class="card-title">Weekly Dépence</h4>
                   <p class="card-category">
                     <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
                 </div>
@@ -301,7 +301,7 @@ $.ajax({
                   </div>
                 </div>
                 <div class="card-body" >
-                  <h4 class="card-title">Daily Payaments</h4>
+                  <h4 class="card-title">Weekly Tranasction</h4>
                   <p class="card-category">
                     <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
                 </div>
@@ -316,16 +316,27 @@ $.ajax({
 
 
  <div class=" col-md-12">
+              <div class="container-fluid" id="content" >
+          <div class="row" >
+            <div class="col-md-12" >
+                  <div class="col-md-12" id="col2" >
               <div class="card">
                 <div class="card-header card-header-warning">
-                  <h4 class="card-title">Facture Table</h4>
-                  <p class="card-category">Here is Facture Informations</p>
+                  <h4 class="card-title ">Facture Table</h4>
+                  <p class="card-category"> Here is Facture informations</p>
                 </div>
-                  <div class="card-body table-responsive">
-                  <table class="table table-hover">
-                        <thead class=" text-primary">
-                        <th>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="book-table">
+
+                    <p><strong> MH Global:{{mhtg}}DA , &nbsp; MH Payed Global :{{mhtg_p}}DA , &nbsp; MH Global Not Payed : {{mhtg_np}} DA</strong></p>
+
+                      <thead class=" text-primary">
+                       <th>
                          Date
+                        </th>
+                        <th>
+                         Client
                         </th>
                         <th>
                          commande
@@ -351,14 +362,24 @@ $.ajax({
                           <th>
                          Actions
                         </th>
-
                       </thead>
-                        <tbody>
+                      <tbody id="replaceable-content">
                     {% include 'Proformas/facture/partial/partial_facture.html' %}
                       </tbody>
-                  </table>
+                        <div class="modal fade" id="modal-book">
+                    <div class="modal-dialog" style=" left: 10%">
+                   <div class="modal-content"  >
+                  </div>
+                     </div>
+                        </div>
+                    </table>
+        </div>
+                </div>
               </div>
-              </div>
+            </div>
+          </div>
+        </div>
+      </div>
  </div>
  </div>
  </div>
