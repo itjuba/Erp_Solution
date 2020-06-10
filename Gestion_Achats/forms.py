@@ -83,6 +83,9 @@ class AssociationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AssociationForm, self).__init__(*args, **kwargs)
+        self.fields['Id_Achats'].widget.attrs['class'] = 'form-control';
+        self.fields['Id_Article'].widget.attrs['class'] = 'form-control';
+
         # self.initial['Id_Achats'] = Achats.objects.latest('id')
 
     # def clean(self):
