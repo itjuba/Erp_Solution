@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
-<form method="POST" action="{% url 'step2_ach'%}" >
+
       {% csrf_token %}
     <button id="done" class="btn btn-primary disabled" name="submit" type="submit">Ajouter</button>
       <tr>
@@ -23,5 +23,6 @@
                  <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">
           </td>
       </tr>
+
 
 </form>

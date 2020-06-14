@@ -30,11 +30,11 @@
               $('#sidebar').addClass('attig')
                 $('#content').removeClass('cardd');
             $('.main-panel').animate({
-                left: '0',
+                left: '1px',
 
             }, 600);
                    $('#content').animate({
-//                   width:'1000px',
+                   width:'1150px',
 
 
             }, 600);

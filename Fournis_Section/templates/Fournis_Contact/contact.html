@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static%}
-
+<p>hello</p>
 {% block javascript %}
   <script src="{% static 'js/create_contact.js' %}"></script>
 {% endblock %}
@@ -24,8 +24,8 @@
                 <br><br>
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Client Table</h4>
-                  <p class="card-category"> Here is Contacts informations</p>
+                  <h4 class="card-title ">Founniserurs Contact Table</h4>
+                  <p class="card-category">Voici Les Contacts Founrisseurs</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -33,7 +33,7 @@
                           <p>
     <button type="button" class="btn btn-primary js-create-book bout" data-url="{% url 'F_create_contact' %}">
       <span class="glyphicon glyphicon-plus"></span>
-      New Contact
+      Ajouter Contact
     </button>
   </p>
 

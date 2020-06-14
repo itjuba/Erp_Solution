@@ -135,7 +135,10 @@ def graph(request,*args,**kwargs):
     top_p = Association.objects.values_list('Id_Article').annotate(truck_count=Count('Id_Article')).order_by(
         '-truck_count')[0]
     p = top_p[0]
-    produit_top = get_object_or_404(Article,id=p)
+    if p:
+     produit_top = get_object_or_404(Article,id=p)
+    else :
+        prod = 'no product for now '
     prod = produit_top.Designation
     context = {'facture': factur,
                'mhtg_p': mhtg_p,

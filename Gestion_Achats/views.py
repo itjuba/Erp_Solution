@@ -214,7 +214,7 @@ def payement_create(request,pk):
 def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
     # ass = Association.objects.filter(Id_Achats=achat)
-    form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
+    form = modelformset_factory(Association, form=AssociationForm, extra=0,can_delete=True)
 
     if request.method == 'POST':
        formset = form(request.POST or None)
@@ -249,7 +249,7 @@ def update(request,pk):
 
 
     else:
-        form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
+        form = modelformset_factory(Association, form=AssociationForm, extra=0, can_delete=True)
         formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
 
 
@@ -278,16 +278,16 @@ def step2_ach(request):
    if request.method == 'POST':
        if   request.POST['article'] and request.POST['prix'] and request.POST['quantite']:
          prix = float(request.POST['prix'] )
-         prix    = str(round(prix ,2))
-         print(prix)
-         commande_d = Association()
-         if Article.objects.filter(Description= request.POST['article']).exists():
-          artt = get_object_or_404(Article,Description = request.POST['article'])
-         commande_d.Id_Article = artt
-         commande_d.Id_Achats = Achats.objects.latest('id')
-         commande_d.Prix_Unitaire = prix
-         commande_d.Quantite = request.POST['quantite']
-         commande_d.save()
+         prix = str(round(prix ,2))
+         artt = get_object_or_404(Article,Description = request.POST['article'])
+         for prix,q in zip(request.POST.getlist('prix'),request.POST.getlist('quantite')):
+             print(prix)
+             print(q)
+
+             na = AssociationForm({'Id_Article' :artt ,'Id_Achats':Achats.objects.latest('id'),'Prix_Unitaire':str(round(float(prix),2)),'Quantite':q},instance=Association())
+             if na.is_valid():
+                 print('valide')
+                 na.save()
          return redirect('view')
        else:
            error = 'please check your inputs ! '
