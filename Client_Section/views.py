@@ -125,7 +125,10 @@ def graph(request,*args,**kwargs):
 
     top_client = Client_Data.objects.values_list('Raison_social').annotate(truck_count=Count('Raison_social')).order_by(
         '-truck_count')[0]
-    x = top_client[0]
+    if top_client:
+     x = top_client[0]
+    else :
+        x='No Client Found !'
     pay_vente = Payements.objects.filter(E_S="Vente")
     total_v = 0
     for d in pay_vente:

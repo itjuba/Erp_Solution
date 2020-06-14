@@ -568,6 +568,8 @@ def step2(request):
                          cd.save()
                      else:
                          print(cd.errors)
+                         er = 'check yout inputs :'
+                         return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
                 return redirect('step3')
 
             else:
