@@ -43,6 +43,7 @@ def ajax_live(request):
             # client = get_object_or_404(Client_Data,Raison_social__iexact=url_parameter)
             client = Client_Data.objects.get(Raison_social__iexact=url_parameter)
             artists = Facture.objects.filter(commande__Client=client)
+            print(artists)
 
         print(artists)
     else:
@@ -50,6 +51,18 @@ def ajax_live(request):
         print(artists)
 
     if request.is_ajax():
+        if not artists:
+            print('here')
+            html = render_to_string(
+                template_name="Proformas/facture/ajax_errors.html",
+                context={"artists": artists ,'er' :'not found'}
+            )
+
+            data_dict = {"html_from_view": html}
+            print(data_dict)
+
+            return JsonResponse(data=data_dict, safe=False)
+
         html = render_to_string(
             template_name="Proformas/facture/ajax.html",
             context={"artists": artists}

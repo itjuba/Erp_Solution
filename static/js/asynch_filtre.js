@@ -27,6 +27,9 @@
                 artists_div.html(response['html_from_view'])
                 // fade-in the div with new contents
                 artists_div.fadeTo('slow', 1)
+
+                if (response['html_from_view']==''){
+                console.log('not found ! ')}
             })
 
                 },
