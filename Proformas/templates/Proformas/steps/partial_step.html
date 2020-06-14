@@ -1,6 +1,5 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
-<!--<form method="POST" id="myform" >-->
         {% csrf_token %}
 
     <button id="done" class="btn btn-primary disabled" type="submit">Ajouter</button>
@@ -14,14 +13,7 @@
          <input class="na"  required="true" min="0" max="10" step="0.01" value="0.00"  type="number" id="prix"  name="prix">
           </td>
 
-          <td>
-     <select  required="true" name="commande" id="article" class="form-control">
-                 <option selected>{{com}}</option>
 
-                 <option  value="{{com}}"></option>
-
-
-             </select>          </td>
 
           <td>
                  <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">

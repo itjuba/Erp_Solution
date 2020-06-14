@@ -551,24 +551,30 @@ def step1(request):
 
 
 def step2(request):
+        print('in')
         commande = Commande.objects.latest('id')
         if request.method == 'POST':
-            if request.POST['designation'] and request.POST['prix'] and request.POST['quantite'] and request.POST['commande'] and request.POST['mnt_ht'] and request.POST['mnt_tva'] and request.POST['mnt_ttc']:
-                commande_d = Commande_Designation()
-                if Commande.objects.filter(id=request.POST['commande']).exists():
-                    com = get_object_or_404(Commande, id=request.POST['commande'])
-                commande_d.Designation = request.POST['designation']
-                commande_d.Prix_Unitaire = request.POST['prix']
-                commande_d.Command =  commande
-                commande_d.Montant_HT = request.POST['mnt_ht']
-                commande_d.Montant_TTC = request.POST['mnt_ttc']
-                commande_d.Montant_TVA = request.POST['mnt_tva']
-                commande_d.save()
+            print('post')
+            if request.POST['designation'] and request.POST['prix'] and request.POST['quantite']  and request.POST['mnt_ht'] and request.POST['mnt_tva'] and request.POST['mnt_ttc']:
+                print('get')
+                print(request.POST)
+                for des,prix,q,mht,mtva,ttc in zip(request.POST.getlist('designation'),request.POST.getlist('prix'),request.POST.getlist('quantite'),request.POST.getlist('mnt_tva'),request.POST.getlist('mnt_ht'),request.POST.getlist('mnt_ttc')):
+                     print('in for')
+                     cd = Commande_D_Form({'Designation':des,'Prix_Unitaire':prix,'Quantite':q,'Montant_HT':mht,'Montant_TVA':mtva,'Montant_TTC':ttc , 'Command' : commande},instance=Commande_Designation())
+                     print('hna')
+                     print(cd.is_valid())
+                     if cd.is_valid():
+                         print('valide')
+                         cd.save()
+                     else:
+                         print(cd.errors)
                 return redirect('step3')
-            else :
-                er = 'check yout inputs :'
-                return render(request, 'Proformas/steps/step2.html', {'com': commande ,'ers' :er})
 
+            else:
+                er = 'check yout inputs :'
+
+                return render(request, 'Proformas/steps/step2.html', {'com': commande ,'ers' :er})
+        print('ici')
         return render(request, 'Proformas/steps/step2.html',{'com': commande} )
 
 

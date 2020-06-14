@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                      <form method="POST" id="myform" >
+                      <form method="POST" id="myform" action="{% url 'step2' %}" >
 
                     <table class="table" id="book-table">
 
@@ -40,9 +40,9 @@
                         <th>
                           Prix_Unitaire
                         </th>
-                        <th>
-                          Commande
-                        </th>
+<!--                        <th>-->
+<!--                          Commande-->
+<!--                        </th>-->
                         <th>
                           Quantite
                         </th>
