@@ -38,14 +38,13 @@ def ajax_live(request):
 
         elif Facture.objects.filter(Date__icontains=url_parameter):
             artists = Facture.objects.filter(Date__icontains=url_parameter)
-
-        elif Client_Data.objects.get(Raison_social__iexact=url_parameter):
-            # client = get_object_or_404(Client_Data,Raison_social__iexact=url_parameter)
-            client = Client_Data.objects.get(Raison_social__iexact=url_parameter)
-            artists = Facture.objects.filter(commande__Client=client)
-            print(artists)
-
-        print(artists)
+        elif Client_Data.objects.filter(Raison_social__iexact=url_parameter).exists():
+                Client_Data.objects.get(Raison_social__iexact=url_parameter)
+                # client = get_object_or_404(Client_Data,Raison_social__iexact=url_parameter)
+                client = Client_Data.objects.get(Raison_social__iexact=url_parameter)
+                artists = Facture.objects.filter(commande__Client=client)
+        else:
+            artists = ""
     else:
         artists = Facture.objects.all()
         print(artists)
