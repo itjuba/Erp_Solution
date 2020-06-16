@@ -162,7 +162,7 @@ input:checked + .slider:before {
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><img src="{% static 'images/sh.png'%}"  style="width : 120px;height:120px;margin-left:65px" class="simple-text logo-normal">
+      <div class="logo"><img src="{% static 'images/sh.png'%}"  style="width : 150px;height:130px;margin-left:45px" class="simple-text logo-normal">
 <!--          SH Informatique-->
         </img></div>
       <div class="sidebar-wrapper">
@@ -264,10 +264,17 @@ input:checked + .slider:before {
               <i class="material-icons" style="" >content_paste</i>
               <p>Charge List </p>
             </a>
-          </li>   <li class="nav-item ">
+          </li>
+          <li class="nav-item ">
             <a class="nav-link" href="{% url 'transaction_view'%}">
               <i class="material-icons" style="" >content_paste</i>
               <p>Transaction bancaire </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'caisse'%}">
+              <i class="material-icons" style="" >content_paste</i>
+              <p>Caisse </p>
             </a>
           </li>
 
