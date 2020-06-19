@@ -77,6 +77,8 @@ def save_client_form(request, form,Fournis_Contact_form, template_name):
             print(form.errors)
             print(Fournis_Contact_form.errors)
             data['form_is_valid'] = False
+    data['errors_c'] = Fournis_Contact_form.errors.as_text()
+    # data['errors'] = form.errors.as_text()
     context = {'form': form,'contact_form':Fournis_Contact_form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
@@ -90,7 +92,7 @@ def save_contact_form(request,Fournis_Contact_form, template_name):
 
             data['form_is_valid'] = True
             books = Fournis_Contact.objects.all()
-            data['html_book_list'] = render_to_string('contact/contact_list.html', {
+            data['html_book_list'] = render_to_string('Fournis_Contact/contact_list.html', {
                 'contact': books
             })
         else:
@@ -98,6 +100,8 @@ def save_contact_form(request,Fournis_Contact_form, template_name):
             print(Fournis_Contact_form.errors)
             data['form_is_valid'] = False
     context = {'form':Fournis_Contact_form}
+    data['errors'] = Fournis_Contact_form.errors.as_text()
+
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -167,15 +171,15 @@ def client_create(request):
 
 
 
-def contact_update(request,pk):
-    contact = get_object_or_404(Fournis_Contact, pk=pk)
-    print(contact)
+def contact_update_fournis(request,pk):
+    contact_f = get_object_or_404(Fournis_Contact, pk=pk)
+    print(contact_f)
     if request.method == 'POST':
         print(request.POST)
-        form = Contact_Fournis_Form(request.POST, instance=contact)
+        form = Contact_Fournis_Form(request.POST, instance=contact_f)
 
     else:
-        form = Contact_Fournis_Form(instance=contact)
+        form = Contact_Fournis_Form(instance=contact_f)
 
 
     return save_contact_form(request, form,'Fournis_Contact/partial_contact/partial_contact_update.html')

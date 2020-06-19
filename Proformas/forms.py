@@ -26,24 +26,28 @@ class Payments_Form_facture(forms.ModelForm):
         self.initial['Numero_facture'] = facture.Numero_facture
 
     def clean(self):
-        print('fuck you')
         idp = self.facture
         fac = get_object_or_404(Facture,id=idp)
         print(fac.commande_id)
         print(idp)
         pay = Payements.objects.filter(reference=fac.commande_id)
         if pay:
-            raise ValidationError('the payment for this facture exist !')
+            raise ValidationError('le payement de cette facture exist deja !')
 
 
 class Facture_Form2(forms.ModelForm):
     Titre_facture = forms.CharField()
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    Date_limite_payement = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Facture
-        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
+        fields = ('Date','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
 
 
 class Facture_Form(forms.ModelForm):
+    Date =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
+    Date_limite_payement =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
+
     Titre_facture = forms.CharField()
     class Meta:
         model = Facture
@@ -68,6 +72,7 @@ class Facture_Form(forms.ModelForm):
 
 
 
+
     def clean(self):
         cleaned_data = self.cleaned_data
         Montant_TTC = self.cleaned_data.get('Montant_TTC')
@@ -75,21 +80,33 @@ class Facture_Form(forms.ModelForm):
         command = Commande.objects.get(id=commande.id)
         print(commande.id)
         if Facture.objects.filter(commande=commande.id).exists():
-            raise ValidationError('exist déja !')
+            raise ValidationError('il existe une facture pour cette commande !')
         ttc= command.Montant_TTC
         # if Montant_TTC > ttc:
         #     raise ValidationError('le montant ttc facture > montant ttc commmande ')
 
 
 class Commande_Form2(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    Date_validation = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Commande
         fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation','Date_validation')
 
 
-class Commande_Form(forms.ModelForm):
+class Commande_Form_step(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
 
+    class Meta:
+        model = Commande
+        fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service')
+
+
+
+class Commande_Form(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    Date_validation = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Commande
         fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation','Date_validation')
@@ -148,6 +165,7 @@ class Commande_D_Form(forms.ModelForm):
                 Montant_HT=Montant_HT).exists() and Commande_Designation.objects.filter(
                 Montant_TVA=Montant_TVA).exists() and Commande_Designation.objects.filter(
                 Montant_TTC=Montant_TTC).exists():
+                 print('data exists')
                  raise ValidationError('data exists ')
 
             return cleaned_data
@@ -192,4 +210,6 @@ class Modalite_Form(forms.ModelForm):
 
 
 class validat(forms.Form):
-    Validate_date = forms.DateField()
+    Validate_date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    # Date_validation = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    # Validate_date = forms.DateField()

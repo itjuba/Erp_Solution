@@ -1,8 +1,12 @@
 {% load dat_tag %}
 {% load my_tag %}
-
   {% for obj in facture %}
 
+<!--{% if not obj.Etat %}-->
+<!-- <div class="alert alert-danger">-->
+<!--            <strong class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>-->
+<!--        </div>-->
+<!--{% endif %}-->
 
                         <tr>
 
@@ -16,16 +20,16 @@
                            {{obj.commande}}
                           </td>
 
-                       <td>
-                              {% if not obj|date %}
+                          <td>
+                              {% if  obj|date %}
                               <strong style="color : red;" class="blink_me"> {{obj.Titre_facture}} &nbsp;{{obj|date}}</strong>
 
                               {%else%}
                            {{obj.Titre_facture}}
                                  {% endif %}
                           </td>
-                             <td>
-                           {{obj.Numero_facture}}
+                                 <td>
+                            {{obj.Numero_facture}}
                           </td>
                               <td>
                             {{obj.Montant_HT}}
@@ -51,6 +55,9 @@
 
         <a class=""  href="{% url 'create_payements_f' obj.id %}"  style="color : #9c27b0;">
          <i class="fa fa-plus-circle w3-xxlarge"></i></a>
+&nbsp
+                                             <a class="  likes-button "    href="{% url 'pdf_facture' obj.id  %}" style="color : #9c27b0;" >
+          <i class="fa fa-file  w3-xxlarge"></i></a>
 
 
 

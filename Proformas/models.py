@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 from django.shortcuts import get_object_or_404
+from .utils import unique_slug_generator
+from django.db.models.signals import  pre_save
 
 import datetime
 from Client_Section.models import Client_Data
@@ -16,7 +18,7 @@ class Commande(models.Model):
         Matérial = "Matérial"
 
     Date = models.DateField()
-    Date_validation = models.DateField(null=True,blank=True)
+    Date_validation = models.DateField(blank=True,null=True)
     Client = models.ForeignKey(Client_Data, on_delete=models.CASCADE)
     Numero_commande = models.CharField(max_length=200)
     Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)
@@ -68,7 +70,7 @@ class Facture(models.Model):
     Etat = models.BooleanField(default=False)
     commande = models.ForeignKey(Commande,on_delete=models.CASCADE,unique=True)
     Titre_facture = models.CharField(max_length=200)
-    Numero_facture = models.CharField(max_length=200)
+    Numero_facture = models.CharField(max_length=200 ,blank=True,null=True)
     Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)
     Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2)
     Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
@@ -85,6 +87,26 @@ class Facture(models.Model):
             return self.commande.Client.Raison_social
         else:
             return str(self.Date)
+
+def facture_presave_receiver(sender,instance,*args,**kwargs):
+    if not instance.Numero_facture:
+        instance.Numero_facture = unique_slug_generator(instance)
+
+
+
+pre_save.connect(facture_presave_receiver,sender=Facture)
+
+
+
+
+
+
+
+
+
+
+
+
 
 #
 # class Payements2(models.Model):

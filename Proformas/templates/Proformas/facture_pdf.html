@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     {% load static %}
+        {% load splite.splite %}
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -92,7 +94,13 @@ table, th, td {
   </tr>
   <tr class="height">
     <td></td>
-    <td>{{Designation}}</td>
+       <td style="text-align : left">
+      {% with Designation|split:"," as des %}
+      {% for de in des%}
+    {{de}}<br>
+      {% endfor%}
+      {% endwith %}
+      </td>
     <td>{{Prix_Uni}}</td>
       <td>{{Quantite}}</td>
     <td>{{Montant_HT}}</td>

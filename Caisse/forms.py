@@ -10,6 +10,7 @@ from django.forms import ValidationError
 
 class Caisse_Form(ModelForm):
     Nature = forms.CharField()
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Caisse
         fields = ('ES', 'Date','Nature','Montant')

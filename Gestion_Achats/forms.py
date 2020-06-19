@@ -26,7 +26,7 @@ class AchatForm(ModelForm):
     # Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     Montant_pay = forms.DecimalField(required=False)
-    Date = forms.DateField()
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Achats
         fields = ('Date','Id_Fournis','Montant_HT','Montant_TVA','Montant_TTC','Montant_pay')
@@ -52,6 +52,7 @@ class AchatForm2(ModelForm):
     # Date = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     # Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     Montant_pay = forms.DecimalField(required=False)
     class Meta:
         model = Achats
@@ -88,15 +89,21 @@ class AssociationForm(forms.ModelForm):
 
         # self.initial['Id_Achats'] = Achats.objects.latest('id')
 
-    # def clean(self):
-    #     cleaned_data = self.cleaned_data
-    #     Id_Achats = self.cleaned_data.get('Id_Achats')
-    #     Id_Article = self.cleaned_data.get('Id_Article')
-    #     Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
-    #     Quantite = self.cleaned_data.get('Quantite')
-    #
-    #     if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
-    #         raise ValidationError('Check your inputs !')
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Id_Achats = self.cleaned_data.get('Id_Achats')
+        Id_Article = self.cleaned_data.get('Id_Article')
+        Prix_Unitaire = self.cleaned_data.get('Prix_Unitaire')
+        Quantite = self.cleaned_data.get('Quantite')
+
+
+
+
+        # for x in Quantite :
+        #     print(x)
+
+        # if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
+        #     raise ValidationError('Check your inputs !')
 
 
 
@@ -106,7 +113,7 @@ class AssociationForm(forms.ModelForm):
         #         Quantite=Quantite).exists():
         #     raise ValidationError('data exists ')
 
-        # return cleaned_data
+        return cleaned_data
 
 
 
@@ -160,6 +167,7 @@ class Payments_Form2(forms.ModelForm):
 
 
 class Payments_Form(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Payements
         fields = ('Date', 'mode_de_payement', 'reference', 'Montant_HT','Montant_TVA','Montant_TTC', 'Numero_facture', 'Numero_payement','E_S')

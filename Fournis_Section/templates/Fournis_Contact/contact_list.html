@@ -17,14 +17,14 @@
                             {{obj.email}}
                           </td>
                                   <td>
-                            {{obj.client}}
+                            {{obj.Fournis}}
                           </td>
                             <td>
 
-       <a class="  bout likes-button js-update-book  "   data-url="{% url 'Fournus_update_contact' obj.id %}" href="#" style="color : #9c27b0;" >
+       <a class="bout likes-button js-update-book"   data-url="{% url 'Fournus_update_contact' obj.id %}" style="color : #9c27b0;" >
             <i class="fa fa-edit w3-xxlarge" aria-hidden="true"></i></a>
 &nbsp
-                                <a class=" bout js-delete-book " data-url="{% url 'Fournis_contact_delete' obj.id %}" href="#"  style="color : #9c27b0;">
+                                <a class=" bout js-delete-book " data-url="{% url 'Fournis_contact_delete' obj.id %}"  style="color : #9c27b0;">
         <i class="fa fa-trash w3-xxlarge" aria-hidden="true"></i></a>
 
 

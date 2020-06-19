@@ -3,6 +3,7 @@
 
 {% block javascript %}
   <script src="{% static 'js/create_commande.js' %}"></script>
+  <script src="{% static 'js/tva.js' %}"></script>
 {% endblock %}
 
  <div class="content" >
@@ -64,7 +65,7 @@
                       <tbody>
                     {% include 'Proformas/partial/partial_proformas.html' %}
                       </tbody>
-                        <div class="modal fade" id="modal-book">
+                        <div class="modal fade" id="modal-book" data-keyboard="false" data-backdrop="static">
                     <div class="modal-dialog" style=" left: 10%">
                    <div class="modal-content"  >
                   </div>
@@ -89,4 +90,3 @@
 
 
 {% endblock%}
-

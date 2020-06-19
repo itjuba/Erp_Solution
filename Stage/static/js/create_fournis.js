@@ -36,8 +36,17 @@ $(function () {
           console.log("success");
         }
         else {
+
+            if(data.errors){
+          console.log('email')
+          md.showNotificationFail('bottom','left','warning',data.errors);
+          }
+          if (data.errors_c){
+            console.log('c')
+           md.showNotificationFail('bottom','left','warning',data.errors_c);
+          }
+
           console.log('error');
-          md.showNotificationFail('bottom','left','warning','please enter a valid email adresse !');
           $("#modal-book .modal-content").html(data.html_form);
         }
       }

@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from Client_Section.models import Client_Data
 import datetime
 import threading
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2,Commande_Form_step
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -113,9 +113,9 @@ def html_to_pdf_view_facture(request, pk):
         design = Commande_Designation.objects.filter(Command=com).values_list('Designation', flat=True)
         prix = Commande_Designation.objects.filter(Command=com).values_list('Prix_Unitaire', flat=True)
         qua = Commande_Designation.objects.filter(Command=com).values_list('Quantite', flat=True)
-        ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
-        tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
-        ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
+        # ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
+        # tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
+        # ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
     else:
         design = ""
         prix = ""
@@ -127,7 +127,7 @@ def html_to_pdf_view_facture(request, pk):
     Designation = ''
     for x in design:
         print(x)
-        Designation = Designation + " " + x
+        Designation = Designation +  '-' + x +  " ,"
 
     Prix_Uni = 0
     for x in prix:
@@ -137,17 +137,17 @@ def html_to_pdf_view_facture(request, pk):
     for x in qua:
         Quantite = Quantite + x
 
-    Montant_HT = 0
-    for x in ht:
-        Montant_HT = Montant_HT + x
-
-    Montant_TVA = 0
-    for x in tva:
-        Montant_TVA = Montant_TVA + x
-
-    Montant_TTC = 0
-    for x in ttc:
-        Montant_TTC = Montant_TTC + x
+    # Montant_HT = 0
+    # for x in ht:
+    #     Montant_HT = Montant_HT + x
+    #
+    # Montant_TVA = 0
+    # for x in tva:
+    #     Montant_TVA = Montant_TVA + x
+    #
+    # Montant_TTC = 0
+    # for x in ttc:
+    #     Montant_TTC = Montant_TTC + x
 
     if Modalite.objects.filter(Command=com.id).exists():
         mod = Modalite.objects.get(Command=com.id)
@@ -169,7 +169,12 @@ def html_to_pdf_view_facture(request, pk):
         Debut_realsiation = ''
         Garantie = ''
 
-    Numero_com = com.Numero_commande
+    Montant_HT = id_com.Montant_HT
+    Montant_TVA = id_com.Montant_TVA
+    Montant_TTC = id_com.Montant_TTC
+
+
+    Numero_com = id_com.Numero_facture
     client = com.Client
     client_data = Client_Data.objects.get(id=client.id)
     adresse = client_data.adresse
@@ -189,7 +194,7 @@ def html_to_pdf_view_facture(request, pk):
         'NIF': NIF,
         'NIS': NIS,
         'raison_social': raison_social,
-        'Date': datetime.date.today(),
+        'Date': id_com.Date,
         'modalite_payement': modalite_payement,
         'Arret_Facture': Arret_Facture,
         'Formation': Formation,
@@ -425,9 +430,9 @@ def html_to_pdf_view(request,pk):
             design = Commande_Designation.objects.filter(Command=com).values_list('Designation', flat=True)
             prix = Commande_Designation.objects.filter(Command=com).values_list('Prix_Unitaire', flat=True)
             qua = Commande_Designation.objects.filter(Command=com).values_list('Quantite', flat=True)
-            ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
-            tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
-            ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
+            # ht = Commande_Designation.objects.filter(Command=com).values_list('Montant_HT', flat=True)
+            # tva = Commande_Designation.objects.filter(Command=com).values_list('Montant_TVA', flat=True)
+            # ttc = Commande_Designation.objects.filter(Command=com).values_list('Montant_TTC', flat=True)
         else :
            design = ""
            prix = ""
@@ -440,7 +445,7 @@ def html_to_pdf_view(request,pk):
         for x in design:
 
             print(x)
-            Designation = Designation + " " +  x
+            Designation = Designation +  '-' + x +  " ,"
 
         Prix_Uni = 0
         for x in prix:
@@ -450,17 +455,21 @@ def html_to_pdf_view(request,pk):
         for x in qua:
             Quantite = Quantite + x
 
-        Montant_HT= 0
-        for x in ht:
-            Montant_HT =Montant_HT +x
+        # Montant_HT= 0
+        # for x in ht:
+        #     Montant_HT =Montant_HT +x
 
-        Montant_TVA = 0
-        for x in tva:
-            Montant_TVA = Montant_TVA +x
+        # Montant_TVA = 0
+        # for x in tva:
+        #     Montant_TVA = Montant_TVA +x
 
-        Montant_TTC = 0
-        for x in ttc:
-                Montant_TTC = Montant_TTC +x
+        # Montant_TTC = 0
+        # for x in ttc:
+        #         Montant_TTC = Montant_TTC +x
+
+        Montant_HT = com.Montant_HT
+        Montant_TVA = com.Montant_TVA
+        Montant_TTC = com.Montant_TTC
 
 
 
@@ -486,6 +495,7 @@ def html_to_pdf_view(request,pk):
             Garantie = ''
 
         Numero_com  = com.Numero_commande
+        datee = com.Date
         client = com.Client
         client_data = Client_Data.objects.get(id=client.id)
         adresse = client_data.adresse
@@ -514,6 +524,7 @@ def html_to_pdf_view(request,pk):
         'Period_Réalisation':Period_Réalisation,
         'Debut_realsiation':Debut_realsiation,
         'Garantie':Garantie,
+        'date':datee,
 
         }
         html_string = render_to_string('Proformas/command.html',context)
@@ -551,14 +562,14 @@ def step3(request):
 
 def step1(request):
     if request.method == 'POST':
-        form = Commande_Form(request.POST or None)
+        form = Commande_Form_step(request.POST or None)
         if form.is_valid():
             form.save()
             return redirect('step2')
         print(form.errors)
     else:
 
-        form = Commande_Form()
+        form = Commande_Form_step()
     return render(request, 'Proformas/steps/step1.html', {'form': form})
 
 
@@ -570,17 +581,23 @@ def step2(request):
             if request.POST['designation'] and request.POST['prix'] and request.POST['quantite']  and request.POST['mnt_ht'] and request.POST['mnt_tva'] and request.POST['mnt_ttc']:
                 print('get')
                 print(request.POST)
+                res = 0
                 for des,prix,q,mht,mtva,ttc in zip(request.POST.getlist('designation'),request.POST.getlist('prix'),request.POST.getlist('quantite'),request.POST.getlist('mnt_tva'),request.POST.getlist('mnt_ht'),request.POST.getlist('mnt_ttc')):
                      print('in for')
                      cd = Commande_D_Form({'Designation':des,'Prix_Unitaire':prix,'Quantite':q,'Montant_HT':mht,'Montant_TVA':mtva,'Montant_TTC':ttc , 'Command' : commande},instance=Commande_Designation())
                      print('hna')
+                     res = res + float(prix) * float(q)
+                     if res > commande.Montant_TTC:
+                         er = 'la somme des prix est sup que le montant tt de la commande '
+                         return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
+
                      print(cd.is_valid())
                      if cd.is_valid():
                          print('valide')
                          cd.save()
                      else:
                          print(cd.errors)
-                         er = 'check yout inputs :'
+                         er = 'data exists '
                          return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
                 return redirect('step3')
 

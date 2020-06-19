@@ -2,15 +2,15 @@
   <button  id="step2" class="btn btn-danger" >Check</button>
         {% csrf_token %}
 
-    <button id="done" class="btn btn-primary disabled" type="submit">Ajouter</button>
+    <button id="done" class="btn btn-primary "  disabled="disabled" type="submit">Ajouter</button>
 
         <tr>
              <td>
-         <input class="na"  required="true"   type="text" id="designation"  name="designation">
+         <input class=""  required="true"   type="text" id="designation"  name="designation">
           </td>
 
           <td>
-         <input class="na"  required="true" min="0" max="10" step="0.01" value=""  type="number" id="prix"  name="prix">
+         <input class="na"  required="true" min="0"  step="0.01" value=""  type="number" id="prix"  name="prix">
           </td>
 
 
@@ -19,13 +19,13 @@
                  <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">
           </td>
                <td>
-         <input class="na"  required="true" min="0" max="10" step="0.01"   type="number" id="mnt_ht"  name="mnt_ht">
+         <input class="na"  required="true" min="0" step="0.01"   type="number" id="mnt_ht"  name="mnt_ht">
           </td>
                <td>
-         <input class="na"  required="true" min="0" max="10" step="0.01"   type="number" id="mnt_tva"  name="mnt_tva">
+         <input class="na"  required="true" min="0"  step="0.01"   type="number" id="mnt_tva"  name="mnt_tva">
           </td>
                <td>
-         <input class="na"  required="true" min="0" max="10" step="0.01"  type="number" id="mnt_ttc"  name="mnt_ttc">
+         <input class="na"  required="true" min="0"  step="0.01"  type="number" id="mnt_ttc"  name="mnt_ttc">
           </td>
       </tr>
 

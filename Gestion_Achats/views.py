@@ -184,14 +184,14 @@ def payement_create(request,pk):
         Montant_pay_aprés = float(Montant_pay) + montant_ttc
         # print(Montant_pay_aprés)
         total = Montant_HT - montant_ttc
-        if total < 0:
-            error =  "le montant_ttc est superieur que le montant paye "
-            return render(request, 'Gestion_Achats/payement/partial_payement_form.html', {'form': form,'errors':error})
+        # if total < 0:
+        #     error =  "le montant_ttc est superieur que le montant paye "
+        #     return render(request, 'Gestion_Achats/payement/partial_payement_form.html', {'form': form,'errors':error})
 
 
 
-        elif(Montant_pay_aprés > Montant_HT):
-            error =  "le montant_ttc est superieur que le montant paye 2 "
+        if(Montant_pay_aprés > achat.Montant_TTC):
+            error =  "Le montant du payement en cours est supérieur au montant restant ! "
             return render(request, 'Gestion_Achats/payement/partial_payement_form.html', {'form': form,'errors':error})
 
 
@@ -214,7 +214,7 @@ def payement_create(request,pk):
 def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
     # ass = Association.objects.filter(Id_Achats=achat)
-    form = modelformset_factory(Association, form=AssociationForm, extra=0,can_delete=True)
+    form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
 
     if request.method == 'POST':
        formset = form(request.POST or None)
@@ -249,7 +249,7 @@ def update(request,pk):
 
 
     else:
-        form = modelformset_factory(Association, form=AssociationForm, extra=0, can_delete=True)
+        form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
         formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
 
 
@@ -280,13 +280,22 @@ def step2_ach(request):
          prix = float(request.POST['prix'] )
          prix = str(round(prix ,2))
          artt = get_object_or_404(Article,Description = request.POST['article'])
+         res = 0
          for prix,q in zip(request.POST.getlist('prix'),request.POST.getlist('quantite')):
-             print(prix)
-             print(q)
+             res =  res + float(prix)*float(q)
+             print(res)
+             print(ach.Montant_TTC)
+
+             if (res > ach.Montant_TTC):
+                 error = 'la somme des prix est sup que le montant tt de l achat '
+                 data = dict()
+                 data['errors'] = error
+                 return JsonResponse(data)
 
              na = AssociationForm({'Id_Article' :artt ,'Id_Achats':Achats.objects.latest('id'),'Prix_Unitaire':str(round(float(prix),2)),'Quantite':q},instance=Association())
+
              if na.is_valid():
-                 print('valide')
+                 # print('valide')
                  na.save()
          return redirect('view')
        else:

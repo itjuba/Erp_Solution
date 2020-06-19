@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
+    {% load splite.splite %}
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -69,7 +70,7 @@ table, th, td {
 
                 <div class="">
                     <div  style="float : right;" class="nadjib div-right" >
-                    <p>{{Date}}</p>
+                    <p>{{date}}</p>
                 </div>
                     Client : {{raison_social}}  <br/>
                      <p>  Adresse :{{adresse}} </p>
@@ -81,7 +82,7 @@ table, th, td {
 
 
 
-    <p style="text-align : center">Profromas N : {{Numero_com}}</p>
+    <p style="text-align : center">Pro-froma N : {{Numero_com}}</p>
             <table style="width:100%">
   <tr>
     <th>Ref</th>
@@ -92,7 +93,13 @@ table, th, td {
   </tr>
   <tr class="height">
     <td></td>
-    <td>{{Designation}}</td>
+      <td style="text-align : left">
+      {% with Designation|split:"," as des %}
+      {% for de in des%}
+    {{de}}<br>
+      {% endfor%}
+      {% endwith %}
+      </td>
     <td>{{Prix_Uni}}</td>
       <td>{{Quantite}}</td>
     <td>{{Montant_HT}}</td>
@@ -161,7 +168,7 @@ table, th, td {
             <br>
             <div>
 
-    <br><br><br><br><br><br><br><br>
+
 <p style="text-align : center">Nous restons à votre disposition pour tout renseignement complémentaire</p>
        </body>
 </html>

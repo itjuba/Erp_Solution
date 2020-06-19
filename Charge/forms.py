@@ -6,6 +6,7 @@ from django.forms import ValidationError
 
 class ChargeForm(ModelForm):
     Description = forms.CharField()
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Charge
         fields = ('Date', 'Date_limit','Montant','Description','Designation_charge')
@@ -16,6 +17,7 @@ class ChargeForm(ModelForm):
         self.initial['Etat'] = False
 
 class Payments_charge_Form(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Payements
         fields = ('Date', 'mode_de_payement', 'reference', 'Montant_HT','Montant_TVA','Montant_TTC', 'Numero_facture', 'Numero_payement','E_S')

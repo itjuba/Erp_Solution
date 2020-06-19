@@ -7,7 +7,7 @@
                left: '-300px'
             }, 600);
             $('#sidebar').removeClass('attig')
-            $('.main-panel ').animate({
+            $('.main-panel').animate({
                 left: '-275px',
 
             }, 600);

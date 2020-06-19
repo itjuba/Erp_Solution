@@ -455,7 +455,7 @@ input:checked + .slider:before {
 <script src="{% static 'js/montant_check_step2_ach.js' %}"></script>
 <script src="{% static 'js/montant_cookie.js' %}"></script>
 <script src="{% static 'js/button-href-delete.js' %}"></script>
-<script src="{% static 'js/tva.js' %}"></script>
+<!--<script src="{% static 'js/tva.js' %}"></script>-->
 <script src="{% static 'js/close_button.js' %}"></script>
 
 
@@ -475,6 +475,40 @@ input:checked + .slider:before {
         });
     });
 </script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+        $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll2"));
+    }
+
+    $(window).on("scroll", function() {
+        localStorage.setItem("my_app_name_here-quote-scroll2", $(window).scrollTop());
+    });
+
+  });
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+        $('.sidebar-wrapper').scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+        console.log('1');
+    }
+
+    $('.sidebar-wrapper').on("scroll", function() {
+        localStorage.setItem("my_app_name_here-quote-scroll", $('.sidebar-wrapper').scrollTop());
+        console.log('2');
+    });
+
+  });
+</script>
+
+
+
 
 
 

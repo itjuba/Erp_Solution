@@ -18,7 +18,6 @@ class Transactionb(models.Model):
     Numero_facture = models.IntegerField(blank=True,null=True)
     Numero_payement = models.IntegerField()
 
-
     def __str__(self):
         return str(self.Date)
 
@@ -27,6 +26,6 @@ def create_t(sender, instance, created, *args, **kwargs):
   if created:
     if instance.mode_de_payement =="Chéque" or instance.mode_de_payement == "virement bancaire":
         Transactionb.objects.bulk_create([
-            Transactionb(Date=instance.Date,Numero_facture=instance.Numero_facture,Numero_payement=instance.Numero_payement,reference=instance.reference,Montant_HT=instance.Montant_HT,Montant_TVA=instance.Montant_TVA,Montant_TTC=instance.Montant_TTC,mode_de_payement=instance.mode_de_payement,E_S=instance.E_S)])
+        Transactionb(Date=instance.Date,Numero_facture=instance.Numero_facture,Numero_payement=instance.Numero_payement,reference=instance.reference,Montant_HT=instance.Montant_HT,Montant_TVA=instance.Montant_TVA,Montant_TTC=instance.Montant_TTC,mode_de_payement=instance.mode_de_payement,E_S=instance.E_S)])
 
 post_save.connect(create_t, sender=Payements)

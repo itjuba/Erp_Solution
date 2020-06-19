@@ -18,7 +18,7 @@ from django.template.loader import render_to_string
 
 def ajax_trans(request):
     data = {}
-    days = 7
+    days = 60
     start_date = timezone.now() - datetime.timedelta(days=days - 1)
 
     datetime_list = []
@@ -43,7 +43,7 @@ def ajax_trans(request):
 
 def ajax_pay(request):
     data = {}
-    days = 7
+    days = 60
     start_date = timezone.now() - datetime.timedelta(days=days - 1)
 
     datetime_list = []
@@ -66,7 +66,7 @@ def ajax(request):
             data = {}
             # data['labels'] = ["sebt", "had", "thnin", "tlata", "larba", "khmis", "djemaa"]
             # data['data'] = [123,100,80,2,10,50,180]
-            days = 7
+            days = 60
             start_date = timezone.now() - datetime.timedelta(days=days - 1)
 
             datetime_list = []
@@ -80,6 +80,7 @@ def ajax(request):
                     datetime_list.append(new_time)
                     # print(new_time.date())
                     # print(n.Date)
+
                     if (n.Date == new_time.date()):
                         labels.append(new_time.strftime("%a"))
                         salesItems.append(n.Montant_HT)
@@ -122,27 +123,28 @@ def graph(request,*args,**kwargs):
     for x in factur:
         mhtg = mhtg + x.Montant_HT
 
-
-    top_client = Client_Data.objects.values_list('Raison_social').annotate(truck_count=Count('Raison_social')).order_by(
-        '-truck_count')[0]
-    if top_client:
-     x = top_client[0]
+    if Client_Data.objects.all():
+        print('all')
+        top_client = Client_Data.objects.values_list('Raison_social').annotate(truck_count=Count('Raison_social')).order_by(
+            '-truck_count')[0]
+        if top_client:
+         x = top_client[0]
     else :
-        x='No Client Found !'
+            x='No Client Found !'
     pay_vente = Payements.objects.filter(E_S="Vente")
     total_v = 0
     for d in pay_vente:
         total_v = total_v + d.Montant_HT
-
-
-    top_p = Association.objects.values_list('Id_Article').annotate(truck_count=Count('Id_Article')).order_by(
-        '-truck_count')[0]
-    p = top_p[0]
-    if p:
-     produit_top = get_object_or_404(Article,id=p)
+    if Association.objects.all():
+        top_p = Association.objects.values_list('Id_Article').annotate(truck_count=Count('Id_Article')).order_by(
+            '-truck_count')[0]
+        p = top_p[0]
+        if p:
+         produit_top = get_object_or_404(Article,id=p)
+         prod = produit_top.Designation
     else :
         prod = 'no product for now '
-    prod = produit_top.Designation
+
     context = {'facture': factur,
                'mhtg_p': mhtg_p,
                'mhtg_np': mhtg_np,
@@ -220,10 +222,18 @@ def save_client_form(request, form,Contact_form, template_name):
                 'client': books
             })
         else:
-            print(form.errors)
+            print(Contact_form.non_field_errors())
+            print(Contact_form.errors.as_text())
             print(Contact_form.errors)
+            print(form.errors)
+            # print(Contact_form.non_field_errors.as_data())
             data['form_is_valid'] = False
+
+
     context = {'form': form,'contact_form':Contact_form}
+    # data['errors'] = repr(Contact_form.errors.as_data())
+    data['errors'] = Contact_form.errors.as_text()
+    data['errors_c'] = form.errors.as_text()
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -241,9 +251,10 @@ def save_contact_form(request,Contact_form, template_name):
             })
         else:
 
-            # print(Contact_form.errors)
+
             data['form_is_valid'] = False
     context = {'form':Contact_form}
+    data['errors'] = Contact_form.errors.as_text()
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 

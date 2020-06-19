@@ -1,6 +1,12 @@
 {% extends 'base.html'%}
+{% load static%}
 <!--{% load widget_tweaks %}-->
 {% load crispy_forms_tags %}
+
+
+{% block javascript %}
+  <script src="{% static 'js/tva.js' %}"></script>
+{% endblock %}
 {% block content %}
 
  <div class="content">
@@ -54,7 +60,7 @@
    </div>
       <div class="form-row">
             <div class="form-group col-md-6 mb-0">
-          <label class="bmd-label-floating" for="form.id_for_label">Date</label>
+          <label class="" for="form.id_for_label">Date</label>
            {% render_field form.Date class="form-control" %}
       </div>
 
