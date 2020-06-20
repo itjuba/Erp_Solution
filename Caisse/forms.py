@@ -21,6 +21,9 @@ class Caisse_Form(ModelForm):
 
 
 class TransactionForm(ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    Date_transaction = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Transactionb
         fields = ('Date', 'Date_transaction','validation','E_S','reference','mode_de_payement','Montant_HT','Montant_TVA','Montant_TTC','Numero_facture','Numero_payement')

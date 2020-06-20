@@ -20,7 +20,8 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                      <form method="POST" id="myform" action="{% url 'step2' %}" >
+<!--                      <form method="POST" id="myform" action="{% url 'step2' %}" >-->
+                      <form method="POST" >
 
                     <table class="table" id="book-table">
 
@@ -40,9 +41,9 @@
                         <th>
                           Prix_Unitaire
                         </th>
-<!--                        <th>-->
-<!--                          Commande-->
-<!--                        </th>-->
+                        <th>
+                          Commande
+                        </th>
                         <th>
                           Quantite
                         </th>
@@ -65,7 +66,7 @@
                       {% include 'Proformas/steps/partial_step.html' %}
                       </tbody>
                     </table>
-   <button  class="btn btn-primary" id="add" >Add new row</button>
+   <a  class="btn btn-primary" id="add" >Add new row</a>
 
 
 

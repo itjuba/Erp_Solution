@@ -1,28 +1,82 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
 
-      {% csrf_token %}
-    <button id="done" class="btn btn-primary " disabled="disabled" name="submit" type="submit">Ajouter</button>
-      <tr>
+    <button id="done" class="btn btn-primary disabled" type="submit">Ajouter</button>
 
-          <td>
-                 <select  required="true" name="article" id="article" class="form-control">
-                 <option selected></option>
-                        {% for obj in art %}
-                 <option  value="{{obj}}">{{obj}}</option>
-                         {%endfor%}
+    {% csrf_token %}
+    {{ formset.management_form }}
+{{ formset.management_data}}
+    {% for form in formset.forms %}
+    <tr >
+        {% for field in form.visible_fields %}
+        <td>
+             {# Include the hidden fields in the form #}
+            {% if forloop.first %}
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% endif %}
+            {{  field }}
 
-             </select>
-
-          </td>
-          <td>
-                 <input class="na"  required="true" min="0" step="0.01"
-                        type="number" id="prix"  name="prix" placeholder="0.00">
-          </td>
-          <td>
-                 <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">
-          </td>
-      </tr>
-
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
 
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--{% load widget_tweaks %}-->
+<!--  <button  id="step2" class="btn btn-danger" >Check</button>-->
+
+<!--      {% csrf_token %}-->
+<!--    <button id="done" class="btn btn-primary " disabled="disabled" name="submit" type="submit">Ajouter</button>-->
+<!--      <tr>-->
+
+<!--          <td>-->
+<!--                 <select  required="true" name="article" id="article" class="form-control">-->
+<!--                 <option selected></option>-->
+<!--                        {% for obj in art %}-->
+<!--                 <option  value="{{obj}}">{{obj}}</option>-->
+<!--                         {%endfor%}-->
+
+<!--             </select>-->
+
+<!--          </td>-->
+<!--          <td>-->
+<!--                 <input class="na"  required="true" min="0" step="0.01"-->
+<!--                        type="number" id="prix"  name="prix" placeholder="0.00">-->
+<!--          </td>-->
+<!--          <td>-->
+<!--                 <input class="qu l" required="true" pattern="\d+" type="number" id="quantite" name="quantite">-->
+<!--          </td>-->
+<!--      </tr>-->
+
+
+<!--</form>-->

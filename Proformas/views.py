@@ -7,6 +7,8 @@ from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseR
 from django.views.generic import View
 from django.http import JsonResponse
 from Client_Section.models import Client_Data
+from decimal import Decimal
+
 import datetime
 import threading
 from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2,Commande_Form_step
@@ -573,43 +575,72 @@ def step1(request):
     return render(request, 'Proformas/steps/step1.html', {'form': form})
 
 
+# def step2(request):
+#         # print('in')
+#         commande = Commande.objects.latest('id')
+#         if request.method == 'POST':
+#             # print('post')
+#             if request.POST['designation'] and request.POST['prix'] and request.POST['quantite']  and request.POST['mnt_ht'] and request.POST['mnt_tva'] and request.POST['mnt_ttc']:
+#                 # print('get')
+#                 print(request.POST)
+#                 res = 0
+#                 for des,prix,q,mht,mtva,ttc in zip(request.POST.getlist('designation'),request.POST.getlist('prix'),request.POST.getlist('quantite'),request.POST.getlist('mnt_tva'),request.POST.getlist('mnt_ht'),request.POST.getlist('mnt_ttc')):
+#                      # print('in for')
+#                      cd = Commande_D_Form({'Designation':des,'Prix_Unitaire':prix,'Quantite':q,'Montant_HT':mht,'Montant_TVA':mtva,'Montant_TTC':ttc , 'Command' : commande},instance=Commande_Designation())
+#                      # print('hna')
+#                      res = res + float(prix) * float(q)
+#                 if res > commande.Montant_TTC:
+#                          er = 'la somme des prix est sup que le montant tt de la commande '
+#                          return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
+#
+#                 else:
+#                          if cd.is_valid():
+#                              # print('valide')
+#                              cd.save()
+#                          else:
+#                              # print(cd.errors)
+#                              er = 'data exists '
+#                              return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
+#                 return redirect('step3')
+#
+#             else:
+#                 er = 'check yout inputs :'
+#
+#                 return render(request, 'Proformas/steps/step2.html', {'com': commande ,'ers' :er})
+#         print('ici')
+#         return render(request, 'Proformas/steps/step2.html',{'com': commande} )
+
+
+
 def step2(request):
-        print('in')
-        commande = Commande.objects.latest('id')
-        if request.method == 'POST':
-            print('post')
-            if request.POST['designation'] and request.POST['prix'] and request.POST['quantite']  and request.POST['mnt_ht'] and request.POST['mnt_tva'] and request.POST['mnt_ttc']:
-                print('get')
-                print(request.POST)
-                res = 0
-                for des,prix,q,mht,mtva,ttc in zip(request.POST.getlist('designation'),request.POST.getlist('prix'),request.POST.getlist('quantite'),request.POST.getlist('mnt_tva'),request.POST.getlist('mnt_ht'),request.POST.getlist('mnt_ttc')):
-                     print('in for')
-                     cd = Commande_D_Form({'Designation':des,'Prix_Unitaire':prix,'Quantite':q,'Montant_HT':mht,'Montant_TVA':mtva,'Montant_TTC':ttc , 'Command' : commande},instance=Commande_Designation())
-                     print('hna')
-                     res = res + float(prix) * float(q)
-                     if res > commande.Montant_TTC:
-                         er = 'la somme des prix est sup que le montant tt de la commande '
-                         return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
+    nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
 
-                     print(cd.is_valid())
-                     if cd.is_valid():
-                         print('valide')
-                         cd.save()
-                     else:
-                         print(cd.errors)
-                         er = 'data exists '
-                         return render(request, 'Proformas/steps/step2.html', {'com': commande, 'ers': er})
-                return redirect('step3')
+    if request.method == 'POST':
+        form = nadjib(request.POST)
 
-            else:
-                er = 'check yout inputs :'
+        if form.is_valid():
+            commande = Commande.objects.last
+            res = 0
+            for x in form:
+                data = x.cleaned_data
+                commande = get_object_or_404(Commande,id=data.get('Command').id)
+                # print(data.get('Prix_Unitaire'))
+                res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
+            if res > commande.Montant_TTC:
+                print(res)
+                er = 'la somme des prix est sup que le montant tt de la commande '
+                return render(request, 'Proformas/steps/step2.html', {'formset': form, 'com': commande, 'ers': er})
+            form.save()
 
-                return render(request, 'Proformas/steps/step2.html', {'com': commande ,'ers' :er})
-        print('ici')
-        return render(request, 'Proformas/steps/step2.html',{'com': commande} )
+            return redirect('step3')
+        else:
+            print(form.errors)
+            return render(request, 'Proformas/steps/step2.html', {'formset': form, 'error': form.errors})
 
-
-
+    else:
+      # ss = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1,c)
+      formset = nadjib(queryset=Commande.objects.none())
+    return render(request, 'Proformas/steps/step2.html', {'formset': formset})
 
 def save_commande_form_update(request, form, template_name):
     data = dict()

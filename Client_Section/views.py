@@ -254,6 +254,7 @@ def save_contact_form(request,Contact_form, template_name):
 
             data['form_is_valid'] = False
     context = {'form':Contact_form}
+    print(Contact_form.errors.as_text())
     data['errors'] = Contact_form.errors.as_text()
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)

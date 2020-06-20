@@ -12,9 +12,9 @@
                md.showNotificationDelete('top','center','danger','check your empty inputs !');
 
             }
-            prix = (isNaN(prix) || (prix == '') )?0:parseInt(prix);
+            prix = (isNaN(prix) || (prix == '') )?0:parseFloat(prix);
             quantite = (isNaN(quantite) || (quantite == ''))?0:parseInt(quantite);
-            total += prix * quantite;
+            total += (prix * quantite);
             console.log(total);
         });
         var sah = Cookies.get('montant')

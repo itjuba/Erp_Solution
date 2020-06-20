@@ -272,37 +272,67 @@ def step1_ach(request):
     return render(request, 'step1.html', {'form': form,'error':form.errors})
 
 
+# def step2_ach(request):
+#    ach = Achats.objects.latest('id')
+#    Art = Article.objects.all()
+#    if request.method == 'POST':
+#        if   request.POST['article'] and request.POST['prix'] and request.POST['quantite']:
+#          prix = float(request.POST['prix'] )
+#          prix = str(round(prix ,2))
+#          artt = get_object_or_404(Article,Description = request.POST['article'])
+#          res = 0
+#          for prix,q in zip(request.POST.getlist('prix'),request.POST.getlist('quantite')):
+#              res =  res + float(prix)*float(q)
+#              print(res)
+#              print(ach.Montant_TTC)
+#
+#              if (res > ach.Montant_TTC):
+#                  error = 'la somme des prix est sup que le montant tt de l achat '
+#
+#                  return render(request, 'step2.html', {'art': Art, 'er': error})
+#
+#              na = AssociationForm({'Id_Article' :artt ,'Id_Achats':Achats.objects.latest('id'),'Prix_Unitaire':str(round(float(prix),2)),'Quantite':q},instance=Association())
+#
+#              if na.is_valid():
+#                  # print('valide')
+#                  na.save()
+#          return redirect('view')
+#        else:
+#            error = 'please check your inputs ! '
+#            return render(request, 'step2.html', { 'art': Art , 'er': error })
+#
+#    return render(request, 'step2.html', {'id_achat':ach , 'art': Art})
+
 def step2_ach(request):
-   ach = Achats.objects.latest('id')
-   Art = Article.objects.all()
-   if request.method == 'POST':
-       if   request.POST['article'] and request.POST['prix'] and request.POST['quantite']:
-         prix = float(request.POST['prix'] )
-         prix = str(round(prix ,2))
-         artt = get_object_or_404(Article,Description = request.POST['article'])
-         res = 0
-         for prix,q in zip(request.POST.getlist('prix'),request.POST.getlist('quantite')):
-             res =  res + float(prix)*float(q)
-             print(res)
-             print(ach.Montant_TTC)
+    if request.method == 'POST':
+        nadjib = modelformset_factory(Association, form=AssociationForm1, extra=5,can_delete=True)
+        form = nadjib(request.POST)
+        # ha = form.cleaned_data
+        # id = ha['Id_Achats']
+        # ach = get_object_or_404(Achats, pk=id)
+        # n = 0
+        # for b in form:
+        #     a = float(b.data['Prix_Unitaire'])
+        #     c = float(b.data['Quantite'])
+        #     n = n + (a * c)
+        # print(n)
+        # if n > ach.Montant_HT:
+        #     error = "le montant_ttc est superieur que le montant paye 2 "
+        #     return render(request, 'step2.html', {'form': form, 'error': form.errors})
 
-             if (res > ach.Montant_TTC):
-                 error = 'la somme des prix est sup que le montant tt de l achat '
-                 data = dict()
-                 data['errors'] = error
-                 return JsonResponse(data)
+        if form.is_valid():
+            form.save()
 
-             na = AssociationForm({'Id_Article' :artt ,'Id_Achats':Achats.objects.latest('id'),'Prix_Unitaire':str(round(float(prix),2)),'Quantite':q},instance=Association())
+            return redirect('view')
+        else:
+            print(form.errors)
+            return render(request, 'step2.html', {'formset': form, 'error': form.errors})
 
-             if na.is_valid():
-                 # print('valide')
-                 na.save()
-         return redirect('view')
-       else:
-           error = 'please check your inputs ! '
-           return render(request, 'step2.html', { 'art': Art , 'er': error })
-
-   return render(request, 'step2.html', {'id_achat':ach , 'art': Art})
+    else:
+     form = modelformset_factory(Association, form=AssociationForm2, extra=1)
+     formset = form(queryset=Association.objects.none())
+    # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
+    return render(request, 'step2.html', {'formset': formset,'error':form.errors})
 
 
 class ContactWizard(SessionWizardView):

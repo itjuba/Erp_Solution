@@ -8,8 +8,14 @@ class Caisse(models.Model):
         Vente = "Vente"
         Charge = "Charge"
         Dépence  = "Dépence"
+        Alimentation  = "Alimentation"
+
 
     ES = models.CharField(choices=ES.choices, max_length=200)
     Date = models.DateField()
     Nature = models.TextField()
     Montant = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+    def __str__(self):
+        return self.Nature

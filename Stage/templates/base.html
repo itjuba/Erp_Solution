@@ -227,13 +227,13 @@ input:checked + .slider:before {
               <i class="material-icons" style="" >content_paste</i>
               <p>Article List </p>
             </a>
-          </li>
-                <li class="nav-item ">
-            <a class="nav-link" href="{% url 'achats'%}">
-              <i class="material-icons" style="" >content_paste</i>
-              <p>Achats List </p>
-            </a>
-          </li>
+<!--          </li>-->
+<!--                <li class="nav-item ">-->
+<!--            <a class="nav-link" href="{% url 'achats'%}">-->
+<!--              <i class="material-icons" style="" >content_paste</i>-->
+<!--              <p>Achats List </p>-->
+<!--            </a>-->
+<!--          </li>-->
             </li>
                 <li class="nav-item ">
             <a class="nav-link" href="{% url 'view'%}">
@@ -459,22 +459,22 @@ input:checked + .slider:before {
 <script src="{% static 'js/close_button.js' %}"></script>
 
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#add").click(function() {
-          $('#mytable tbody>tr:last').clone(true).insertAfter('#mytable tbody>tr:last');
-          return false;
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#add").click(function() {
-          $('#book-table tbody>tr:last').clone(true).insertAfter('#book-table tbody>tr:last');
-          return false;
-        });
-    });
-</script>
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function() {-->
+<!--        $("#add").click(function() {-->
+<!--          $('#mytable tbody>tr:last').clone(true).insertAfter('#mytable tbody>tr:last');-->
+<!--          return false;-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function() {-->
+<!--        $("#add").click(function() {-->
+<!--          $('#book-table tbody>tr:last').clone(true).insertAfter('#book-table tbody>tr:last');-->
+<!--          return false;-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -508,6 +508,35 @@ $(document).ready(function () {
 </script>
 
 
+<script>
+   $(document).ready(function(){
+  $('#add').click(function() {
+  console.log('clicked')
+	var form_idx = $('#id_form-TOTAL_FORMS').val();
+	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+	var commande = $('#id_form-0-Command').val()
+	console.log(commande);
+	console.log(form_idx)
+
+	$('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+});
+    });
+</script><script>
+   $(document).ready(function(){
+  $('#add_two').click(function() {
+  console.log('clicked')
+	var form_idx = $('#id_form-TOTAL_FORMS').val();
+	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+	var article = $('#id_form-0-Command').val()
+	console.log(commande);
+	console.log(form_idx)
+
+	$('#book-table > tbody:last').append('<tr><td><Select id="id_form-'+form_idx+'-Id_Article"  class="form-control"  type=text name="form-'+form_idx+'-Id_Article" required=true"><option value='+article+' selected="">'+article+' </option></Select></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+});
+    });
+</script>
 
 
 

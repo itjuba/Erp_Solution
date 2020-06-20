@@ -34,7 +34,7 @@
 <form method="POST">
     {% csrf_token %}
 
-
+  <div style="margin-left : 25px" >
            <div class="form-row">
       <div class="form-group col-md-6 mb-0">
           <label class="bmd-label-floating" for="form.id_for_label">Garantie</label>
@@ -55,7 +55,7 @@
       <div class="form-row">
       <div class="form-group col-md-6 mb-0">
           <label class="bmd-label-floating" for="form.id_for_label">Formation</label>
-           {% render_field form.Formation class="form-control mont" %}
+           {% render_field form.Formation class="form-control " %}
       </div>
           <div class="form-group col-md-6 mb-0">
         <label  class="bmd-label-floating" for="form.id_for_label">Period_Réalisation &nbsp;</label>
@@ -81,6 +81,7 @@
 
 
     <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />
+  </div>
 </form>
 
 <!--    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />-->

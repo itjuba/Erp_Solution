@@ -133,6 +133,13 @@ class Commande_Form(forms.ModelForm):
 
 class Commande_D_Form(forms.ModelForm):
     Designation = forms.CharField(required=True)
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control','required':'true'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control','required':'true'}))
+    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'required':'true' ,'class':'form-control'}))
+    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'required':'true','class':'form-control'}))
+    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'required':'true','class':'form-control'}))
+    Designation = forms.CharField(widget=forms.TextInput(attrs={'required':'true','class':'form-control'}))
+
     class Meta:
         model = Commande_Designation
         fields = ('Designation','Prix_Unitaire','Command','Quantite','Montant_HT','Montant_TVA','Montant_TTC')
@@ -154,19 +161,23 @@ class Commande_D_Form(forms.ModelForm):
             Montant_HT = self.cleaned_data.get('Montant_HT')
             Montant_TVA = self.cleaned_data.get('Montant_TVA')
             Montant_TTC = self.cleaned_data.get('Montant_TTC')
+            Command = self.cleaned_data.get('Command')
+            print(Commande)
+
+            print(cleaned_data)
 
             if not (Designation and Prix_Unitaire and Command and Quantite and Montant_HT and Montant_TVA and Montant_TTC):
                 raise ValidationError('Check your inputs!')
 
-            if Commande_Designation.objects.filter(Designation=Designation).exists() and Commande_Designation.objects.filter(
-                Prix_Unitaire=Prix_Unitaire).exists() and Commande_Designation.objects.filter(
-                Command=Command).exists()  and Commande_Designation.objects.filter(
-                Quantite=Quantite).exists() and Commande_Designation.objects.filter(
-                Montant_HT=Montant_HT).exists() and Commande_Designation.objects.filter(
-                Montant_TVA=Montant_TVA).exists() and Commande_Designation.objects.filter(
-                Montant_TTC=Montant_TTC).exists():
-                 print('data exists')
-                 raise ValidationError('data exists ')
+            # if Commande_Designation.objects.filter(Designation=Designation).exists() and Commande_Designation.objects.filter(
+            #     Prix_Unitaire=Prix_Unitaire).exists() and Commande_Designation.objects.filter(
+            #     Command=Command).exists()  and Commande_Designation.objects.filter(
+            #     Quantite=Quantite).exists() and Commande_Designation.objects.filter(
+            #     Montant_HT=Montant_HT).exists() and Commande_Designation.objects.filter(
+            #     Montant_TVA=Montant_TVA).exists() and Commande_Designation.objects.filter(
+            #     Montant_TTC=Montant_TTC).exists():
+            #      print('data exists')
+            #      raise ValidationError('data exists ')
 
             return cleaned_data
 
