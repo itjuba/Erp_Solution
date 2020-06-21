@@ -18,7 +18,7 @@ from django.template.loader import render_to_string
 
 def ajax_trans(request):
     data = {}
-    days = 60
+    days = 30
     start_date = timezone.now() - datetime.timedelta(days=days - 1)
 
     datetime_list = []
@@ -43,7 +43,7 @@ def ajax_trans(request):
 
 def ajax_pay(request):
     data = {}
-    days = 60
+    days = 30
     start_date = timezone.now() - datetime.timedelta(days=days - 1)
 
     datetime_list = []
@@ -66,7 +66,7 @@ def ajax(request):
             data = {}
             # data['labels'] = ["sebt", "had", "thnin", "tlata", "larba", "khmis", "djemaa"]
             # data['data'] = [123,100,80,2,10,50,180]
-            days = 60
+            days = 30
             start_date = timezone.now() - datetime.timedelta(days=days - 1)
 
             datetime_list = []

@@ -7,6 +7,7 @@ from django.forms import ValidationError
 class ChargeForm(ModelForm):
     Description = forms.CharField()
     Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    Date_limit = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
     class Meta:
         model = Charge
         fields = ('Date', 'Date_limit','Montant','Description','Designation_charge')
@@ -54,6 +55,6 @@ class Payments_charge_Form(forms.ModelForm):
             reference=reference).exists() and  Payements.objects.filter(
             Numero_payement=Numero_payement).exists() and  Payements.objects.filter(
             mode_de_payement=mode_de_payement).exists():
-            raise ValidationError('data exists ')
+            raise ValidationError('le payement exist déja! ')
 
         return cleaned_data

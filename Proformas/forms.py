@@ -8,6 +8,8 @@ from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseR
 
 from django.forms import ModelForm
 class Payments_Form_facture(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Payements
         fields = ('Date', 'mode_de_payement', 'reference', 'Montant_HT','Montant_TVA','Montant_TTC', 'Numero_facture', 'Numero_payement','E_S')
