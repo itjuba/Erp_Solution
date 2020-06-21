@@ -1,7 +1,7 @@
 {% load widget_tweaks %}
   <button  id="step2" class="btn btn-danger" >Check</button>
 
-    <button id="done" class="btn btn-primary" type="submit">Ajouter</button>
+    <button id="done" class="btn btn-primary" disabled="disabled"  type="submit">Ajouter</button>
 
     {% csrf_token %}
     {{ formset.management_form }}

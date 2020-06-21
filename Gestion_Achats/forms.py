@@ -131,11 +131,12 @@ class AssociationForm2(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AssociationForm2, self).__init__(*args, **kwargs)
-        self.initial['Id_Achats'] = Achats.objects.latest('id')
-        self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na ';
+        acht = Achats.objects.latest('id')
+        self.initial['Id_Achats'] = acht
+        self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na form-control';
         self.fields['Id_Article'].widget.attrs['class'] = 'form-control';
-        self.fields['Quantite'].widget.attrs['class'] = 'qu l'
-        self.fields['Id_Achats'].widget = forms.HiddenInput()
+        self.fields['Quantite'].widget.attrs['class'] = 'qu l form-control'
+        # self.fields['Id_Achats'].widget = forms.HiddenInput()
 
     def clean(self):
         cleaned_data = self.cleaned_data

@@ -526,14 +526,16 @@ $(document).ready(function () {
    $(document).ready(function(){
   $('#add_two').click(function() {
   console.log('clicked')
-	var form_idx = $('#id_form-TOTAL_FORMS').val();
-	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-	var article = $('#id_form-0-Command').val()
-	console.log(commande);
-	console.log(form_idx)
-
-	$('#book-table > tbody:last').append('<tr><td><Select id="id_form-'+form_idx+'-Id_Article"  class="form-control"  type=text name="form-'+form_idx+'-Id_Article" required=true"><option value='+article+' selected="">'+article+' </option></Select></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+	var form_idx1 = $('#id_form-TOTAL_FORMS').val();
+	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
+	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
+	var article = $('#id_form-0-Id_Article').val()
+	var achats = $('#id_form-0-Id_Achats').val()
+	console.log(article);
+    var article =  $( "#id_form-0-Id_Article option:selected").text()
+    var article1 =  $( "#id_form-0-Id_Article option:selected").val()
+	console.log(form_idx1)
+	$('#mytable > tbody:last').append('<tr><td><Select id="id_form-'+form_idx1+'-Id_Achats" class="form-control" type=text name="form-'+form_idx1+'-Id_Achats" required=true"><option value='+achats+' selected="">'+achats+'</option></Select></td><td><Select id="id_form-'+form_idx1+'-Id_Article" class="form-control" type=text name="form-'+form_idx1+'-Id_Article" required=true"><option value='+article1+' selected="">'+article+'</option></Select></td><td><input id="id_form-'+form_idx1+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx1+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx1+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx1+'-Quantite"  required=true"></td><input type="checkbox" name="form-'+form_idx1+'-DELETE" id="id_form-'+form_idx1+'-DELETE"></td></tr>');
 });
     });
 </script>

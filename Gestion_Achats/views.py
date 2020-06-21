@@ -305,28 +305,29 @@ def step1_ach(request):
 
 def step2_ach(request):
     if request.method == 'POST':
-        nadjib = modelformset_factory(Association, form=AssociationForm1, extra=5,can_delete=True)
+        nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
         form = nadjib(request.POST)
-        # ha = form.cleaned_data
-        # id = ha['Id_Achats']
-        # ach = get_object_or_404(Achats, pk=id)
-        # n = 0
-        # for b in form:
-        #     a = float(b.data['Prix_Unitaire'])
-        #     c = float(b.data['Quantite'])
-        #     n = n + (a * c)
-        # print(n)
-        # if n > ach.Montant_HT:
-        #     error = "le montant_ttc est superieur que le montant paye 2 "
-        #     return render(request, 'step2.html', {'form': form, 'error': form.errors})
+        Art = Article.objects.all()
+        prod = Association.objects.all()
 
         if form.is_valid():
             form.save()
+            achat = Achats.objects.last
+            res = 0
+            for x in form:
+                data = x.cleaned_data
+                achat = get_object_or_404(Achats, id=data.get('Id_Achats').id)
+                # print(data.get('Prix_Unitaire'))
+                res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
+            if res > achat.Montant_TTC:
+                print(res)
+                ers = 'la somme des prix est sup que le montant tt de la commande '
+                return render(request, 'step2.html', {'formset': form,'art': Art, 'er': ers,'as':prod})
 
             return redirect('view')
         else:
             print(form.errors)
-            return render(request, 'step2.html', {'formset': form, 'error': form.errors})
+            return render(request, 'step2.html', {'formset': form, 'error': form.errors , 'as':prod})
 
     else:
      form = modelformset_factory(Association, form=AssociationForm2, extra=1)
