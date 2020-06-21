@@ -304,10 +304,11 @@ def step1_ach(request):
 #    return render(request, 'step2.html', {'id_achat':ach , 'art': Art})
 
 def step2_ach(request):
+    Art = Article.objects.all()
     if request.method == 'POST':
         nadjib = modelformset_factory(Association, form=AssociationForm2, extra=5,can_delete=True)
         form = nadjib(request.POST)
-        Art = Article.objects.all()
+
         prod = Association.objects.all()
 
         if form.is_valid():
@@ -327,13 +328,13 @@ def step2_ach(request):
             return redirect('view')
         else:
             print(form.errors)
-            return render(request, 'step2.html', {'formset': form, 'error': form.errors , 'as':prod})
+            return render(request, 'step2.html', {'formset': form,'art': Art, 'error': form.errors , 'as':prod})
 
     else:
      form = modelformset_factory(Association, form=AssociationForm2, extra=1)
      formset = form(queryset=Association.objects.none())
     # form.fields['Id_Achats'].queryset = Achats.objects.latest('id')
-    return render(request, 'step2.html', {'formset': formset,'error':form.errors})
+    return render(request, 'step2.html', {'formset': formset,'art': Art,'error':form.errors})
 
 
 class ContactWizard(SessionWizardView):
