@@ -69,25 +69,36 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = ('Designation','Code','Description','Service')
 
-
-class AssociationForm(forms.ModelForm):
-    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'na'}))
-    # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+class AssociationForm3(forms.ModelForm):
+    # Id_Achats = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
     class Meta:
         model = Association
         fields = ('Id_Achats', 'Id_Article', 'Prix_Unitaire', 'Quantite')
 
-    # def __init__(self, *args, **kwargs):
-    #     super(AssociationForm, self).__init__(*args, **kwargs)
-    #     self.queryset = Association.objects.none()
+
+class AssociationForm(forms.ModelForm):
+    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'na'}))
+    # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Id_Achats = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Association
+        fields = ('Id_Achats', 'Id_Article', 'Prix_Unitaire', 'Quantite')
 
     def __init__(self, *args, **kwargs):
+        self.achats = kwargs.pop("achats")
+        print(self.achats)
         super(AssociationForm, self).__init__(*args, **kwargs)
+
+
         self.fields['Id_Achats'].widget.attrs['class'] = 'form-control';
         self.fields['Id_Article'].widget.attrs['class'] = 'form-control';
-
-        # self.initial['Id_Achats'] = Achats.objects.latest('id')
+        self.initial['Id_Achats'] = self.achats
 
     def clean(self):
         cleaned_data = self.cleaned_data

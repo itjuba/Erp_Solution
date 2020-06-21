@@ -12,7 +12,7 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory,formset_factory
 from django.http import JsonResponse
 from django.forms import formset_factory
-from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,Payments_Form,AchatForm2,Payments_Form2
+from .forms import AchatForm,ArticleForm,AssociationForm,AssociationForm2,AssociationForm3,Payments_Form,AchatForm2,Payments_Form2
 from django.template.loader import render_to_string
 from django.views.generic import View
 import os
@@ -214,7 +214,7 @@ def payement_create(request,pk):
 def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
     # ass = Association.objects.filter(Id_Achats=achat)
-    form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
+    form = modelformset_factory(Association, form=AssociationForm3, extra=0,can_delete=True)
 
     if request.method == 'POST':
        formset = form(request.POST or None)
@@ -232,14 +232,11 @@ def update(request,pk):
                # print(data.get('Prix_Unitaire'))
                # print(data.get('Quantite'))
                if data.get('Prix_Unitaire')  is not None and data.get('Quantite') is not None:
-                sum =  sum + (data.get('Prix_Unitaire') * data.get('Quantite'))
+                sum =  sum + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(data.get('Quantite'))))
                 print(data.get('Prix_Unitaire'))
                 print(data.get('Quantite'))
-           print(sum)
 
            if (sum > Decimal(ht)):
-               print(sum)
-               print(' form zawjda !')
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
            formset.save()
            return redirect('view')
@@ -249,8 +246,8 @@ def update(request,pk):
 
 
     else:
-        form = modelformset_factory(Association, form=AssociationForm, extra=5, can_delete=True)
-        formset = form(queryset=Association.objects.filter(Id_Achats=achat.id))
+        form = modelformset_factory(Association, form=AssociationForm, extra=0, can_delete=True)
+        formset = form(queryset=Association.objects.filter(Id_Achats=achat.id),form_kwargs={'achats':achat})
 
 
     return render(request, 'html_update.html', {'formset': formset})
@@ -312,7 +309,6 @@ def step2_ach(request):
         prod = Association.objects.all()
 
         if form.is_valid():
-            form.save()
             achat = Achats.objects.last
             res = 0
             for x in form:
@@ -324,7 +320,8 @@ def step2_ach(request):
                 print(res)
                 ers = 'la somme des prix est sup que le montant tt de la commande '
                 return render(request, 'step2.html', {'formset': form,'art': Art, 'er': ers,'as':prod})
-
+            else:
+                form.save()
             return redirect('view')
         else:
             print(form.errors)
@@ -370,7 +367,7 @@ def view(request):
 
 
     achat_articl = Achats.objects.all()
-    form = modelformset_factory(Association, form=AssociationForm, extra=5,can_delete=True)
+    form = modelformset_factory(Association, form=AssociationForm3, extra=5,can_delete=True)
     if request.method == 'POST':
         formset = form(request.POST or None)
 

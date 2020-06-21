@@ -554,6 +554,33 @@ $(document).ready(function () {
 </script>
 
 
+<script>
+   $(document).ready(function(){
+  $('#add_three').click(function() {
+  console.log('clicked')
+	var form_idx1 = $('#id_form-TOTAL_FORMS').val();
+	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
+	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
+	var achats = $('#id_form-0-Id_Achats').val()
+
+    var article =  $( "#id_form-0-Id_Article option:selected").text()
+    var article1 =  $( "#id_form-0-Id_Article option:selected").val()
+	var data = $("#id_form-0-Id_Article").clone()
+	console.log(data)
+	$('#table2 > tbody:last').append('<tr><td><Select id="id_form-'+form_idx1+'-Id_Achats" class="form-control" type=text name="form-'+form_idx1+'-Id_Achats" required=true"><option value='+achats+' selected="">'+achats+'</option></Select></td><td><Select id="id_form-'+form_idx1+'-Id_Article" class="form-control" type=text name="form-'+form_idx1+'-Id_Article" required=true"><option value='+article1+' selected="">'+article+'</option></Select></td><td><input id="id_form-'+form_idx1+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx1+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx1+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx1+'-Quantite"  required=true"></td><td><input type="checkbox" id="id_form-'+form_idx1+'-DELETE"  name="form-'+form_idx1+'-DELETE"></td></tr>');
+	var options = $('#id_form-0-Id_Article').html();
+	id = "#id_form-" +form_idx1+"-Id_Article"
+	console.log(id);
+	for (var x=0;x<=form_idx1;x++) {
+	console.log(x);
+   $(id).html(options);
+   }
+});
+
+
+    });
+</script>
+
 
 
 

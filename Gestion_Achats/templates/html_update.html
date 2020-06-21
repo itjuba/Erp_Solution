@@ -16,7 +16,8 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                    <table class="table">
+                      <form method="POST"  id="basic-form" >
+                    <table class="table" id="table2">
 
                         {% if formset.errors %}
 
@@ -61,6 +62,7 @@
                       {% include 'assos_html.html' %}
                       </tbody>
                     </table>
+                        <a  class="btn btn-primary" id="add_three" >Add new row</a>
 
 
                 </div>

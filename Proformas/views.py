@@ -630,7 +630,8 @@ def step2(request):
                 print(res)
                 er = 'la somme des prix est sup que le montant tt de la commande '
                 return render(request, 'Proformas/steps/step2.html', {'formset': form, 'com': commande, 'ers': er})
-            form.save()
+            else:
+                form.save()
 
             return redirect('step3')
         else:
