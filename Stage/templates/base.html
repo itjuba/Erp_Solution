@@ -633,7 +633,8 @@ $("#DeleteButton").on("click", function() {
 });
 });
 
-</script><script>
+</script>
+<script>
  $(document).ready(function(){
 $("#DeleteButton").on("click", function() {
    console.log('yes');
@@ -642,6 +643,44 @@ $("#DeleteButton").on("click", function() {
 });
 
 </script>
+<script>
+var $tbody = $("#table2 tbody")
+ $(document).ready(function(){
+$("#done").on("click", function() {
+
+    var $last = $tbody.find('tr:last');
+    if($last.is(':first-child')){
+        console.log('not last');
+    }else {
+        $last.remove()
+                console.log('yes last !');
+
+    }
+
+});
+});
+
+</script>
+<script>
+var $tbody1 = $("#tablefour tbody")
+ $(document).ready(function(){
+$("#done1").on("click", function() {
+
+    var $last = $tbody1.find('tr:last');
+    if($last.is(':first-child')){
+        console.log('not last');
+    }else {
+        $last.remove()
+                console.log('yes last !');
+
+    }
+
+});
+});
+
+</script>
+
+
 
 
 
