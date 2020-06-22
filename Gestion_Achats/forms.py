@@ -5,6 +5,8 @@ from django.forms.models import BaseModelFormSet
 from django.forms import modelformset_factory
 from django.forms import ValidationError
 from Charge.models import Charge
+from django.shortcuts import get_object_or_404
+
 from django.db.models import Sum
 
 TOTAL_FORM_COUNT = 'TOTAL_FORMS'
@@ -142,12 +144,13 @@ class AssociationForm2(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AssociationForm2, self).__init__(*args, **kwargs)
-        acht = Achats.objects.latest('id')
-        self.initial['Id_Achats'] = acht
+
+
+        self.initial['Id_Achats'] = Achats.objects.latest('id')
         self.fields['Prix_Unitaire'].widget.attrs['class'] = 'na form-control';
         self.fields['Id_Article'].widget.attrs['class'] = 'form-control';
         self.fields['Quantite'].widget.attrs['class'] = 'qu l form-control'
-        # self.fields['Id_Achats'].widget = forms.HiddenInput()
+        self.fields['Id_Achats'].widget = forms.HiddenInput()
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -162,7 +165,7 @@ class AssociationForm2(forms.ModelForm):
         print(Quantite)
 
 
-        if not (Id_Achats and Id_Article and Prix_Unitaire and Quantite):
+        if not ( Id_Article and Prix_Unitaire and Quantite):
             raise ValidationError('Form Invalide nadjib!')
 
         if Id_Article == None:

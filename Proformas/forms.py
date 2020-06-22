@@ -149,8 +149,10 @@ class Commande_D_Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(Commande_D_Form, self).__init__(*args, **kwargs)
 
-        commande =  Commande.objects.latest('id')
-        self.initial['Command'] = commande
+
+        self.initial['Command'] = Commande.objects.latest('id')
+        self.fields['Command'].widget = forms.HiddenInput()
+
         # self.fields['Prix_Unitaire'].widget.attrs["required"] = "true"
 
 

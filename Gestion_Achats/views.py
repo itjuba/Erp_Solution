@@ -214,28 +214,26 @@ def payement_create(request,pk):
 def update(request,pk):
     achat = get_object_or_404(Achats, pk=pk)
     # ass = Association.objects.filter(Id_Achats=achat)
-    form = modelformset_factory(Association, form=AssociationForm3, extra=0,can_delete=True)
+    form = modelformset_factory(Association, form=AssociationForm3, extra=1,can_delete=True)
 
     if request.method == 'POST':
        formset = form(request.POST or None)
 
 
        if formset.is_valid():
-           ht = achat.Montant_HT
+           ht = achat.Montant_TTC
            # print(ht)
            error = "la somme des prix est superieur que le montant ht"
            sum = 0
            for x in formset:
                data = x.cleaned_data
-               # print(x.Prix_Unitaire)
-               # print(data)
-               # print(data.get('Prix_Unitaire'))
-               # print(data.get('Quantite'))
+
                if data.get('Prix_Unitaire')  is not None and data.get('Quantite') is not None:
                 sum =  sum + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(data.get('Quantite'))))
-                print(data.get('Prix_Unitaire'))
-                print(data.get('Quantite'))
-
+                # print(data.get('Prix_Unitaire'))
+                # print(data.get('Quantite'))
+           print(sum)
+           print(Decimal(ht))
            if (sum > Decimal(ht)):
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
            formset.save()
@@ -246,7 +244,7 @@ def update(request,pk):
 
 
     else:
-        form = modelformset_factory(Association, form=AssociationForm, extra=0, can_delete=True)
+        form = modelformset_factory(Association, form=AssociationForm, extra=1, can_delete=True)
         formset = form(queryset=Association.objects.filter(Id_Achats=achat.id),form_kwargs={'achats':achat})
 
 
@@ -309,15 +307,19 @@ def step2_ach(request):
         prod = Association.objects.all()
 
         if form.is_valid():
-            achat = Achats.objects.last
+            achat = Achats.objects.latest('id')
+            print(achat.Montant_TTC)
             res = 0
             for x in form:
                 data = x.cleaned_data
                 achat = get_object_or_404(Achats, id=data.get('Id_Achats').id)
+                print(achat)
                 # print(data.get('Prix_Unitaire'))
                 res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
+            print(achat)
             if res > achat.Montant_TTC:
                 print(res)
+                print(achat.Montant_TTC)
                 ers = 'la somme des prix est sup que le montant tt de la commande '
                 return render(request, 'step2.html', {'formset': form,'art': Art, 'er': ers,'as':prod})
             else:

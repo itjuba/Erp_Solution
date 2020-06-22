@@ -513,13 +513,17 @@ $(document).ready(function () {
   $('#add').click(function() {
   console.log('clicked')
 	var form_idx = $('#id_form-TOTAL_FORMS').val();
+
+		if(form_idx <=0){
+	return  window.location.href=window.location.href;
+	}
 	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
 	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
 	var commande = $('#id_form-0-Command').val()
 	console.log(commande);
 	console.log(form_idx)
 
-	$('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+	$('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"   class="form-control"  type="hidden" name="form-'+form_idx+'-Command"  value='+commande+' required=true"></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
 });
     });
 </script>
@@ -528,6 +532,9 @@ $(document).ready(function () {
   $('#add_two').click(function() {
   console.log('clicked')
 	var form_idx1 = $('#id_form-TOTAL_FORMS').val();
+		if(form_idx1 <=0){
+	return  window.location.href=window.location.href;
+	}
 	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
 	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
 <!--	var article = $('#id_form-0-Id_Article').val()-->
@@ -539,7 +546,7 @@ $(document).ready(function () {
 	var data = $("#id_form-0-Id_Article").clone()
 	console.log(data)
 <!--    $("#id_form-1-Id_Article").html(data);-->
-	$('#mytable > tbody:last').append('<tr><td><Select id="id_form-'+form_idx1+'-Id_Achats" class="form-control" type=text name="form-'+form_idx1+'-Id_Achats" required=true"><option value='+achats+' selected="">'+achats+'</option></Select></td><td><Select id="id_form-'+form_idx1+'-Id_Article" class="form-control" type=text name="form-'+form_idx1+'-Id_Article" required=true"><option value='+article1+' selected="">'+article+'</option></Select></td><td><input id="id_form-'+form_idx1+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx1+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx1+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx1+'-Quantite"  required=true"></td><input type="checkbox" name="form-'+form_idx1+'-DELETE" id="id_form-'+form_idx1+'-DELETE"></td></tr>');
+	$('#mytable > tbody:last').append('<tr><td><input id="id_form-'+form_idx1+'-Id_Achats" class="form-control" type="hidden" name="form-'+form_idx1+'-Id_Achats"  value='+achats+'  required=true"></input><Select id="id_form-'+form_idx1+'-Id_Article" class="form-control" type=text name="form-'+form_idx1+'-Id_Article" required=true"><option value='+article1+' selected="">'+article+'</option></Select></td><td><input id="id_form-'+form_idx1+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx1+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx1+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx1+'-Quantite"  required=true"></td><input type="checkbox" name="form-'+form_idx1+'-DELETE" id="id_form-'+form_idx1+'-DELETE"></td></tr>');
 	var options = $('#id_form-0-Id_Article').html();
 	id = "#id_form-" +form_idx1+"-Id_Article"
 	console.log(id);
@@ -557,21 +564,23 @@ $(document).ready(function () {
 <script>
    $(document).ready(function(){
   $('#add_three').click(function() {
-  console.log('clicked')
+    console.log('clicked')
 	var form_idx1 = $('#id_form-TOTAL_FORMS').val();
+
+
 	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
 	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx1) + 1);
 	var achats = $('#id_form-0-Id_Achats').val()
-
-    var article =  $( "#id_form-0-Id_Article option:selected").text()
-    var article1 =  $( "#id_form-0-Id_Article option:selected").val()
-	var data = $("#id_form-0-Id_Article").clone()
-	console.log(data)
-	$('#table2 > tbody:last').append('<tr><td><Select id="id_form-'+form_idx1+'-Id_Achats" class="form-control" type=text name="form-'+form_idx1+'-Id_Achats" required=true"><option value='+achats+' selected="">'+achats+'</option></Select></td><td><Select id="id_form-'+form_idx1+'-Id_Article" class="form-control" type=text name="form-'+form_idx1+'-Id_Article" required=true"><option value='+article1+' selected="">'+article+'</option></Select></td><td><input id="id_form-'+form_idx1+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx1+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx1+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx1+'-Quantite"  required=true"></td><td><input type="checkbox" id="id_form-'+form_idx1+'-DELETE"  name="form-'+form_idx1+'-DELETE"></td></tr>');
+<!--    var article =  $( "#id_form-0-Id_Article option:selected").text()-->
+<!--    var article1 =  $( "#id_form-0-Id_Article option:selected").val()-->
+<!--	var data = $("#id_form-0-Id_Article").clone()-->
+<!--	console.log(data)-->
+	$('#table2 > tbody:last').append('<tr><td><Select id="id_form-'+form_idx1+'-Id_Achats" class="form-control" type=text name="form-'+form_idx1+'-Id_Achats" required=true"><option value='+achats+' selected="">'+achats+'</option></Select></td><td><Select id="id_form-'+form_idx1+'-Id_Article" class="form-control" type=text name="form-'+form_idx1+'-Id_Article"><option value=""></option></Select></td><td><input id="id_form-'+form_idx1+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx1+'-Prix_Unitaire" ></td><td><input id="id_form-'+form_idx1+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx1+'-Quantite" ></td><td><input type="checkbox" id="id_form-'+form_idx1+'-DELETE"  name="form-'+form_idx1+'-DELETE"></td></tr>');
 	var options = $('#id_form-0-Id_Article').html();
 	id = "#id_form-" +form_idx1+"-Id_Article"
 	console.log(id);
-	for (var x=0;x<=form_idx1;x++) {
+	for (var x=0;x<form_idx1;x++) {
+	x= x +1;
 	console.log(x);
    $(id).html(options);
    }
@@ -581,7 +590,34 @@ $(document).ready(function () {
     });
 </script>
 
+<script>
+ $(document).ready(function(){
+$("#DeleteButton").on("click", function() {
+   console.log('yes');
+   $('#mytable tr:last').remove();
+    $('#id_form-TOTAL_FORMS').val( $('#id_form-TOTAL_FORMS').val()-1);
+});
+});
 
+</script>
+<script>
+ $(document).ready(function(){
+$("#DeleteButton").on("click", function() {
+   console.log('yes');
+   $('#book-table tr:last').remove();
+});
+});
+
+</script>
+<script>
+ $(document).ready(function(){
+$("#DeleteButton").on("click", function() {
+   console.log('yes');
+   $('#table2 tr:last').remove();
+});
+});
+
+</script>
 
 
 
