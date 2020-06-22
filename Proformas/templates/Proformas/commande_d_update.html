@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<br><br><br><br><br>
+
+       <div class="row">
+                <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12"  style="width : 950px; left: 3%; ">
+                 <div><a  class="btn btn-warning" href="javascript:history.back(1)">back</a> </div>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Update Achats Article</h4>
+                  <p class="card-category"> Here is Achats informations</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive" >
+                      <form method="POST"  id="basic-form" >
+                    <table class="table" id="tablefour">
+
+                        {% if formset.errors %}
+
+
+                <div class="alert alert-danger">
+                    <strong><p>Check Your inputs</p></strong>
+                </div>
+
+
+{% endif %}
+
+                                      {% if errors %}
+                         <div class="alert alert-danger">
+            <strong>{{ errors|escape }}</strong>
+        </div>
+                        {%endif%}
+
+
+             <thead class=" text-primary"  >
+                      <th>
+                         Designation
+                        </th>
+                        <th>
+                          Prix_Unitaire
+                        </th>
+                        <th>
+                          Commande
+                        </th>
+                        <th>
+                          Quantite
+                        </th>
+                        <th>
+                          Montant_HT
+                        </th>
+                       <th>
+                          Montant_TVA
+                        </th>
+                          <th>
+                          Montant_TTC
+                        </th>
+
+                      </thead>
+
+                      </thead>
+                    <tbody>
+                      {% include 'Proformas/commande_d.html' %}
+                      </tbody>
+                    </table>
+                        <a  class="btn btn-primary" id="add_four" >Add new row</a>
+                           <a  class="btn btn-primary" id="DeleteButton" >delete</a>
+
+
+
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+                </div>
+                    </div>
+
+
+{% endblock%}

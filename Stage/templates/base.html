@@ -591,6 +591,22 @@ $(document).ready(function () {
 </script>
 
 <script>
+   $(document).ready(function(){
+  $('#add_four').click(function() {
+  console.log('clicked')
+	var form_idx = $('#id_form-TOTAL_FORMS').val();
+	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+	var commande = $('#id_form-0-Command').val()
+	console.log(commande);
+	console.log(form_idx)
+
+	$('#tablefour> tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+});
+    });
+</script>
+
+<script>
  $(document).ready(function(){
 $("#DeleteButton").on("click", function() {
    console.log('yes');
@@ -614,6 +630,14 @@ $("#DeleteButton").on("click", function() {
 $("#DeleteButton").on("click", function() {
    console.log('yes');
    $('#table2 tr:last').remove();
+});
+});
+
+</script><script>
+ $(document).ready(function(){
+$("#DeleteButton").on("click", function() {
+   console.log('yes');
+   $('#tablefour tr:last').remove();
 });
 });
 

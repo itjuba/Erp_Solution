@@ -132,6 +132,41 @@ class Commande_Form(forms.ModelForm):
         return cleaned_data
 
 
+class Commande_D_Form2(forms.ModelForm):
+    Designation = forms.CharField(required=True)
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control','required':'true'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control','required':'true'}))
+    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={ 'class':'form-control'}))
+    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = Commande_Designation
+        fields = ('Designation','Prix_Unitaire','Command','Quantite','Montant_HT','Montant_TVA','Montant_TTC')
+
+
+
+class Commande_D_Form_p(forms.ModelForm):
+    Designation = forms.CharField(required=True)
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
+    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = Commande_Designation
+        fields = ('Designation','Prix_Unitaire','Command','Quantite','Montant_HT','Montant_TVA','Montant_TTC')
+
+    def __init__(self, *args, **kwargs):
+        self.com = kwargs.pop('com')
+        print(self.com)
+        super(Commande_D_Form_p, self).__init__(*args, **kwargs)
+        self.initial['Command'] = self.com
+
+
 
 class Commande_D_Form(forms.ModelForm):
     Designation = forms.CharField(required=True)

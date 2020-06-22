@@ -11,7 +11,7 @@ from decimal import Decimal
 
 import datetime
 import threading
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2,Commande_Form_step
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2,Commande_Form_step,Commande_D_Form2,Commande_D_Form_p
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -26,6 +26,46 @@ from .forms import Payments_Form_facture
 
 from django.utils.html import strip_tags
 # Create your views here.
+
+
+def update_com_d(request,pk):
+    commande = get_object_or_404(Commande, pk=pk)
+    print(commande)
+    form = modelformset_factory(Commande_Designation, form=Commande_D_Form2, extra=1,can_delete=True)
+
+    if request.method == 'POST':
+       formset = form(request.POST or None)
+
+
+       if formset.is_valid():
+           ht = commande.Montant_TTC
+           error = "la somme des prix est superieur que le montant ht"
+           sum = 0
+           for x in formset:
+               data = x.cleaned_data
+
+               if data.get('Prix_Unitaire')  is not None and data.get('Quantite') is not None:
+                sum =  sum + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(data.get('Quantite'))))
+
+           print(sum)
+           print(Decimal(ht))
+           if (sum > Decimal(ht)):
+               return render(request, 'html_update.html', {'formset': formset, 'errors': error})
+           formset.save()
+           return redirect('commande')
+       else:
+           # formset._non_form_errors = "Date Exist !"
+           print(formset.errors)
+
+
+    else:
+        form = modelformset_factory(Commande_Designation, form=Commande_D_Form_p, extra=1, can_delete=True)
+        formset = form(queryset=Commande_Designation.objects.filter(Command=commande.id),form_kwargs={'com':commande})
+
+
+    return render(request, 'Proformas/commande_d_update.html', {'formset': formset})
+
+
 
 def is_valid_queryparam(param):
     return param != '' and param is not None
@@ -182,6 +222,7 @@ def html_to_pdf_view_facture(request, pk):
     adresse = client_data.adresse
     NIF = client_data.NIF
     NIS = client_data.NIS
+    AI =  client_data.AI
     raison_social = client_data.Raison_social
 
     context = {
@@ -195,6 +236,7 @@ def html_to_pdf_view_facture(request, pk):
         'adresse': adresse,
         'NIF': NIF,
         'NIS': NIS,
+        'AI':AI,
         'raison_social': raison_social,
         'Date': id_com.Date,
         'modalite_payement': modalite_payement,

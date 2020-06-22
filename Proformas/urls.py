@@ -30,6 +30,7 @@ urlpatterns = [
 
 
     path('pdf_facture/<int:pk>',views.html_to_pdf_view_facture,name="pdf_facture"),
+    path('update_com_d/<int:pk>',views.update_com_d,name="update_com_d"),
 
 
 
