@@ -643,45 +643,54 @@ $("#DeleteButton").on("click", function() {
 });
 
 </script>
+
+
 <script>
 var $tbody = $("#table2 tbody")
- $(document).ready(function(){
-$("#done").on("click", function() {
-
+$(document).ready(function() {
+  $("#done").on("click", function() {
     var $last = $tbody.find('tr:last');
-    if($last.is(':first-child')){
-        console.log('not last');
-    }else {
+    if ($last.is(':first-child')) {
+      console.log('not last');
+    } else {
+      var inputs = $last.find("select");
+      if (inputs.length == 1 && inputs.val() == "") {
+        console.log('empty');
         $last.remove()
-                console.log('yes last !');
-
+      } else {
+        console.log("Not empty");
+      }
+      console.log('yes last !');
     }
-
+  });
 });
-});
-
 </script>
+
 <script>
-var $tbody1 = $("#tablefour tbody")
- $(document).ready(function(){
-$("#done1").on("click", function() {
+var $tbodys = $("#tablefour tbody")
+<!--var x  = $('#tablefour tbody tr:last').find('select').length;-->
+<!--var y =$(#tablefour tbody tr:last').find('input:not(:empty)').length;-->
 
-    var $last = $tbody1.find('tr:last');
-    if($last.is(':first-child')){
-        console.log('not last');
-    }else {
-        $last.remove()
-                console.log('yes last !');
 
+$(document).ready(function() {
+  $("#done1").on("click", function() {
+  console.log('nadjib');
+    var $lasts = $tbodys.find('tr:last');
+    if ($lasts.is(':first-child')) {
+      console.log('not last');
+    } else {
+      var inputss = $lasts.find("select");
+      if (x == 1 && y ==0) {
+        console.log('empty');
+        $lasts.remove()
+      } else {
+        console.log("Not empty");
+      }
+      console.log('yes last !');
     }
-
+  });
 });
-});
-
 </script>
-
-
-
 
 
 </body>

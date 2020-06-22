@@ -34,7 +34,7 @@ def update_com_d(request,pk):
     form = modelformset_factory(Commande_Designation, form=Commande_D_Form2, extra=1,can_delete=True)
 
     if request.method == 'POST':
-       formset = form(request.POST or None)
+       formset = form(request.POST or None,form_kwargs={'com':commande})
 
 
        if formset.is_valid():
