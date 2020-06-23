@@ -447,24 +447,42 @@ class EmailThread(threading.Thread):
         msg.attach_file('/tmp/{username}.{filename}'.format(username=self.name,filename='proformas')+ '.pdf')
         msg.content_subtype = "html"  # Main content is now text/html
         msg.encoding = 'utf-8'
-        msg.send()
-        print('sent')
+        if(msg.send()):
+            print('yes')
+            return HttpResponse('SENT')
 
 
+
+# def send_mail(request,pk):
+#     commande = get_object_or_404(Commande,id=pk)
+#     name  = commande.Client.Raison_social
+#     html_nadjib = render_to_string('Proformas/msg.html',{'raison_social':name,'Date':datetime.date.today()})
+#     to_emails = ['attignadjib@outlook.com']
+#     subject = "SH INFOR FACTURE"
+#     sender = 'attignadjib@gmail.com'
+#     # EmailThread(subject, html_nadjib, to_emails, sender, name).start()
+#     if(EmailThread(subject, html_nadjib, to_emails, sender, name).start()):
+#      return HttpResponse('SENT')
+#     else:
+#         return HttpResponse('not sent')
 
 
 def send_mail(request,pk):
-    commande = get_object_or_404(Commande,id=pk)
-    name  = commande.Client.Raison_social
-    html_nadjib = render_to_string('Proformas/msg.html',{'raison_social':name,'Date':datetime.date.today()})
-    to_emails = ['attignadjib@outlook.com']
-    subject = "SH INFOR FACTURE"
-    sender = 'attignadjib@gmail.com'
-    EmailThread(subject, html_nadjib, to_emails, sender, name).start()
-
-    return HttpResponse('SENT')
-
-
+        commande = get_object_or_404(Commande,id=pk)
+        name  = commande.Client.Raison_social
+        html_nadjib = render_to_string('Proformas/msg.html',{'raison_social':name,'Date':datetime.date.today()})
+        to_emails = ['attignadjib@outlook.com']
+        subject = "SH INFOR FACTURE"
+        sender = 'attignadjib@gmail.com'
+        msg = EmailMessage(subject, html_nadjib, sender, to_emails)
+        msg.attach_file('/tmp/{username}.{filename}'.format(username=name, filename='proformas') + '.pdf')
+        msg.content_subtype = "html"  # Main content is now text/html
+        msg.encoding = 'utf-8'
+        try:
+            msg.send()
+            return HttpResponse('sent')
+        except Exception as e:
+            return HttpResponse('Not sent')
 
 
 
