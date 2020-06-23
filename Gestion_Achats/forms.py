@@ -80,11 +80,15 @@ class AssociationForm3(forms.ModelForm):
         model = Association
         fields = ('Id_Achats', 'Id_Article', 'Prix_Unitaire', 'Quantite')
 
+    def __init__(self, *args, **kwargs):
+        super(AssociationForm3, self).__init__(*args, **kwargs)
+        self.fields['Id_Achats'].widget.attrs['class'] = 'form-control';
+        self.fields['Id_Article'].widget.attrs['class'] = 'form-control';
+
+
+
 
 class AssociationForm(forms.ModelForm):
-    # Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class':'na'}))
-    # Quantite = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Id_Achats = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 

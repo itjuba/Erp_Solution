@@ -133,7 +133,6 @@ class Commande_Form(forms.ModelForm):
 
 
 class Commande_D_Form2(forms.ModelForm):
-    Designation = forms.CharField(required=True)
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
     Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -155,7 +154,6 @@ class Commande_D_Form2(forms.ModelForm):
 
 
 class Commande_D_Form_p(forms.ModelForm):
-    Designation = forms.CharField(required=True)
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
     Command = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
@@ -181,12 +179,12 @@ class Commande_D_Form_p(forms.ModelForm):
 
 class Commande_D_Form(forms.ModelForm):
     Designation = forms.CharField(required=True)
-    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control','required':'true'}))
-    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control','required':'true'}))
-    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'required':'true' ,'class':'form-control'}))
-    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'required':'true','class':'form-control'}))
-    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'required':'true','class':'form-control'}))
-    Designation = forms.CharField(widget=forms.TextInput(attrs={'required':'true','class':'form-control'}))
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
+    Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
+    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
     class Meta:
         model = Commande_Designation

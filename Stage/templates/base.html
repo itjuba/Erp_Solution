@@ -445,6 +445,7 @@ input:checked + .slider:before {
 
 
 
+
   {% block javascript %}
     {% endblock %}
 
@@ -580,7 +581,6 @@ $(document).ready(function () {
 	id = "#id_form-" +form_idx1+"-Id_Article"
 	console.log(id);
 	for (var x=0;x<form_idx1;x++) {
-	x= x +1;
 	console.log(x);
    $(id).html(options);
    }
@@ -645,32 +645,10 @@ $("#DeleteButton").on("click", function() {
 </script>
 
 
-<script>
-var $tbody = $("#table2 tbody")
-$(document).ready(function() {
-  $("#done").on("click", function() {
-    var $last = $tbody.find('tr:last');
-    if ($last.is(':first-child')) {
-      console.log('not last');
-    } else {
-      var inputs = $last.find("select");
-      if (inputs.length == 1 && inputs.val() == "") {
-        console.log('empty');
-        $last.remove()
-      } else {
-        console.log("Not empty");
-      }
-      console.log('yes last !');
-    }
-  });
-});
-</script>
+
 
 <script>
 var $tbodys = $("#tablefour tbody")
-<!--var x  = $('#tablefour tbody tr:last').find('select').length;-->
-<!--var y =$(#tablefour tbody tr:last').find('input:not(:empty)').length;-->
-
 
 $(document).ready(function() {
   $("#done1").on("click", function() {
@@ -680,7 +658,7 @@ $(document).ready(function() {
       console.log('not last');
     } else {
       var inputss = $lasts.find("select");
-      if (x == 1 && y ==0) {
+      if (inputss.length == 1 && inputss.val() == "") {
         console.log('empty');
         $lasts.remove()
       } else {
@@ -691,6 +669,8 @@ $(document).ready(function() {
   });
 });
 </script>
+
+
 
 
 </body>

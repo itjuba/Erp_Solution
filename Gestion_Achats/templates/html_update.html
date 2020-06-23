@@ -1,5 +1,36 @@
 {% extends 'base.html'%}
 
+
+{% block javascript %}
+
+  <script>
+var $tbodyz = $("#table2 tbody")
+
+console.log('now');
+$(document).ready(function() {
+  $("#done").on("click", function() {
+    var last = $("#table2 tbody").find('tr:last');
+    if (last.is(':first-child')) {
+      console.log('Not Last Row');
+    } else {
+      var inputs = last.find("select");
+      var inputd= last.find("input");
+      var inputf= last.find('input[type=text]').filter(':visible:first');
+      var inputl= last.find('input[type=text]').filter(':visible:last');
+
+      if (inputs.length == 2 && inputs.last().val() =='' && inputf.val() =='' && inputl.val() == '') {
+        last.remove()
+      } else {
+        console.log("Inputs OR select not empty");
+      }
+    }
+  });
+});
+</script>
+
+
+{% endblock %}
+
 {% block content %}
 <br><br><br><br><br>
 
