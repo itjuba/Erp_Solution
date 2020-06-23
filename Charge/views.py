@@ -83,9 +83,10 @@ def charge_delete(request, pk):
 
     data = dict()
     if request.method == 'POST':
-        if get_object_or_404(Payements, reference=charge.id):
-            payement = get_object_or_404(Payements, reference=charge.id)
-            payement.delete()
+        if Payements.objects.filter(reference=charge.id).exists():
+              payement = get_object_or_404(Payements, reference=charge.id)
+              print('exists')
+              payement.delete()
         charge.delete()
 
 
