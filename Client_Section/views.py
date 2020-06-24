@@ -5,7 +5,7 @@ from django.forms import modelformset_factory
 from .forms import ClientForm,Contact_Form       
 from django.http import JsonResponse
 import datetime
-from Proformas.models import Facture
+from Proformas.models import Facture,Commande
 from django.db.models import Count
 from Gestion_Achats.models import Payements,Achats,Association,Article
 from Transactionb.models import Transactionb
@@ -123,12 +123,13 @@ def graph(request,*args,**kwargs):
     for x in factur:
         mhtg = mhtg + x.Montant_HT
 
-    if Client_Data.objects.all():
+    if Commande.objects.all():
         print('all')
-        top_client = Client_Data.objects.values_list('Raison_social').annotate(truck_count=Count('Raison_social')).order_by(
+        top_client = Commande.objects.values_list('Client').annotate(truck_count=Count('Client')).order_by(
             '-truck_count')[0]
         if top_client:
          x = top_client[0]
+         x = Client_Data.objects.get(id=x)
     else :
             x='No Client Found !'
     pay_vente = Payements.objects.filter(E_S="Vente")
