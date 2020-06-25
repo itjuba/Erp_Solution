@@ -221,7 +221,7 @@ def update(request,pk):
 
 
        if formset.is_valid():
-           ht = achat.Montant_TTC
+           ht = achat.Montant_HT
            # print(ht)
            error = "la somme des prix est superieur que le montant ht"
            sum = 0

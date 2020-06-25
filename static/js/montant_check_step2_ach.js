@@ -20,8 +20,8 @@
         var sah = Cookies.get('montant')
         console.log(sah)
         console.log(total)
-        if (total > sah){
-          var message = 'Le Total des articles ne correspond pas à le montant HT   : ' + total
+        if (total != sah){
+          var message = 'Le Total des articles ne correspond pas à le montant HT   :  total =' + total + '' + 'Montant HT = ' + sah
           md.showNotificationDelete('top','center','danger',message);
           $('#done').attr('disabled','disabled');
           }

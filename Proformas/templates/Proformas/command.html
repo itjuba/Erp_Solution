@@ -59,7 +59,7 @@ table, th, td {
     <body>
         <div class='wrapper'>
             <div class='header'>
-                <img class="image" src="{% static  'img/sh.png' %}" alt="nadjib">
+                <img class="image" src="{% static  'img/shinfo.png' %}"  style="width:500px;height:100px;" alt="nadjib">
                 <p class='title'>GROUPE PROPRIETAIRE 421 SECTION 09 BABA ALI      BIRTOUTA  - ALGER
                               RC : 16/00 - 1012249B17  - NIF : 001716101224922 - AI : 16340226465
                    C.B.:  SGA - RIB.: 021 00012 1130035535 18-Mob:0561 45 80 88 / 0551 72 11 38
@@ -96,12 +96,12 @@ table, th, td {
       <td style="text-align : left">
       {% with Designation|split:"," as des %}
       {% for de in des%}
-    {{de}}<br>
+    <p>{{de}}</p>
       {% endfor%}
       {% endwith %}
       </td>
-    <td>{{Prix_Uni}}</td>
-      <td>{{Quantite}}</td>
+    <td style="text-align : left"> {% for x in Prix_Uni%} <p>{{x}}</p> {%endfor%}</td>
+      <td style="text-align : left"> {% for q in Quantite %}<p>{{q}}</p>{%endfor%}</td>
     <td>{{Montant_HT}}</td>
   </tr>
 

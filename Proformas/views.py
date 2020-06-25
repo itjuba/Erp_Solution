@@ -171,13 +171,13 @@ def html_to_pdf_view_facture(request, pk):
         print(x)
         Designation = Designation +  '-' + x +  " ,"
 
-    Prix_Uni = 0
-    for x in prix:
-        Prix_Uni = Prix_Uni + x
+    # Prix_Uni = 0
+    # for x in prix:
+    #     Prix_Uni = Prix_Uni + x
 
-    Quantite = 0
-    for x in qua:
-        Quantite = Quantite + x
+    # Quantite = 0
+    # for x in qua:
+    #     Quantite = Quantite + x
 
     # Montant_HT = 0
     # for x in ht:
@@ -227,8 +227,8 @@ def html_to_pdf_view_facture(request, pk):
 
     context = {
         'Designation': Designation,
-        'Prix_Uni': Prix_Uni,
-        'Quantite': Quantite,
+        'Prix_Uni': prix,
+        'Quantite': qua,
         'Montant_HT': Montant_HT,
         'Montant_TVA': Montant_TVA,
         'Montant_TTC': Montant_TTC,
@@ -509,13 +509,13 @@ def html_to_pdf_view(request,pk):
             print(x)
             Designation = Designation +  '-' + x +  " ,"
 
-        Prix_Uni = 0
-        for x in prix:
-            Prix_Uni = Prix_Uni + x
+        # Prix_Uni = 0
+        # for x in prix:
+        #     Prix_Uni = Prix_Uni + x
 
-        Quantite = 0
-        for x in qua:
-            Quantite = Quantite + x
+        # Quantite = 0
+        # for x in qua:
+        #     Quantite = Quantite + x
 
         # Montant_HT= 0
         # for x in ht:
@@ -568,8 +568,8 @@ def html_to_pdf_view(request,pk):
 
         context = {
         'Designation': Designation,
-        'Prix_Uni': Prix_Uni,
-        'Quantite': Quantite,
+        'Prix_Uni': prix,
+        'Quantite': qua,
         'Montant_HT': Montant_HT,
         'Montant_TVA': Montant_TVA,
         'Montant_TTC': Montant_TTC,
