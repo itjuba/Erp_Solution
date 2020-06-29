@@ -38,7 +38,7 @@ class Modalite(models.Model):
     Formation = models.TextField(blank=True,null=True,default='')
     Period_Réalisation = models.TextField(blank=True,null=True,default='')
     Echéancier_payement = models.TextField(blank=True,null=True,default='')
-    Debut_realsiation = models.TextField(blank=True,null=True,default='')
+    Debut_realsiation = models.DateField(blank=True,null=True)
     Command = models.ForeignKey(Commande, on_delete=models.CASCADE, default='')
     Garantie = models.TextField(blank=True,null=True,default='')
 

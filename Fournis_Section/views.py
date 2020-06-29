@@ -78,7 +78,7 @@ def save_client_form(request, form,Fournis_Contact_form, template_name):
             print(Fournis_Contact_form.errors)
             data['form_is_valid'] = False
     data['errors_c'] = Fournis_Contact_form.errors.as_text()
-    # data['errors'] = form.errors.as_text()
+    data['errors'] = form.errors.as_text()
     context = {'form': form,'contact_form':Fournis_Contact_form}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)

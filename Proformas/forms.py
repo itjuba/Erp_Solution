@@ -235,7 +235,9 @@ class Modalite_Form(forms.ModelForm):
     Formation = forms.CharField(required=False)
     Period_Réalisation = forms.CharField(required=False)
     Echéancier_payement = forms.CharField(required=False)
-    Debut_realsiation = forms.CharField(required=False)
+
+    Debut_realsiation = forms.CharField(widget=forms.TextInput(attrs={'type': 'date','requied':'false'}))
+
     Garantie = forms.CharField(required=False)
     class Meta:
         model = Modalite

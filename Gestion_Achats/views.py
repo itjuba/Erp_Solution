@@ -223,7 +223,7 @@ def update(request,pk):
        if formset.is_valid():
            ht = achat.Montant_HT
            # print(ht)
-           error = "la somme des prix est superieur que le montant ht"
+           error = "la somme des prix doit etre égale au montant HT de l'achat" + ' ' + str(ht)
            sum = 0
            for x in formset:
                data = x.cleaned_data
@@ -234,7 +234,7 @@ def update(request,pk):
                 # print(data.get('Quantite'))
            print(sum)
            print(Decimal(ht))
-           if (sum > Decimal(ht)):
+           if (sum != Decimal(ht)):
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
            formset.save()
            return redirect('view')
@@ -317,10 +317,10 @@ def step2_ach(request):
                 # print(data.get('Prix_Unitaire'))
                 res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
             print(achat)
-            if res > achat.Montant_TTC:
+            if res != achat.Montant_HT:
                 print(res)
-                print(achat.Montant_TTC)
-                ers = 'la somme des prix est sup que le montant tt de la commande '
+                print(achat.Montant_HT)
+                ers = 'la somme des prix  doit etre égale au montant HT de lachat ' + ' ' + str(achat.Montant_HT)
                 return render(request, 'step2.html', {'formset': form,'art': Art, 'er': ers,'as':prod})
             else:
                 form.save()

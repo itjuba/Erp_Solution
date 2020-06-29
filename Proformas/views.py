@@ -38,8 +38,8 @@ def update_com_d(request,pk):
 
 
        if formset.is_valid():
-           ht = commande.Montant_TTC
-           error = "la somme des prix est superieur que le montant ht"
+           ht = commande.Montant_HT
+           error = "la somme des prix doit etre égale au montant ht de la commande !" + ' Montant HT:'  + ' ' + str(ht)
            sum = 0
            for x in formset:
                data = x.cleaned_data
@@ -49,7 +49,7 @@ def update_com_d(request,pk):
 
            print(sum)
            print(Decimal(ht))
-           if (sum > Decimal(ht)):
+           if (sum != Decimal(ht)):
                return render(request, 'html_update.html', {'formset': formset, 'errors': error})
            formset.save()
            return redirect('commande')
@@ -686,9 +686,9 @@ def step2(request):
                 commande = get_object_or_404(Commande,id=data.get('Command').id)
                 # print(data.get('Prix_Unitaire'))
                 res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
-            if res > commande.Montant_TTC:
+            if res != commande.Montant_HT:
                 print(res)
-                er = 'la somme des prix est sup que le montant tt de la commande '
+                er = 'la somme des prix doit etre égale au montant ht de la commande ! ' + ' ' + str(commande.Montant_HT)
                 return render(request, 'Proformas/steps/step2.html', {'formset': form, 'com': commande, 'ers': er})
             else:
                 form.save()
