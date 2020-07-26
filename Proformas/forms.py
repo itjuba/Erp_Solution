@@ -155,7 +155,7 @@ class Commande_D_Form2(forms.ModelForm):
 
 class Commande_D_Form_p(forms.ModelForm):
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
-    Command = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    #Command = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
     Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))

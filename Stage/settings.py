@@ -91,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Stage',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'USER': 'juba',
+        'PASSWORD': 'Nadjib11051963',
         'PORT': '',
     }
 }

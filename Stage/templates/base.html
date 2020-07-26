@@ -644,6 +644,9 @@ $("#DeleteButton").on("click", function() {
 
 </script>
 
+var $tbodys = $("#tablefour tbody")
+var $lasts = $tbodys.find('tr:last');
+var inputss = $lasts.find("select");
 
 
 
@@ -657,10 +660,15 @@ $(document).ready(function() {
     if ($lasts.is(':first-child')) {
       console.log('not last');
     } else {
+       var emptyInputs = $lasts.find("input[type=text]").filter(function() {
+        return this.value === "";
+      });
       var inputss = $lasts.find("select");
-      if (inputss.length == 1 && inputss.val() == "") {
+      if (inputss.val() == "" && emptyInputs && emptyInputs.length == 6) {
         console.log('empty');
         $lasts.remove()
+        $('#id_form-TOTAL_FORMS').html($('#id_form-TOTAL_FORMS').val()-1);
+        $('#id_form-TOTAL_FORMS').attr("value",$('#id_form-TOTAL_FORMS').val()-1);
       } else {
         console.log("Not empty");
       }
