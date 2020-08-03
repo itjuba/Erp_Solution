@@ -23,6 +23,12 @@ urlpatterns = [
     path('create_facture/<int:pk>',views.Facture_create,name="create_facture"),
     path('create_payements_f/<int:pk>',views.payement_c,name="create_payements_f"),
     path('pdf/<int:pk>',views.html_to_pdf_view,name="pdf"),
+    
+    path('update2/<int:pk>',views.update2,name="update2"),
+    path('update1/<int:pk>',views.update1,name="update1"),
+    path('update2post/<int:pk>',views.update2post,name="update2post"),
+    
+
 
 
 
@@ -31,6 +37,8 @@ urlpatterns = [
 
     path('pdf_facture/<int:pk>',views.html_to_pdf_view_facture,name="pdf_facture"),
     path('update_com_d/<int:pk>',views.update_com_d,name="update_com_d"),
+    path('test',views.test,name='test'),
+    path('test2',views.test2,name='test2'),
 
 
 

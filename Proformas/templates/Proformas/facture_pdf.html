@@ -79,8 +79,12 @@ table, th, td {
           <p>
     NIF : {{NIF}}
           </p>
+          {% if NIS %}
             <p> NIS : {{NIS}}</p>
+            {% endif%}
             <p> AI : {{AI}}</p>
+
+            <p> RC : {{rc}}</p>
 
 
 
@@ -137,7 +141,7 @@ table, th, td {
 
 
              {%   if Arret_Facture%}
-                 <p>ARRET LA FACTURE A LA SOMME DE :</p>
+                 <p>ARRET LA FACTURE  A LA SOMME DE :</p>
             <p>{{Arret_Facture}}</p>
 
             {% endif%}

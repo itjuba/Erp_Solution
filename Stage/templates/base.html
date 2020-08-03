@@ -170,19 +170,19 @@ input:checked + .slider:before {
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'homme' %}">
               <i class="material-icons wh" style="" >dashboard</i>
-              <p>Dashboard</p>
+              <p style="">Dashboard</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="#">
               <i class="material-icons" style="" >person</i>
-              <p>User Profile</p>
+              <p>Profile Utilisateurs</p>
             </a>
           </li>
              <li class="nav-item  ">
             <a class="nav-link dropdown-btn" data-toggle="collapse" data-target="#cl" href="#">
               <i class="material-icons" style="color : black;" >content_paste</i>
-              <p>Client Section  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <span class="iconify" data-icon="zmdi-caret-down-circle" data-inline="false"></span></p>
+              <p>Gestion clients  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; <span class="iconify" data-icon="zmdi-caret-down-circle" data-inline="false"></span></p>
             </a>
           </li>
           <div id="cl" class="show">
@@ -190,14 +190,14 @@ input:checked + .slider:before {
             <a class="nav-link" href="{% url 'client'%}">
               <i class="material-icons" style="" >content_paste</i>
 
-              <p>Client List</p>
+              <p>Liste clients</p>
             </a>
           </li>
                 <li class="nav-item  ">
             <a class="nav-link" href="{% url 'contact'%}">
               <i class="material-icons" style="" >content_paste</i>
 
-              <p>Client Contact List</p>
+              <p>Contacts clients</p>
             </a>
           </li>
             </div>
@@ -205,27 +205,27 @@ input:checked + .slider:before {
             <a class="nav-link "data-toggle="collapse" data-target="#fournis"  href="#">
               <i class="material-icons" style="color : black" >content_paste</i>
 
-              <p>Fournis Section &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="iconify" data-icon="zmdi-caret-down-circle" data-inline="false"></span></p>
+              <p>Gestion fournisseurs &nbsp; <span class="iconify" data-icon="zmdi-caret-down-circle" data-inline="false"></span></p>
             </a>
           </li>
           <div id="fournis" class="show">
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'fournis'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Fournis List</p>
+              <p>Liste fournisseurs</p>
             </a>
           </li>
              <li class="nav-item ">
             <a class="nav-link" href="{% url 'Fournis_contact'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Fournis Contact List</p>
+              <p>Contacts fournisseurs</p>
             </a>
           </li>
             </div>
             <li class="nav-item ">
             <a class="nav-link" href="{% url 'article'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Article List </p>
+              <p>Articles</p>
             </a>
 <!--          </li>-->
 <!--                <li class="nav-item ">-->
@@ -238,64 +238,52 @@ input:checked + .slider:before {
                 <li class="nav-item ">
             <a class="nav-link" href="{% url 'view'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Achats Article List </p>
+              <p>Gestion achats</p>
             </a>
           </li>
                   <li class="nav-item ">
             <a class="nav-link" href="{% url 'commande'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Commande List </p>
+              <p>Gestion commandes</p>
             </a>
           </li>
                   <li class="nav-item ">
             <a class="nav-link" href="{% url 'facture'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Facture List </p>
+              <p>Gestion factures</p>
             </a>
           </li>
                   <li class="nav-item ">
             <a class="nav-link" href="{% url 'payements'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Payement List </p>
+              <p>Gestion payements</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'charge_view'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Charge List </p>
+              <p>Gestion charges</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'transaction_view'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Transaction bancaire </p>
+              <p>Transactions bancaires</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'caisse'%}">
               <i class="material-icons" style="" >content_paste</i>
-              <p>Caisse </p>
+              <p>Gestion caisse</p>
             </a>
           </li>
 
-          <li class="nav-item ">
-            <a class="nav-link " href="#">
-              <i class="material-icons" style="" >location_ons</i>
-              <p>Maps</p>
-            </a>
-          </li>
+     
           <li class="nav-item ">
             <a class="nav-link " href="#">
               <i class="material-icons" style="" >notifications</i>
               <p>Notifications</p>
             </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link " href="#">
-              <i class="material-icons" style="" >language</i>
-              <p>RTL Support</p>
-            </a>
-          </li>white
 <!--          <li class="nav-item active-pro ">-->
 <!--            <a class="nav-link " href="#">-->
 <!--              <i class="material-icons" style="" >unarchive</i>-->
@@ -332,7 +320,7 @@ input:checked + .slider:before {
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="javascript:;">
-                  <i class="material-icons">dashboard</i>
+                  <i class="material-icons">Tableau de bord</i>
                   <p class="d-lg-none d-md-block">
                     Stats
                   </p>
@@ -510,23 +498,43 @@ $(document).ready(function () {
 
 
 <script>
-   $(document).ready(function(){
-  $('#add').click(function() {
-  console.log('clicked')
-	var form_idx = $('#id_form-TOTAL_FORMS').val();
+  $(document).ready(function(){
+ $('#add_test').click(function() {
+ console.log('clicked')
+ var form_idx = $('#id_form-TOTAL_FORMS').val();
 
-		if(form_idx <=0){
-	return  window.location.href=window.location.href;
-	}
-	$('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-	var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-	var commande = $('#id_form-0-Command').val()
-	console.log(commande);
-	console.log(form_idx)
+   if(form_idx <=0){
+ return  window.location.href=window.location.href;
+ }
+ $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+ var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+ var commande = $('#id_form-0-Command').val()
+ console.log(commande);
+ console.log(form_idx)
 
-	$('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"   class="form-control"  type="hidden" name="form-'+form_idx+'-Command"  value='+commande+' required=true"></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+ $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"  type="hidden"  class="form-control"  type="text" name="form-'+form_idx+'-Command" required="true" value='+commande+' ></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
 });
-    });
+   });
+</script>
+
+<script>
+  $(document).ready(function(){
+ $('#add').click(function() {
+ console.log('clicked')
+ var form_idx = $('#id_form-TOTAL_FORMS').val();
+
+   if(form_idx <=0){
+ return  window.location.href=window.location.href;
+ }
+ $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+ var x = $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+ var commande = $('#id_form-0-Command').val()
+ console.log(commande);
+ console.log(form_idx)
+
+ $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+});
+   });
 </script>
 <script>
    $(document).ready(function(){
@@ -677,6 +685,7 @@ $(document).ready(function() {
   });
 });
 </script>
+
 
 
 

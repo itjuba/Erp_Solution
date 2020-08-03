@@ -12,14 +12,14 @@ from django.dispatch import receiver
 
 
 class Client_Data(models.Model):
-     RC = models.CharField(max_length=50,blank=True,null=True)
-     Raison_social = models.CharField(max_length=254)
+     RC = models.CharField(max_length=50,unique=True,blank=True,null=True)
+     Raison_social = models.CharField(max_length=254,unique=True)
      NIF = models.CharField(max_length=50,unique=True,blank=True,null=True)
      AI = models.CharField(max_length=50,unique=True,blank=True,null=True)
      NIS = models.CharField(max_length=50,unique=True,blank=True,null=True)
-     Banque = models.CharField(max_length=50,unique=True,blank=True,null=True)
-     CB = models.CharField(max_length=50,blank=True,null=True)
-     adresse = models.CharField(max_length=50)
+     Banque = models.CharField(max_length=50,blank=True,null=True)
+     CB = models.CharField(max_length=50,unique=True,blank=True,null=True)
+     adresse = models.CharField(max_length=150)
      slug = models.SlugField(blank=True, unique=True)
      active = models.BooleanField(default=True,blank=True,null=True)
 

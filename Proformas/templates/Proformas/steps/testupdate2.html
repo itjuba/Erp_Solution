@@ -1,0 +1,289 @@
+
+{% extends 'base.html'%}
+<!--{% load widget_tweaks %}-->
+{% load crispy_forms_tags %}
+{% load static%}
+
+{% block javascript %}
+  <script src="{% static 'js/tva.js' %}"></script>
+
+<script>
+   $(document).ready(function() {
+  nadjib = function(){
+  document.getElementById("form-one").submit();
+  document.getElementById("form-two").submit();
+ 
+}
+   });
+</script>
+
+<script language="JavaScript">
+  $(document).ready(function() {
+     $("#submit").click(function(e) {
+
+      var total = 0;
+      $('.qu').each(function(ind) {
+          var prix = $('.na').eq(ind).val();
+          console.log(prix);
+          var quantite = $(this).val();
+          console.log(quantite);
+          if(!prix || !quantite){
+             md.showNotificationDelete('top','center','danger','check your empty inputs !');
+
+          }
+          prix = (isNaN(prix) || (prix == '') )?0:parseFloat(prix);
+          quantite = (isNaN(quantite) || (quantite == ''))?0:parseInt(quantite);
+          total += (prix * quantite);
+          console.log(total);
+      });
+      var sah = $('#id_Montant_HT').val()
+      console.log(sah)
+      console.log(total)
+      if (total != sah){
+        var message = 'Le Total des articles ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
+        md.showNotificationDelete('top','center','danger',message);
+        console.log('here')
+        }
+        else{
+          console.log('after here')
+
+
+          var url = window.location.pathname;
+          var id = url.substring(url.lastIndexOf('/') + 1);
+
+
+     var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
+      e.preventDefault();
+          $.ajax({ 
+            headers: {
+               
+                "X-CSRFToken": csrftoken
+            },
+              data: $('#form-one').serialize(), 
+              type: 'POST', 
+              url: '/commande/update2post/'+id, 
+              success: function(response) { 
+                $.ajax({ 
+            headers: {
+               
+                "X-CSRFToken": csrftoken
+            },
+              data: $('#form-two').serialize(), 
+              type: 'POST', 
+              url: '/commande/update1/'+id, 
+              success: function(response) { 
+                $("#moussa").html(response.html_from_view);
+                console.log(response.html_from_view)
+                console.log($("#moussa"))
+                  console.log("success !")
+                  if(response.errors){
+                    console.log(response.errors)
+                    md.showNotificationDelete('top','center','danger',response.errors);
+                  }
+
+              },
+            
+                
+              
+          });
+              }
+          });
+         
+      
+          return false;
+
+
+        }
+       
+    
+         
+      });
+      
+  });
+</script>
+{% endblock %}
+{% block content %}
+
+
+ <div class="content" style="margin-left : 150px;">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8">
+                <br><br>
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title " style="text-align: center;">Modifier Commande</h4>
+                </div>
+
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                        {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+                        <br><br><br><br><br>
+
+<form method="POST" id="form-one" >
+       <div class="col-md-4" style="margin-left : auto;margin-right:auto;">
+                          <label for="">TVA</label>
+                        <input   class="form-control" type="text" name="tv">
+                            </div>
+    <br>
+    {% csrf_token %}
+
+     <div style="margin-left : 25px" >
+
+   <div class="form-row">
+              <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_HT &nbsp;</label>
+            {% render_field form.Montant_HT class="form-control mont" %}
+      </div>
+         <div class="form-group col-md-6 mb-0" id="label1">
+          <label class="bmd-label-floating" for="form.id_for_label">Montant_TVA</label>
+           {% render_field form.Montant_TVA class="form-control " %}
+      </div>
+
+
+   </div>
+
+
+
+      <div class="form-row">
+
+
+                              <div class="form-group col-md-6 mb-0" id="label">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TTC &nbsp;</label>
+            {% render_field form.Montant_TTC class="form-control " %}
+      </div>
+
+  <div class="form-group col-md-6 mb-0">
+          <label class="" for="form.id_for_label">Date</label>
+           {% render_field form.Date class="form-control" %}
+      </div>
+
+
+   </div>
+             <div class="form-row">
+
+     <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Type_Service</label>
+           {% render_field form.Type_Service class="form-control" %}
+      </div>
+
+
+                        <div class="form-group col-md-6 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Client &nbsp;</label>
+            {% render_field form.Client class="form-control" %}
+      </div>
+
+    </div>
+      
+                    <div class="form-group col-md-6 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Numero_commande</label>
+           {% render_field form.Numero_commande class="form-control " %}
+      </div>
+
+    
+    
+</div>
+
+
+
+    <!-- <input  id="step1" class="btn btn-primary" value="Submit" /> -->
+     </div>
+
+</form>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ </div>
+
+
+
+ 
+<div class="row">
+<div class="col-md-12" id="col2">
+<div class="card">
+<div class="card-header card-header-primary">
+<h4 class="card-title " style="text-align: center;">Modifier Commande Designation</h4>
+</div>
+<div class="card-body">
+<div class="table-responsive" >
+<!--                      <form method="POST" id="myform" action="{% url 'step2' %}" >-->
+<form method="POST" id="form-two" >
+
+<table class="table" id="book-table">
+
+{% if ers%}
+         <div class="alert alert-danger">
+<strong>   {{ ers }}</strong>
+</div>
+{% endif %}
+
+
+
+
+<thead class=" text-primary"  >
+<th>
+Designation
+</th>
+<th>
+Prix_Unitaire
+</th>
+<th>
+  Commande
+  </th>
+
+<th>
+Quantite
+</th>
+<th>
+Montant_HT
+</th>
+<th>
+Montant_TVA
+</th>
+<th>
+Montant_TTC
+</th>
+
+
+
+</thead>
+
+</thead>
+<tbody id="moussa">
+{% include 'Proformas/steps/partial_step.html' %}
+</tbody>
+</table>
+<a  class="btn btn-primary" id="add" >Add new row</a>
+                    <a  class="btn btn-primary" id="DeleteButton" >delete</a>
+
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<button id="submit">Submit forms</button>
+{% endblock%}

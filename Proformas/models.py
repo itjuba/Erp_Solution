@@ -61,8 +61,7 @@ class Commande_Designation(models.Model):
     def __str__(self):
         return self.Designation
 
-
-
+    
 class Facture(models.Model):
     Date = models.DateField()
     Date_payement = models.DateField(blank=True,null=True)

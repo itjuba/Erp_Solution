@@ -87,6 +87,14 @@ class Facture_Form(forms.ModelForm):
         # if Montant_TTC > ttc:
         #     raise ValidationError('le montant ttc facture > montant ttc commmande ')
 
+class Commande_Formna(forms.ModelForm):
+    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    #Date_validation = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = Commande
+        fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation','Date_validation')
+
 
 class Commande_Form2(forms.ModelForm):
     Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
@@ -195,9 +203,18 @@ class Commande_D_Form(forms.ModelForm):
 
 
         self.initial['Command'] = Commande.objects.latest('id')
+       
+        
         self.fields['Command'].widget = forms.HiddenInput()
 
         # self.fields['Prix_Unitaire'].widget.attrs["required"] = "true"
+
+    def save(self,commit=True):
+        commande =  super(Commande_D_Form, self).save(commit = False)
+        commande.Command = Commande.objects.latest('id')
+        commande.save()
+        return commande
+
 
 
     def clean(self):

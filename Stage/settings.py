@@ -94,6 +94,7 @@ DATABASES = {
         'USER': 'juba',
         'PASSWORD': 'Nadjib11051963',
         'PORT': '',
+        'HOST': '127.0.0.1',
     }
 }
 

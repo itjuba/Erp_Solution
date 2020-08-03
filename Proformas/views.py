@@ -8,10 +8,10 @@ from django.views.generic import View
 from django.http import JsonResponse
 from Client_Section.models import Client_Data
 from decimal import Decimal
-
+from django.urls import reverse
 import datetime
 import threading
-from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2,Commande_Form_step,Commande_D_Form2,Commande_D_Form_p
+from .forms import Commande_Form,Commande_D_Form,Modalite_Form,validat,Commande_Form2,Facture_Form,Facture_Form2,Commande_Form_step,Commande_D_Form2,Commande_D_Form_p,Commande_Formna
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.forms import modelformset_factory,formset_factory
@@ -22,10 +22,147 @@ import weasyprint
 from django.template.loader import render_to_string
 from weasyprint import HTML
 from .forms import Payments_Form_facture
+import json
+import simplejson
+from django.core import serializers
 
 
 from django.utils.html import strip_tags
 # Create your views here.
+
+def update2(request,pk):
+        commande = get_object_or_404(Commande, pk=pk)
+    
+        form = Commande_Form2(instance=commande)
+        forms = modelformset_factory(Commande_Designation, form=Commande_D_Form_p, extra=0, can_delete=True)
+        formset = forms(queryset=Commande_Designation.objects.filter(Command=commande.id),form_kwargs={'com':commande})
+
+        return render(request,'Proformas/steps/testupdate2.html',{'form':form,'formset':formset})
+
+
+def update2post(request,pk):
+    
+    data = dict()
+    if request.method == 'POST' and request.is_ajax:
+        
+        commande = get_object_or_404(Commande, id=pk)
+      
+        form = Commande_Formna(request.POST,instance=commande)
+        if form.is_valid():
+         form.save()
+
+        else:
+            print(form.errors)
+          
+            data['errors'] = form.errors
+    return JsonResponse(data)
+
+
+def update1(request,pk):
+    print('update 1')
+    satas = dict()
+    commande = get_object_or_404(Commande, id=pk)
+    forms = modelformset_factory(Commande_Designation, form=Commande_D_Form2, extra=0,can_delete=True)
+    formset = forms(request.POST or None,form_kwargs={'com':commande})
+    if request.method == 'POST' and request.is_ajax:
+       if formset.is_valid():
+           ht = commande.Montant_HT
+           error = "la somme des prix doit etre égale au montant ht de la commande !" + ' Montant HT:'  + ' ' + str(ht)
+           sum = 0
+           for x in formset:
+               data = x.cleaned_data
+
+               if data.get('Prix_Unitaire')  is not None and data.get('Quantite') is not None:
+                sum =  sum + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(data.get('Quantite'))))
+
+           print(sum)
+           if (sum != Decimal(ht)):
+               satas['errors'] = "errors ya zah"
+               print('errors')
+               return JsonResponse(data)
+           else:
+                
+                formset.save()
+                forms = modelformset_factory(Commande_Designation, form=Commande_D_Form_p, extra=0, can_delete=True)
+                formset = forms(queryset=Commande_Designation.objects.filter(Command=commande.id),form_kwargs={'com':commande})
+
+                html = render_to_string(
+                template_name='Proformas/steps/partial_step.html',
+                context={"formset": formset}
+            )
+
+                data_dict = {"html_from_view": html}
+                
+       return JsonResponse(data_dict)
+        
+           
+
+def test(request):
+    
+    nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
+    formset = nadjib(queryset=Commande.objects.none())
+    if request.method == 'POST' and request.is_ajax:
+            print('post test 1')
+            
+            
+            print(request.POST)
+            
+            
+            form_c = Commande_Form_step(request.POST or None)
+            if form_c.is_valid():
+                print('form valide !')
+                form_c.save()
+                print('commande saved !')
+            else:
+                print(form_c.errors)
+   
+    form = Commande_Form_step()
+    return render(request,'Proformas/steps/test.html',{'form':form,'formset':formset})
+
+    #return render(request,'Proformas/steps/test.html',{'formset':formset,'form':form})
+
+
+
+def test2(request):
+    print('test2')
+    if request.method == 'POST' and request.is_ajax:
+        nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
+        form = nadjib(request.POST)
+        if form.is_valid():
+                print("form is valide")
+                commandes = Commande.objects.latest('id')
+                print(commandes.id)
+                print('nadjibo')
+                res = 0
+                for x in form:
+                    data = x.cleaned_data
+                    commande = get_object_or_404(Commande,id=commandes.id)
+                    print(commande)
+                    # print(data.get('Prix_Unitaire'))
+                    res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
+                if res != commande.Montant_HT:
+                        print('not equal')
+                        print('res = ')
+                        print(res)
+                        er = 'la somme des prix doit etre égale au montant ht de la commande ! ' + ' ' + str(commande.Montant_HT)
+                        dat = dict()
+                        dat['errors'] = er
+                        print(er)
+                        return JsonResponse(dat)
+                   
+                form.save()
+                print('before redirect')
+                return HttpResponseRedirect(reverse('update2', args=[commande.id]))
+                print('after redirect')
+        else:
+            print(form.errors)
+
+    return redirect('test')
+
+
+
+
+
 
 
 def update_com_d(request,pk):
@@ -224,6 +361,7 @@ def html_to_pdf_view_facture(request, pk):
     NIS = client_data.NIS
     AI =  client_data.AI
     raison_social = client_data.Raison_social
+    rc = client_data.RC
 
     context = {
         'Designation': Designation,
@@ -246,6 +384,7 @@ def html_to_pdf_view_facture(request, pk):
         'Period_Réalisation': Period_Réalisation,
         'Debut_realsiation': Debut_realsiation,
         'Garantie': Garantie,
+        'rc':rc
 
     }
     html_string = render_to_string('Proformas/facture_pdf.html', context)
