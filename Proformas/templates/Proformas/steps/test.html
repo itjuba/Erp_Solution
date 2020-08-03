@@ -47,7 +47,7 @@
         else{
           console.log('after here')
      var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
-      //e.preventDefault();
+      e.preventDefault();
           $.ajax({ 
             headers: {
                
@@ -70,6 +70,8 @@
                   if(response.errors){
                     console.log(response)
                   }
+                  id = parseInt($('#id_form-0-Command').val()) +1 
+                  window.location = '/commande/update2/'+ id
 
               },
             
@@ -80,7 +82,7 @@
           });
          
       
-         
+          return false;
 
 
         }
