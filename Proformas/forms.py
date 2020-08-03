@@ -95,6 +95,8 @@ class Commande_Formna(forms.ModelForm):
         model = Commande
         fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service','validation','Date_validation')
 
+   
+
 
 class Commande_Form2(forms.ModelForm):
     Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
@@ -112,7 +114,20 @@ class Commande_Form_step(forms.ModelForm):
         model = Commande
         fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service')
 
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        Date = self.cleaned_data.get('Date')
+        Client = self.cleaned_data.get('Client')
+        Numero_commande = self.cleaned_data.get('Numero_commande')
+        Montant_HT = self.cleaned_data.get('Montant_HT')
+        Montant_TVA = self.cleaned_data.get('Montant_TVA')
+        Montant_TTC = self.cleaned_data.get('Montant_TTC')
+       
 
+        if not (Date and Client and Numero_commande and Montant_HT and Montant_HT and Montant_TVA and Montant_TTC ):
+            raise ValidationError('verifier les champs vide de la commande ! ')
+
+        return cleaned_data
 
 class Commande_Form(forms.ModelForm):
     Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))

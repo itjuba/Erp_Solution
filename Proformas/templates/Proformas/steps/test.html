@@ -28,7 +28,7 @@
           var quantite = $(this).val();
           console.log(quantite);
           if(!prix || !quantite){
-             md.showNotificationDelete('top','center','danger','check your empty inputs !');
+             md.showNotificationDelete('bottom','right','warning',' Designation : Verifier les Champs vide  ! ..');
 
           }
           prix = (isNaN(prix) || (prix == '') )?0:parseFloat(prix);
@@ -40,7 +40,7 @@
       console.log(sah)
       console.log(total)
       if (total != sah){
-        var message = 'Le Total des articles ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
+        var message = 'Le Total des commande ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
         md.showNotificationDelete('top','center','danger',message);
         console.log('here')
         }
@@ -56,7 +56,14 @@
               data: $('#form-one').serialize(), 
               type: 'POST', 
               url: '/commande/test', 
+            
               success: function(response) { 
+                if(response.errors){
+                  console.log(response.errors['1'])
+                  md.showNotificationFail('bottom','left','warning',response.errors);
+
+                }
+                else {
                 $.ajax({ 
             headers: {
                
@@ -69,15 +76,19 @@
                   console.log("success !")
                   if(response.errors){
                     console.log(response)
+                    md.showNotificationFail('bottom','left','warning',response.errors);
+
                   }
+                  else{
                   id = parseInt($('#id_form-0-Command').val()) +1 
-                  window.location = '/commande/update2/'+ id
+                  window.location = '/commande/update2/'+ id}
 
               },
             
                 
               
           });
+        }
               }
           });
          

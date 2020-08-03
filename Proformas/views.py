@@ -114,7 +114,11 @@ def test(request):
                 form_c.save()
                 print('commande saved !')
             else:
-                print(form_c.errors)
+                print(form_c.errors.as_text())
+                data = dict()
+                data['errors'] = form_c.non_field_errors()
+
+                return JsonResponse(data)
    
     form = Commande_Form_step()
     return render(request,'Proformas/steps/test.html',{'form':form,'formset':formset})
@@ -156,6 +160,9 @@ def test2(request):
                 print('after redirect')
         else:
             print(form.errors)
+            data = dict()
+            data['errors'] = form.errors.as_text()
+            return JsonResponse(data)
 
     return redirect('test')
 
