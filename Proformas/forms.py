@@ -124,7 +124,7 @@ class Commande_Form_step(forms.ModelForm):
         Montant_TTC = self.cleaned_data.get('Montant_TTC')
        
 
-        if not (Date and Client and Numero_commande and Montant_HT and Montant_HT and Montant_TVA and Montant_TTC ):
+        if not (Date and Client and Numero_commande and Montant_HT and Montant_HT  and Montant_TTC ):
             raise ValidationError('verifier les champs vide de la commande ! ')
 
         return cleaned_data
@@ -204,9 +204,9 @@ class Commande_D_Form(forms.ModelForm):
     Designation = forms.CharField(required=True)
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
-    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_HT = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TVA = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TTC = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
     Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
     class Meta:
@@ -222,7 +222,9 @@ class Commande_D_Form(forms.ModelForm):
         
         self.fields['Command'].widget = forms.HiddenInput()
 
-        # self.fields['Prix_Unitaire'].widget.attrs["required"] = "true"
+        self.fields['Montant_HT'].required = False
+        self.fields['Montant_TVA'].required = False
+        self.fields['Montant_TTC'].required = False
 
     def save(self,commit=True):
         commande =  super(Commande_D_Form, self).save(commit = False)
@@ -246,7 +248,7 @@ class Commande_D_Form(forms.ModelForm):
 
             print(cleaned_data)
 
-            if not (Designation and Prix_Unitaire and Command and Quantite and Montant_HT and Montant_TVA and Montant_TTC):
+            if not (Designation and Prix_Unitaire and Command and Quantite):
                 raise ValidationError('Check your inputs!')
 
             # if Commande_Designation.objects.filter(Designation=Designation).exists() and Commande_Designation.objects.filter(

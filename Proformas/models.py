@@ -54,9 +54,9 @@ class Commande_Designation(models.Model):
     Prix_Unitaire = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     Command = models.ForeignKey(Commande,on_delete=models.CASCADE)
     Quantite = models.IntegerField(default=1)
-    Montant_HT = models.DecimalField(max_digits=10, decimal_places=2)
-    Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2)
-    Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2)
+    Montant_HT = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
+    Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
+    Montant_TTC = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
 
     def __str__(self):
         return self.Designation
