@@ -158,9 +158,9 @@ class Commande_Form(forms.ModelForm):
 class Commande_D_Form2(forms.ModelForm):
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
-    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_HT = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TVA = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TTC = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
     Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
     class Meta:
@@ -173,6 +173,9 @@ class Commande_D_Form2(forms.ModelForm):
         super(Commande_D_Form2, self).__init__(*args, **kwargs)
         self.initial['Command'] = self.com
         self.fields['Command'].widget.attrs['class'] = 'form-control';
+        self.fields['Montant_HT'].required = False
+        self.fields['Montant_TVA'].required = False
+        self.fields['Montant_TTC'].required = False
 
 
 
@@ -180,9 +183,9 @@ class Commande_D_Form_p(forms.ModelForm):
     Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
     #Command = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
-    Montant_HT = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TVA = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TTC = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_HT = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TVA = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_TTC = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
     Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
 
@@ -196,6 +199,9 @@ class Commande_D_Form_p(forms.ModelForm):
         super(Commande_D_Form_p, self).__init__(*args, **kwargs)
         self.initial['Command'] = self.com
         self.fields['Command'].widget.attrs['class'] = 'form-control';
+        self.fields['Montant_HT'].required = False
+        self.fields['Montant_TVA'].required = False
+        self.fields['Montant_TTC'].required = False
 
 
 

@@ -34,7 +34,7 @@ def update2(request,pk):
         commande = get_object_or_404(Commande, pk=pk)
     
         form = Commande_Form2(instance=commande)
-        forms = modelformset_factory(Commande_Designation, form=Commande_D_Form_p, extra=0, can_delete=True)
+        forms = modelformset_factory(Commande_Designation, form=Commande_D_Form_p, extra=1, can_delete=True)
         formset = forms(queryset=Commande_Designation.objects.filter(Command=commande.id),form_kwargs={'com':commande})
 
         return render(request,'Proformas/steps/testupdate2.html',{'form':form,'formset':formset})
@@ -60,9 +60,10 @@ def update2post(request,pk):
 
 def update1(request,pk):
     print('update 1')
+    data_dict = dict()
     satas = dict()
     commande = get_object_or_404(Commande, id=pk)
-    forms = modelformset_factory(Commande_Designation, form=Commande_D_Form2, extra=0,can_delete=True)
+    forms = modelformset_factory(Commande_Designation, form=Commande_D_Form2, extra=1,can_delete=True)
     formset = forms(request.POST or None,form_kwargs={'com':commande})
     if request.method == 'POST' and request.is_ajax:
        if formset.is_valid():
@@ -74,26 +75,29 @@ def update1(request,pk):
 
                if data.get('Prix_Unitaire')  is not None and data.get('Quantite') is not None:
                 sum =  sum + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(data.get('Quantite'))))
-
+           
            print(sum)
            if (sum != Decimal(ht)):
-               satas['errors'] = "errors ya zah"
+               print('makach kifeh')
+               data['errors'] = "kbir alih ! 7"
                print('errors')
                return JsonResponse(data)
            else:
                 
                 formset.save()
-                forms = modelformset_factory(Commande_Designation, form=Commande_D_Form_p, extra=0, can_delete=True)
-                formset = forms(queryset=Commande_Designation.objects.filter(Command=commande.id),form_kwargs={'com':commande})
-
+        
                 html = render_to_string(
                 template_name='Proformas/steps/partial_step.html',
                 context={"formset": formset}
-            )
-
+                )
+                print('update')
                 data_dict = {"html_from_view": html}
+                return JsonResponse(data_dict)
+       else:
+            print(formset.errors)
+    return JsonResponse(data_dict)
                 
-       return JsonResponse(data_dict)
+      
         
            
 
