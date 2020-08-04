@@ -162,7 +162,7 @@ input:checked + .slider:before {
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><img src="{% static 'images/sh.png'%}"  style="width : 150px;height:130px;margin-left:45px" class="simple-text logo-normal">
+      <div class="logo"><img src="{% static 'images/sh.png'%}"  style="width : 150px;height:100px;margin-left:45px" class="simple-text logo-normal">
 <!--          SH Informatique-->
         </img></div>
       <div class="sidebar-wrapper">
@@ -227,13 +227,6 @@ input:checked + .slider:before {
               <i class="material-icons" style="" >content_paste</i>
               <p>Articles</p>
             </a>
-<!--          </li>-->
-<!--                <li class="nav-item ">-->
-<!--            <a class="nav-link" href="{% url 'achats'%}">-->
-<!--              <i class="material-icons" style="" >content_paste</i>-->
-<!--              <p>Achats List </p>-->
-<!--            </a>-->
-<!--          </li>-->
             </li>
                 <li class="nav-item ">
             <a class="nav-link" href="{% url 'view'%}">
@@ -271,6 +264,7 @@ input:checked + .slider:before {
               <p>Transactions bancaires</p>
             </a>
           </li>
+        
           <li class="nav-item ">
             <a class="nav-link" href="{% url 'caisse'%}">
               <i class="material-icons" style="" >content_paste</i>
@@ -278,18 +272,13 @@ input:checked + .slider:before {
             </a>
           </li>
 
-     
           <li class="nav-item ">
-            <a class="nav-link " href="#">
-              <i class="material-icons" style="" >notifications</i>
-              <p>Notifications</p>
+            <a class="nav-link" href="{% url 'caisse'%}">
+              <i class="material-icons" style="" >content_paste</i>
+              <p>Gestion caisse</p>
             </a>
-<!--          <li class="nav-item active-pro ">-->
-<!--            <a class="nav-link " href="#">-->
-<!--              <i class="material-icons" style="" >unarchive</i>-->
-<!--              <p>Upgrade to PRO</p>-->
-<!--            </a>-->
-<!--          </li>-->
+          </li>
+          
         </ul>
       </div>
     </div>
