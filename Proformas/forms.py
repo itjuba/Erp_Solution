@@ -39,21 +39,22 @@ class Payments_Form_facture(forms.ModelForm):
 
 class Facture_Form2(forms.ModelForm):
     Titre_facture = forms.CharField()
-    Date = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
-    Date_limite_payement = forms.CharField(widget=forms.TextInput(attrs={'type': 'date'}))
+    Date =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
+    Date_limite_payement =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
+    Date_payement = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     class Meta:
         model = Facture
-        fields = ('Date','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
+        fields = ('Date','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement','Date_payement')
 
 
 class Facture_Form(forms.ModelForm):
     Date =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     Date_limite_payement =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-
+    Date_payement = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     Titre_facture = forms.CharField()
     class Meta:
         model = Facture
-        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
+        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement','Date_payement')
 
     def __init__(self, *args, **kwargs):
         self.fac = kwargs.pop("fac")

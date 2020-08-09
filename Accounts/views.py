@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,get_user_model
 from django.contrib import  auth
 from .forms import LoginForm,RegisterForm
+from django.shortcuts import HttpResponse,HttpResponseRedirect
 
 
 # Create your views here.
@@ -25,6 +26,8 @@ def signup(request):
 
 
 def Login(request):
+       if request.user.is_authenticated:
+        return HttpResponseRedirect('/home')
        form = LoginForm(request.POST or None)
        if request.method == 'POST':
 

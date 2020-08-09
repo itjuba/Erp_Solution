@@ -50,10 +50,17 @@ def caisse_view(request):
     print(pay_char)
     pay_v = Caisse.objects.filter(ES="Vente")
     print(pay_v)
-    # pay_vente = Caisse.objects.filter(ES="Dépence")
+    pay_dep = Caisse.objects.filter(ES="Dépence")
+   
     pay_entree= Caisse.objects.filter(ES="Alimentation")
     print(pay_entree)
 
+
+    total_dep = 0
+    for x in pay_dep:
+        total_dep = total_dep + x.Montant
+
+    print(total_dep)
     total_v = 0
     for x in pay_v:
         total_v = total_v + x.Montant
@@ -70,7 +77,7 @@ def caisse_view(request):
         total_e = total_e + x.Montant
     print(total_e)
 
-    return render(request,'caisse/caisse.html',{'caisse':cai,'entree':total_e+total_v,'sortie':total_c,'dif':total_v+total_e-total_c})
+    return render(request,'caisse/caisse.html',{'caisse':cai,'entree':total_e+total_v,'sortie':total_c+total_dep,'dif':total_v+total_e-total_c})
 
 
 def save_caisse_form_create(request, form, template_name):

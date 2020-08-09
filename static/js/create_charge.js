@@ -6,6 +6,7 @@ $(function () {
 
   var loadForm = function () {
     var btn = $(this);
+    var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
     $.ajax({
       url: btn.attr("data-url"),
       type: 'get',
