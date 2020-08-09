@@ -147,7 +147,7 @@ def test2(request):
                     commande = get_object_or_404(Commande,id=commandes.id)
                     print(commande)
                     # print(data.get('Prix_Unitaire'))
-                    res = res + (float(Decimal(int(data.get('Prix_Unitaire')))) * float(Decimal(int(data.get('Quantite')))))
+                    res = res + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(int(data.get('Quantite')))))
                 if res != commande.Montant_HT:
                         print('not equal')
                         print('res = ')
@@ -165,7 +165,7 @@ def test2(request):
         else:
             print(form.errors)
             data = dict()
-            data['errors'] = form.errors.as_text()
+            data['errors'] = form.errors
             return JsonResponse(data)
 
     return redirect('test')
