@@ -52,7 +52,7 @@ class Modalite(models.Model):
 class Commande_Designation(models.Model):
     Designation = models.TextField()
     Prix_Unitaire = models.DecimalField(max_digits=10,decimal_places=2,default=0)
-    Command = models.ForeignKey(Commande,on_delete=models.CASCADE)
+    Command = models.ForeignKey(Commande,default=1,on_delete=models.CASCADE)
     Quantite = models.IntegerField(default=1)
     Montant_HT = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
     Montant_TVA = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)

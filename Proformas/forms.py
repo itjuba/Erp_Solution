@@ -40,8 +40,8 @@ class Payments_Form_facture(forms.ModelForm):
 class Facture_Form2(forms.ModelForm):
     Titre_facture = forms.CharField()
     Date =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    Date_limite_payement =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    Date_payement = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
+    Date_limite_payement =  forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
+    Date_payement = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}),required=False)
     class Meta:
         model = Facture
         fields = ('Date','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement','Date_payement')
@@ -50,11 +50,11 @@ class Facture_Form2(forms.ModelForm):
 class Facture_Form(forms.ModelForm):
     Date =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     Date_limite_payement =  forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    Date_payement = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
+    #Date_payement = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     Titre_facture = forms.CharField()
     class Meta:
         model = Facture
-        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement','Date_payement')
+        fields = ('Date','Etat','commande','Titre_facture','Numero_facture','Montant_HT','Montant_TVA','Montant_TTC','Date_limite_payement')
 
     def __init__(self, *args, **kwargs):
         self.fac = kwargs.pop("fac")
@@ -228,6 +228,7 @@ class Commande_D_Form(forms.ModelForm):
        
         
         self.fields['Command'].widget = forms.HiddenInput()
+        self.fields['Command'].required = False
 
         self.fields['Montant_HT'].required = False
         self.fields['Montant_TVA'].required = False
@@ -255,7 +256,7 @@ class Commande_D_Form(forms.ModelForm):
 
             print(cleaned_data)
 
-            if not (Designation and Prix_Unitaire and Command and Quantite):
+            if not (Designation and Prix_Unitaire  and Quantite):
                 raise ValidationError('Check your inputs!')
 
             # if Commande_Designation.objects.filter(Designation=Designation).exists() and Commande_Designation.objects.filter(

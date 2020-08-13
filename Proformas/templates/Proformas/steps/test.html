@@ -80,8 +80,15 @@
 
                   }
                   else{
+
+                    if($('#id_form-0-Command').val()){
                   id = parseInt($('#id_form-0-Command').val()) +1 
                   window.location = '/commande/update2/'+ id}
+                  else {
+                    window.location = '/commande/update2/'+ 1
+
+                  }
+                  }
 
               },
             
