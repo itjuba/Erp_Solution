@@ -7,244 +7,155 @@
 {% block javascript %}
   <script src="{% static 'js/tva.js' %}"></script>
 
-<script>
-   $(document).ready(function() {
-  nadjib = function(){
-  document.getElementById("form-one").submit();
-  document.getElementById("form-two").submit();
- 
-}
-   });
-</script>
 
 <script language="JavaScript">
   $(document).ready(function() {
      $("#submit").click(function(e) {
 
-      var total = 0;
-      $('.qu').each(function(ind) {
-          var prix = $('.na').eq(ind).val();
-          console.log(prix);
-          var quantite = $(this).val();
-          console.log(quantite);
-          if(!prix || !quantite){
-             md.showNotificationDelete('bottom','right','warning',' Designation : Verifier les Champs vide  ! ..');
+         var total = 0;
+         $('.mt').each(function (ind) {
 
-          }
-          prix = (isNaN(prix) || (prix == '') )?0:parseFloat(prix);
-          quantite = (isNaN(quantite) || (quantite == ''))?0:parseInt(quantite);
-          total += (prix * quantite);
-          console.log(total);
-      });
-      var sah = $('#id_Montant_HT').val()
-      console.log(sah)
-      console.log(total)
-      if (total != sah){
-        var message = 'Le Total des commande ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
-        md.showNotificationDelete('top','center','danger',message);
-        console.log('here')
-        }
-        else{
-          console.log('after here')
-     var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
-      e.preventDefault();
-          $.ajax({ 
-            headers: {
-               
-                "X-CSRFToken": csrftoken
-            },
-              data: $('#form-one').serialize(), 
-              type: 'POST', 
-              url: '/commande/test', 
-            
-              success: function(response) { 
-                if(response.errors){
-                  console.log(response.errors['1'])
-                  md.showNotificationFail('bottom','left','warning',response.errors);
+             prix = parseFloat($(this).val())
+             console.log(prix)
+             total = parseFloat(total + prix)
+             console.log(total)
+         });
+         var sah = $('#id_Montant_HT').val()
+       //  console.log(sah)
+       //  console.log(total)
+         if (total != sah) {
+             var message = 'Le Total des commande ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
+             md.showNotificationDelete('top', 'center', 'danger', message);
+         //    console.log('here')
+         } else {
+        //     console.log('after here')
+             var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
+             //e.preventDefault();
+             $.ajax({
+                 headers: {
 
-                }
-                else {
-                $.ajax({ 
-            headers: {
-               
-                "X-CSRFToken": csrftoken
-            },
-              data: $('#form-two').serialize(), 
-              type: 'POST', 
-              url: '/commande/test2', 
-              success: function(response) { 
-                  console.log("success !")
-                  if(response.errors){
-                    console.log(response)
-                    md.showNotificationFail('bottom','left','warning',response.errors);
+                     "X-CSRFToken": csrftoken
+                 },
+                 data: $('#form-one').serialize(),
+                 type: 'POST',
+                 url: '/commande/test',
 
-                  }
-                  else{
+                 success: function (response) {
+                     if (response.errors) {
+                         console.log(response.errors['1'])
+                         md.showNotificationFail('bottom', 'left', 'warning', response.errors);
 
-                    if($('#id_form-0-Command').val()){
-                  id = parseInt($('#id_form-0-Command').val()) +1 
-                  window.location = '/commande/update2/'+ id}
-                  else {
-                    window.location = '/commande/update2/'+ 1
+                     } else {
+                         $.ajax({
+                             headers: {
 
-                  }
-                  }
+                                 "X-CSRFToken": csrftoken
+                             },
+                             data: $('#form-two').serialize(),
+                             type: 'POST',
+                             url: '/commande/test2',
+                             success: function (response) {
+                                 console.log("success !")
+                                 if (response.errors) {
+                                     var errors = jQuery.parseJSON(response.errors)
 
-              },
-            
-                
-              
-          });
-        }
-              }
-          });
-         
-      
-          return false;
+                                     console.log(errors)
+                                     console.log(errors[0])
+                                     if (errors[0]['Montant_HT']) {
+                                         console.log('dkhal')
+                                         er = errors[0]['Montant_HT']
+                                         msg = 'Montant HT  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+                                     if (errors[0]['Montant_TTC']) {
+                                         console.log('dkhal')
+                                         er = errors[0]['Montant_TTC']
+                                         msg = 'Montant TTC  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+                                     if (errors[0]['Montant_TVA']) {
+                                         console.log('dkhal')
+                                         er = errors[0]['Montant_TVA']
+                                         msg = 'Montant TVA  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+                                     if (errors[0]['Quantite']) {
+                                         console.log('dkhal')
+                                         er = errors[0]['Quantite']
+                                         msg = 'Quantite  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
 
 
-        }
-       
-    
-         
-      });
-      
+                                 } else {
+                                     $.ajax({
+                                         headers: {
+
+                                             "X-CSRFToken": csrftoken
+                                         },
+                                         data: $('#form-three').serialize(),
+                                         type: 'POST',
+                                         url: '/commande/step3',
+                                         success: function (response) {
+                                             console.log("success !")
+                                             if (response.errors) {
+
+                                                 if(response.errors){
+                                                md.showNotificationFail('bottom', 'left', 'warning', response.errors);
+
+                                                 }
+
+
+                                             } else {
+
+                                                 // window.location = '/commande/'
+                                             }
+
+                                         },
+
+
+                                     });
+                                 }
+                             }
+                         });
+
+
+                         //return false;
+
+
+                     }
+
+
+                 }
+             });
+
+         }
+     });
   });
 </script>
 {% endblock %}
 {% block content %}
-
-
- <div class="content" style="margin-left : 150px;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-8">
-                <br><br>
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title " style="text-align: center;">Ajouter Commande</h4>
-                </div>
-
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                        {% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-
-                        <br><br><br><br><br>
-
-<form method="POST" id="form-one" >
-       <div class="col-md-4" style="margin-left : auto;margin-right:auto;">
-                          <label for="">TVA</label>
-                        <input   class="form-control" type="text" name="tv">
-                            </div>
-    <br>
-    {% csrf_token %}
-
-     <div style="margin-left : 25px" >
-
-   <div class="form-row">
-              <div class="form-group col-md-6 mb-0">
-        <label  class="bmd-label-floating" for="form.id_for_label">Montant_HT &nbsp;</label>
-            {% render_field form.Montant_HT class="form-control mont" %}
-      </div>
-         <div class="form-group col-md-6 mb-0" id="label1">
-          <label class="bmd-label-floating" for="form.id_for_label">Montant_TVA</label>
-           {% render_field form.Montant_TVA class="form-control " %}
-      </div>
-
-
-   </div>
+<br><br><br><br>
+<div>
 
 
 
-      <div class="form-row">
 
 
-                              <div class="form-group col-md-6 mb-0" id="label">
-        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TTC &nbsp;</label>
-            {% render_field form.Montant_TTC class="form-control " %}
-      </div>
+<div class="content" style="">
+            <div class="container-fluid">
 
-  <div class="form-group col-md-6 mb-0">
-          <label class="" for="form.id_for_label">Date</label>
-           {% render_field form.Date class="form-control" %}
-      </div>
-
-
-   </div>
-             <div class="form-row">
-
-     <div class="form-group col-md-6 mb-0">
-          <label class="bmd-label-floating" for="form.id_for_label">Type_Service</label>
-           {% render_field form.Type_Service class="form-control" %}
-      </div>
-
-
-                        <div class="form-group col-md-6 mb-0">
-        <label  class="bmd-label-floating" for="form.id_for_label">Client &nbsp;</label>
-            {% render_field form.Client class="form-control" %}
-      </div>
-
-
-
-                    <div class="form-group col-md-6 mb-0">
-          <label class="bmd-label-floating" for="form.id_for_label">Numero_commande</label>
-           {% render_field form.Numero_commande class="form-control " %}
-      </div>
-</div>
-
-
-
-    <!-- <input  id="step1" class="btn btn-primary" value="Submit" /> -->
-     </div>
-
-</form>
-
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
- </div>
-
-
-
- 
 <div class="row">
-<div class="col-md-12" id="col2">
+<div class="col-md-12" >
 <div class="card">
 <div class="card-header card-header-primary">
-<h4 class="card-title " style="text-align: center;">Ajouter Commande Designation</h4>
+<h4 class="card-title" style="text-align: center;">Ajouter Commande Designation</h4>
 </div>
 <div class="card-body">
 <div class="table-responsive" >
-<!--                      <form method="POST" id="myform" action="{% url 'step2' %}" >-->
 <form method="POST" id="form-two" action="{% url 'test2' %}">
 
 <table class="table" id="book-table">
-
-{% if ers%}
-         <div class="alert alert-danger">
-<strong>   {{ ers }}</strong>
-</div>
-{% endif %}
-
-
 
 
 <thead class=" text-primary"  >
@@ -264,6 +175,9 @@ Quantite
 Montant_HT
 </th>
 <th>
+TVA%
+</th>
+<th>
 Montant_TVA
 </th>
 <th>
@@ -275,21 +189,178 @@ Montant_TTC
 </thead>
 
 </thead>
-<tbody>
+<tbody >
 {% include 'Proformas/steps/partial_step.html' %}
 </tbody>
 </table>
 <a  class="btn btn-primary" id="add_test" >Add new row</a>
                     <a  class="btn btn-primary" id="DeleteButton" >delete</a>
 
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+    <div class="content" style="">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title " style="text-align: center;">Ajouter Commande</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive" style="overflow: hidden;">
+                    <table class="table">
+
+
+<form method="POST" id="form-one" >
+    {% csrf_token %}
+
+<tbody>
+   <br><br>
+ <div class="form-row" style="margin-left: 25px">
+
+              <div class="form-group col-sm-2 mb-0" id="label1" >
+        <label  class="bmd-label-floating"  for="form.id_for_label">Montant_HT &nbsp;</label>
+            {% render_field form.Montant_HT class="form-control mont" %}
+      </div>
+         <div class="form-group col-sm-2 mb-0" id="label2">
+          <label class="bmd-label-floating" for="form.id_for_label">Montant_TVA</label>
+           {% render_field form.Montant_TVA class="form-control " %}
+   </div>
+
+
+                              <div class="form-group col-sm-2 mb-0" id="label3">
+        <label  class="bmd-label-floating" for="form.id_for_label">Montant_TTC &nbsp;</label>
+            {% render_field form.Montant_TTC class="form-control " %}
+      </div>
+
+  <div class="form-group col-sm-2 mb-0">
+          <label class="" for="form.id_for_label">Date</label>
+           {% render_field form.Date class="form-control" %}
+      </div>
+
+
+
+                    <div class="form-group col-sm-2 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Numero_commande</label>
+           {% render_field form.Numero_commande class="form-control " %}
+      </div>
+
+ </div>
+     <div class="form-row" style="margin-left: 25px">
+     <div class="form-group col-sm-2 mb-0" style="">
+          <label class="bmd-label-floating" for="form.id_for_label">Type_Service</label>
+           {% render_field form.Type_Service class="form-control" %}
+      </div>
+
+
+                        <div class="form-group col-sm-2 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Client &nbsp;</label>
+            {% render_field form.Client class="form-control" %}
+      </div>
+     </div>
+
+ </tbody>
+    </form>
+                    </table>
+</div>
+</div>
+ </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
 
 
+
+
+
+
+ <div class="row">
+             <div class="container-fluid">
+
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title " style="text-align: center;">Ajouter Modalité</h4>
+                </div>
+
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+
+
+<form id="form-three" method="POST">
+    {% csrf_token %}
+
+  <div style="" >
+           <div class="form-row" style="margin-left: 25px">
+      <div class="form-group col-md-3 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Garantie</label>
+           {% render_field modal.Garantie class="form-control" %}
+      </div>
+
+
+      <div class="form-group col-md-3 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">modalite_payement</label>
+           {% render_field modal.modalite_payement class="form-control" %}
+      </div>
+          <div class="form-group col-md-3 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Arret_Facture &nbsp;</label>
+            {% render_field modal.Arret_Facture class="form-control" %}
+      </div>
+
+
+
+      <div class="form-group col-md-3 mb-0">
+          <label class="bmd-label-floating" for="form.id_for_label">Formation</label>
+           {% render_field modal.Formation class="form-control " %}
+      </div>
+          <div class="form-group col-md-3 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Period_Réalisation &nbsp;</label>
+            {% render_field modal.Period_Réalisation class="form-control" %}
+      </div>
+
+
+            <div class="form-group col-md-3 mb-0">
+        <label  class="bmd-label-floating" for="form.id_for_label">Echéancier_payement &nbsp;</label>
+            {% render_field modal.Echéancier_payement class="form-control" %}
+      </div>
+
+        <div class="form-group col-md-3 mb-0">
+        <label  class="" for="form.id_for_label">Debut_realsiation &nbsp;</label>
+            {% render_field modal.Debut_realsiation class="form-control" %}
+      </div>
+
+
+<!--        <div class="form-group col-md-3 mb-0">-->
+<!--        <label  class="bmd-label-floating" for="form.id_for_label">Commande &nbsp;</label>-->
+<!--            {% render_field modal.Command class="form-control" %}-->
+<!--      </div>-->
+
+
+  </div>
+</form>
+
+<!--    <input  id="step1" class="btn btn-primary" type="submit" value="Submit" />-->
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<button id="submit">Submit forms</button>
+    <input  id="submit" class="btn btn-primary" type="submit" value="Submit" />
 {% endblock%}

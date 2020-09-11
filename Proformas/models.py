@@ -44,7 +44,7 @@ class Modalite(models.Model):
 
 
     def __str__(self):
-        return self.modalite_payement
+        return str(self.Command)
 
 
 

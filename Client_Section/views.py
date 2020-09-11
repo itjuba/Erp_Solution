@@ -20,6 +20,7 @@ def ajax_trans(request):
     data = {}
     days = 30
     start_date = timezone.now() - datetime.timedelta(days=days - 1)
+   
 
     datetime_list = []
     labels = []
@@ -95,6 +96,8 @@ def ajax(request):
 
 
 def graph(request,*args,**kwargs):
+    print(str(datetime.timedelta(minutes=1)))
+    print('her')
     data = {}
     # days = 7
     # stat_date = timezone.now() - datetime.timedelta(days=days - 1)

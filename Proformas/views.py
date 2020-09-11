@@ -7,6 +7,7 @@ from django.shortcuts import render,get_object_or_404,HttpResponse,HttpResponseR
 from django.views.generic import View
 from django.http import JsonResponse
 from Client_Section.models import Client_Data
+import json
 from decimal import Decimal
 from django.urls import reverse
 import datetime
@@ -103,8 +104,9 @@ def update1(request,pk):
 
 def test(request):
     
-    nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
+    nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1)
     formset = nadjib(queryset=Commande.objects.none())
+    modalit = Modalite_Form()
     if request.method == 'POST' and request.is_ajax:
             print('post test 1')
             
@@ -120,12 +122,12 @@ def test(request):
             else:
                 print(form_c.errors.as_text())
                 data = dict()
-                data['errors'] = form_c.non_field_errors()
+                data['errors'] = form_c.errors.as_text()
 
                 return JsonResponse(data)
    
     form = Commande_Form_step()
-    return render(request,'Proformas/steps/test.html',{'form':form,'formset':formset})
+    return render(request,'Proformas/steps/test.html',{'form':form,'formset':formset , 'modal':modalit})
 
     #return render(request,'Proformas/steps/test.html',{'formset':formset,'form':form})
 
@@ -137,35 +139,36 @@ def test2(request):
         nadjib = modelformset_factory(Commande_Designation, form=Commande_D_Form, extra=1, can_delete=True)
         form = nadjib(request.POST)
         if form.is_valid():
-                print("form is valide")
+
                 commandes = Commande.objects.latest('id')
-                print(commandes.id)
-                print('nadjibo')
+
                 res = 0
                 for x in form:
                     data = x.cleaned_data
                     commande = get_object_or_404(Commande,id=commandes.id)
-                    print(commande)
+
                     # print(data.get('Prix_Unitaire'))
                     res = res + (float(Decimal(data.get('Prix_Unitaire'))) * float(Decimal(int(data.get('Quantite')))))
                 if res != commande.Montant_HT:
-                        print('not equal')
-                        print('res = ')
-                        print(res)
+
                         er = 'la somme des prix doit etre égale au montant ht de la commande ! ' + ' ' + str(commande.Montant_HT)
                         dat = dict()
                         dat['errors'] = er
                         print(er)
                         return JsonResponse(dat)
-                   
-                form.save()
-                print('before redirect')
-                return HttpResponseRedirect(reverse('update2', args=[commande.id]))
-                print('after redirect')
+
+                else :
+                    print('befor validation !')
+                    form.save()
+                    print('before redirect')
+                    return HttpResponseRedirect(reverse('update2', args=[commande.id]))
+
         else:
             print(form.errors)
+            comm = Commande.objects.last()
+            comm.delete()
             data = dict()
-            data['errors'] = form.errors
+            data['errors'] = json.dumps(form.errors)
             return JsonResponse(data)
 
     return redirect('test')
@@ -764,8 +767,19 @@ def step3(request):
         form = Modalite_Form(request.POST or None)
         if form.is_valid():
             form.save()
-            return redirect('commande')
-        print(form.errors)
+            #return redirect('commande')
+            print(form.errors)
+
+        else:
+            print('not')
+            data = dict()
+            data['errors'] = form.errors.as_text()
+            cm_d = Commande_Designation.objects.last()
+            cm_d.delete()
+            commande = Commande.objects.last()
+            commande.delete()
+            return JsonResponse(data)
+
     else:
 
         form = Modalite_Form()

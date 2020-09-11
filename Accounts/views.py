@@ -27,6 +27,8 @@ def signup(request):
 
 def Login(request):
        if request.user.is_authenticated:
+        print('here login boolean !')
+        print(request.user.is_authenticated)
         return HttpResponseRedirect('/home')
        form = LoginForm(request.POST or None)
        if request.method == 'POST':

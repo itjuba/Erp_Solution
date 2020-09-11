@@ -114,7 +114,9 @@ class Commande_Form_step(forms.ModelForm):
     class Meta:
         model = Commande
         fields = ('Date','Client','Numero_commande','Montant_HT','Montant_TVA','Montant_TTC','Type_Service')
-
+        labels = {
+            'Montant_HT':'id',
+        }
     def clean(self):
         cleaned_data = self.cleaned_data
         Date = self.cleaned_data.get('Date')
@@ -209,16 +211,18 @@ class Commande_D_Form_p(forms.ModelForm):
 
 class Commande_D_Form(forms.ModelForm):
     Designation = forms.CharField(required=True)
-    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'na form-control'}))
+    Prix_Unitaire = forms.CharField(widget=forms.TextInput(attrs={'class': 'pr form-control'}))
     Quantite = forms.CharField(widget=forms.TextInput(attrs={'class': 'qu l form-control'}))
-    Montant_HT = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TVA = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    Montant_TTC = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    Montant_HT = forms.DecimalField(widget=forms.TextInput(attrs={'class':'mt form-control'}))
+    tva = forms.CharField(widget=forms.TextInput(attrs={'class':'tvas form-control'}))
+    Montant_TVA = forms.DecimalField(widget=forms.TextInput(attrs={'class':'mt_tva form-control'}))
+    Montant_TTC = forms.DecimalField(widget=forms.TextInput(attrs={'class':'ttc form-control'}))
     Designation = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+
 
     class Meta:
         model = Commande_Designation
-        fields = ('Designation','Prix_Unitaire','Command','Quantite','Montant_HT','Montant_TVA','Montant_TTC')
+        fields = ('Designation','Prix_Unitaire','Command','Quantite','Montant_HT','tva','Montant_TVA','Montant_TTC')
 
     def __init__(self, *args, **kwargs):
         super(Commande_D_Form, self).__init__(*args, **kwargs)
@@ -231,6 +235,7 @@ class Commande_D_Form(forms.ModelForm):
         self.fields['Command'].required = False
 
         self.fields['Montant_HT'].required = False
+        self.fields['tva'].required = False
         self.fields['Montant_TVA'].required = False
         self.fields['Montant_TTC'].required = False
 
@@ -287,9 +292,17 @@ class Modalite_Form(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(Modalite_Form, self).__init__(*args, **kwargs)
-
+        self.fields['Command'].widget = forms.HiddenInput()
         commande = Commande.objects.latest('id')
         self.initial['Command'] = commande
+        self.fields['Command'].required = False
+
+    def save(self, commit=True):
+            commande = super(Modalite_Form, self).save(commit=False)
+            commande.Command = Commande.objects.latest('id')
+            commande.save()
+            return commande
+
     def clean(self):
         cleaned_data = self.cleaned_data
         modalite_payement = self.cleaned_data.get('modalite_payement')

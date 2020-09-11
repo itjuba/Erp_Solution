@@ -501,7 +501,7 @@ $(document).ready(function () {
  console.log(commande);
  console.log(form_idx)
 
- $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"  type="hidden"  class="form-control"  type="text" name="form-'+form_idx+'-Command" required="true" value='+commande+' ></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+ $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"  type="hidden"  class="form-control"  type="text" name="form-'+form_idx+'-Command" required="true" value='+commande+' ></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="mt form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"><td><input  class="tvas form-control" type="text" name="form-0-tva" id="id_form-0-tva"></td></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="mt_tva form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="ttc form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td></tr>');
 });
    });
 </script>
@@ -671,7 +671,50 @@ $(document).ready(function() {
 });
 </script>
 
+<script>
+  $(document).ready(function() {
 
+    $(document).on('keyup', ".tvas", function () {
+       var mt_tva = 0
+       var mt_ttc= 0
+       var mt_ht =0
+      //console.log($('.mt').val())
+      $('.mt').each(function (ind) {
+       // console.log('here')
+        var tva = $('.tvas').eq(ind).val();
+        //console.log(tva);
+        var mt = $(this).val();
+        console.log(mt);
+        // if (!tva || !mt) {
+        //   md.showNotificationDelete('bottom', 'right', 'warning', ' Designation : Verifier les Champs vide  ! ..');
+        //
+        // }
+        tva = (isNaN(tva) || (tva == '')) ? 0 : parseFloat(tva);
+        mt = (isNaN(mt) || (mt == '')) ? 0 : parseFloat(mt);
+        console.log('tvvv = '+ tva)
+
+        var tv = (tva * mt / 100)
+        mt_tva = parseFloat(mt_tva) + parseFloat(tv)
+
+        mt_ht = parseFloat(mt_ht + mt)
+        mt_ttc = parseFloat(mt_tva + mt_ht)
+        console.log('tva = ' + mt_tva)
+        console.log('ht  = ' + mt_ht)
+        console.log('ttc  = ' + mt_ttc)
+        console.log(mt_ttc)
+      $('.mt_tva').eq(ind).val(tv)
+      $('.ttc').eq(ind).val(parseFloat(tv+mt))
+       $('#id_Montant_HT').val(mt_ht)
+        $('#label1').addClass('is-focused');
+        $('#label2').addClass('is-focused');
+          $('#id_Montant_TVA').val(mt_tva)
+        $('#label3').addClass('is-focused');
+        $('#id_Montant_TTC').val(mt_ttc)
+
+      });
+    });
+  });
+</script>
 
 
 
