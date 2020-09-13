@@ -52,40 +52,40 @@
                                      if (errors['Montant_HT']) {
                                          console.log('dkhal')
                                          er = errors['Montant_HT']
-                                         msg = 'Montant HT  ' + er
+                                         msg = 'Commande Montant HT  :' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
                                      if (errors['Montant_TTC']) {
                                          console.log('dkhal')
                                          er = errors['Montant_TTC']
-                                         msg = 'Montant TTC  ' + er
+                                         msg = 'Commande  Montant TTC : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
                                      if (errors['Montant_TVA']) {
                                          console.log('dkhal')
                                          er = errors['Montant_TVA']
-                                         msg = 'Montant TVA  ' + er
+                                         msg = 'Commande  Montant TVA : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
                                      if (errors['Date']) {
                                          console.log('dkhal')
                                          er = errors['Date']
-                                         msg = 'Date  ' + er
+                                         msg = 'Commande Date  ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }  if (errors['Numero_commande']) {
                                          console.log('dkhal')
                                          er = errors['Numero_commande']
-                                         msg = 'Numero_commande  ' + er
+                                         msg = 'Commande Numero_commande  :' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      } if (errors['Type_Service']) {
                                          console.log('dkhal')
                                          er = errors['Type_Service']
-                                         msg = 'Type_Service  ' + er
+                                         msg = 'Commande Type_Service  : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }if (errors['Client']) {
                                          console.log('dkhal')
                                          er = errors['Client']
-                                         msg = 'Client  ' + er
+                                         msg = 'Commande Client : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
 
@@ -109,25 +109,30 @@
                                      if (errors[0]['Montant_HT']) {
                                          console.log('dkhal')
                                          er = errors[0]['Montant_HT']
-                                         msg = 'Montant HT  ' + er
+                                         msg = 'Commande Designation Montant HT : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
                                      if (errors[0]['Montant_TTC']) {
                                          console.log('dkhal')
                                          er = errors[0]['Montant_TTC']
-                                         msg = 'Montant TTC  ' + er
+                                         msg = 'Commande Designation Montant TTC : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
                                      if (errors[0]['Montant_TVA']) {
                                          console.log('dkhal')
                                          er = errors[0]['Montant_TVA']
-                                         msg = 'Montant TVA  ' + er
+                                         msg = 'Commande Designation Montant TVA :' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
                                      if (errors[0]['Quantite']) {
                                          console.log('dkhal')
                                          er = errors[0]['Quantite']
-                                         msg = 'Quantite  ' + er
+                                         msg = 'Commande Designation Quantite : ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }if (errors[0]['Prix_Unitaire']) {
+                                         console.log('dkhal')
+                                         er = errors[0]['Prix_Unitaire']
+                                         msg = 'Commande Designation Prix_Unitaire : ' + er
                                          md.showNotificationFail('bottom', 'left', 'warning', msg);
                                      }
 
@@ -146,14 +151,15 @@
                                              if (response.errors) {
 
                                                  if(response.errors){
-                                                md.showNotificationFail('bottom', 'left', 'warning', response.errors);
+                                                     msg = 'Modalité ' + response.errors
+                                                md.showNotificationFail('bottom', 'left', 'warning', msg);
 
                                                  }
 
 
                                              } else {
 
-                                                 // window.location = '/commande/'
+                                                 window.location = '/commande/'
                                              }
 
                                          },
