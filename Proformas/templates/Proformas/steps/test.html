@@ -42,8 +42,53 @@
 
                  success: function (response) {
                      if (response.errors) {
-                         console.log(response.errors['1'])
-                         md.showNotificationFail('bottom', 'left', 'warning', response.errors);
+                       //  console.log(response.errors['1'])
+                       //  md.showNotificationFail('bottom', 'left', 'warning', response.errors);
+                         console.log(response.errors)
+                          var errors = jQuery.parseJSON(response.errors)
+
+                                     console.log(errors)
+                                     console.log(errors[0])
+                                     if (errors['Montant_HT']) {
+                                         console.log('dkhal')
+                                         er = errors['Montant_HT']
+                                         msg = 'Montant HT  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+                                     if (errors['Montant_TTC']) {
+                                         console.log('dkhal')
+                                         er = errors['Montant_TTC']
+                                         msg = 'Montant TTC  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+                                     if (errors['Montant_TVA']) {
+                                         console.log('dkhal')
+                                         er = errors['Montant_TVA']
+                                         msg = 'Montant TVA  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+                                     if (errors['Date']) {
+                                         console.log('dkhal')
+                                         er = errors['Date']
+                                         msg = 'Date  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }  if (errors['Numero_commande']) {
+                                         console.log('dkhal')
+                                         er = errors['Numero_commande']
+                                         msg = 'Numero_commande  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     } if (errors['Type_Service']) {
+                                         console.log('dkhal')
+                                         er = errors['Type_Service']
+                                         msg = 'Type_Service  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }if (errors['Client']) {
+                                         console.log('dkhal')
+                                         er = errors['Client']
+                                         msg = 'Client  ' + er
+                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                     }
+
 
                      } else {
                          $.ajax({
@@ -303,6 +348,7 @@ Montant_TTC
 
 <form id="form-three" method="POST">
     {% csrf_token %}
+   <br><br>
 
   <div style="" >
            <div class="form-row" style="margin-left: 25px">

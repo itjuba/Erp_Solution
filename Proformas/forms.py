@@ -125,9 +125,10 @@ class Commande_Form_step(forms.ModelForm):
         Montant_HT = self.cleaned_data.get('Montant_HT')
         Montant_TVA = self.cleaned_data.get('Montant_TVA')
         Montant_TTC = self.cleaned_data.get('Montant_TTC')
-       
+        Type_Service = self.cleaned_data.get('Type_Service')
 
-        if not (Date and Client and Numero_commande and Montant_HT and Montant_HT  and Montant_TTC ):
+
+        if not (Date and Client and Numero_commande and Montant_HT and Montant_HT  and Montant_TTC and Type_Service ):
             raise ValidationError('verifier les champs vide de la commande ! ')
 
         return cleaned_data

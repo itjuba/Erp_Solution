@@ -616,8 +616,31 @@ $("#DeleteButton").on("click", function() {
 <script>
  $(document).ready(function(){
 $("#DeleteButton").on("click", function() {
-   console.log('yes');
-   $('#book-table tr:last').remove();
+   console.log('book table here !');
+   var ttc = $('#id_Montant_TTC').val()
+   var tva  =$('#id_Montant_TVA').val()
+   var ht =$('#id_Montant_HT').val()
+  console.log(ht)
+
+  s_ttc =$('#book-table tr:last').find('.ttc').val()
+  s_tva =$('#book-table tr:last').find('.mt_tva').val()
+  s_ht =$('#book-table tr:last').find('.mt').val()
+  console.log(s_ht)
+  console.log((ttc-s_ttc).toFixed(2))
+  console.log((tva-s_tva).toFixed(2))
+  console.log((ht-s_ht).toFixed(2))
+  $('#id_Montant_TTC').val((parseFloat($('#id_Montant_TTC').val()) - parseFloat($('#book-table tr:last').find('.ttc').val())).toFixed(2))
+  $('#id_Montant_TVA').val((parseFloat($('#id_Montant_TVA').val()) - parseFloat($('#book-table tr:last').find('.mt_tva').val())).toFixed(2))
+  $('#id_Montant_HT').val((parseFloat($('#id_Montant_HT').val()) - parseFloat($('#book-table tr:last').find('.mt').val())).toFixed(2))
+
+  if($('#id_Montant_HT').val() < 0 ){
+    $('#id_Montant_HT').val(0)
+  }  if($('#id_Montant_TVA').val() < 0 ){
+    $('#id_Montant_TVA').val(0)
+  }  if($('#id_Montant_TTC').val() < 0 ){
+    $('#id_Montant_TTC').val(0)
+  }
+  $('#book-table tr:last').remove();
 });
 });
 

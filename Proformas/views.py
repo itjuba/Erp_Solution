@@ -122,7 +122,7 @@ def test(request):
             else:
                 print(form_c.errors.as_text())
                 data = dict()
-                data['errors'] = form_c.errors.as_text()
+                data['errors'] = json.dumps(form_c.errors)
 
                 return JsonResponse(data)
    
