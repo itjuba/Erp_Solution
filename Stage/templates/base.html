@@ -501,7 +501,7 @@ $(document).ready(function () {
  console.log(commande);
  console.log(form_idx)
 
- $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"  type="hidden"  class="form-control"  type="text" name="form-'+form_idx+'-Command" required="true" value='+commande+' ></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="mt form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"><td><input  class="tvas form-control" type="text" name="form-0-tva" id="id_form-0-tva"></td></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="mt_tva form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="ttc form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td></tr>');
+ $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Command"  type="hidden"  class="form-control"  type="text" name="form-'+form_idx+'-Command" required="true" value='+commande+' ></input><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="pr form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="mt form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"><td><input  class="tvas form-control" type="text" name="form-0-tva" id="id_form-0-tva"></td></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="mt_tva form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="ttc form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td></tr>');
 });
    });
 </script>
@@ -521,7 +521,7 @@ $(document).ready(function () {
  console.log(commande);
  console.log(form_idx)
 
- $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="na form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
+ $('#book-table > tbody:last').append('<tr><td><input id="id_form-'+form_idx+'-Designation"  class="form-control"  type=text name="form-'+form_idx+'-Designation" required=true"></td><td><input id="id_form-'+form_idx+'-Prix_Unitaire" class="pr form-control" type=text name="form-'+form_idx+'-Prix_Unitaire" required=true"></td><td><Select id="id_form-'+form_idx+'-Command"   class="form-control"  type=text name="form-'+form_idx+'-Command" required=true"><option value='+commande+' selected="">'+commande+' </option></Select></td><td><input id="id_form-'+form_idx+'-Quantite" class="qu l form-control"  type=text name="form-'+form_idx+'-Quantite"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_HT"   class="form-control"  type=text name="form-'+form_idx+'-Montant_HT"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TVA"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TVA"  required=true"></td><td><input id="id_form-'+form_idx+'-Montant_TTC"  class="form-control"  type=text name="form-'+form_idx+'-Montant_TTC"  required=true"></td><td><input type="checkbox" name="form-'+form_idx+'-DELETE" id="id_form-'+form_idx+'-DELETE"></td></tr>');
 });
    });
 </script>
@@ -738,7 +738,21 @@ $(document).ready(function() {
     });
   });
 </script>
+<script>
+  $(document).ready(function() {
 
+    $(document).on('keyup', ".qu", function () {
+      var t = 0;
+      //console.log($('.mt').val())
+      $('.qu').each(function (ind) {
+        // console.log('here')
+        var price = $('.pr').eq(ind).val();
+        var quantite = $(this).val()
+       $('.mt').eq(ind).val(price*quantite)
+      });
+    });
+  });
+</script>
 
 
 </body>

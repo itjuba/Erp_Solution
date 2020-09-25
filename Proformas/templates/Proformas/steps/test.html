@@ -23,163 +23,173 @@
          var sah = $('#id_Montant_HT').val()
        //  console.log(sah)
        //  console.log(total)
-         if (total != sah) {
-             var message = 'Le Total des commande ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
+         if(!total){
+              var message = 'verifier le champs Montant_HT *Commande_Designation*'
              md.showNotificationDelete('top', 'center', 'danger', message);
-         //    console.log('here')
-         } else {
-        //     console.log('after here')
-             var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
-             //e.preventDefault();
-             $.ajax({
-                 headers: {
+         }
+         else {
+             if (total & total != sah) {
+                 var message = 'Le Total des commande ne correspond pas à le montant HT   :  total =' + ' ' + total + ' ' + 'Montant HT = ' + sah
+                 md.showNotificationDelete('top', 'center', 'danger', message);
+                 //    console.log('here')
+             } else {
+                 //     console.log('after here')
+                 var csrftoken = $('[name="csrfmiddlewaretoken"]').val();
+                 //e.preventDefault();
+                 $.ajax({
+                     headers: {
 
-                     "X-CSRFToken": csrftoken
-                 },
-                 data: $('#form-one').serialize(),
-                 type: 'POST',
-                 url: '/commande/test',
+                         "X-CSRFToken": csrftoken
+                     },
+                     data: $('#form-one').serialize(),
+                     type: 'POST',
+                     url: '/commande/test',
 
-                 success: function (response) {
-                     if (response.errors) {
-                       //  console.log(response.errors['1'])
-                       //  md.showNotificationFail('bottom', 'left', 'warning', response.errors);
-                         console.log(response.errors)
-                          var errors = jQuery.parseJSON(response.errors)
+                     success: function (response) {
+                         if (response.errors) {
+                             //  console.log(response.errors['1'])
+                             //  md.showNotificationFail('bottom', 'left', 'warning', response.errors);
+                             console.log(response.errors)
+                             var errors = jQuery.parseJSON(response.errors)
 
-                                     console.log(errors)
-                                     console.log(errors[0])
-                                     if (errors['Montant_HT']) {
-                                         console.log('dkhal')
-                                         er = errors['Montant_HT']
-                                         msg = 'Commande Montant HT  :' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-                                     if (errors['Montant_TTC']) {
-                                         console.log('dkhal')
-                                         er = errors['Montant_TTC']
-                                         msg = 'Commande  Montant TTC : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-                                     if (errors['Montant_TVA']) {
-                                         console.log('dkhal')
-                                         er = errors['Montant_TVA']
-                                         msg = 'Commande  Montant TVA : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-                                     if (errors['Date']) {
-                                         console.log('dkhal')
-                                         er = errors['Date']
-                                         msg = 'Commande Date  ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }  if (errors['Numero_commande']) {
-                                         console.log('dkhal')
-                                         er = errors['Numero_commande']
-                                         msg = 'Commande Numero_commande  :' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     } if (errors['Type_Service']) {
-                                         console.log('dkhal')
-                                         er = errors['Type_Service']
-                                         msg = 'Commande Type_Service  : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }if (errors['Client']) {
-                                         console.log('dkhal')
-                                         er = errors['Client']
-                                         msg = 'Commande Client : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-
-
-                     } else {
-                         $.ajax({
-                             headers: {
-
-                                 "X-CSRFToken": csrftoken
-                             },
-                             data: $('#form-two').serialize(),
-                             type: 'POST',
-                             url: '/commande/test2',
-                             success: function (response) {
-                                 console.log("success !")
-                                 if (response.errors) {
-                                     var errors = jQuery.parseJSON(response.errors)
-
-                                     console.log(errors)
-                                     console.log(errors[0])
-                                     if (errors[0]['Montant_HT']) {
-                                         console.log('dkhal')
-                                         er = errors[0]['Montant_HT']
-                                         msg = 'Commande Designation Montant HT : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-                                     if (errors[0]['Montant_TTC']) {
-                                         console.log('dkhal')
-                                         er = errors[0]['Montant_TTC']
-                                         msg = 'Commande Designation Montant TTC : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-                                     if (errors[0]['Montant_TVA']) {
-                                         console.log('dkhal')
-                                         er = errors[0]['Montant_TVA']
-                                         msg = 'Commande Designation Montant TVA :' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
-                                     if (errors[0]['Quantite']) {
-                                         console.log('dkhal')
-                                         er = errors[0]['Quantite']
-                                         msg = 'Commande Designation Quantite : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }if (errors[0]['Prix_Unitaire']) {
-                                         console.log('dkhal')
-                                         er = errors[0]['Prix_Unitaire']
-                                         msg = 'Commande Designation Prix_Unitaire : ' + er
-                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
-                                     }
+                             console.log(errors)
+                             console.log(errors[0])
+                             if (errors['Montant_HT']) {
+                                 console.log('dkhal')
+                                 er = errors['Montant_HT']
+                                 msg = 'Commande Montant HT  :' + er
+                                 md.showNotificationFail('bottom', 'left', 'warning', msg);
+                             }
+                             if (errors['Montant_TTC']) {
+                                 console.log('dkhal')
+                                 er = errors['Montant_TTC']
+                                 msg = 'Commande  Montant TTC : ' + er
+                                 md.showNotificationFail('bottom', 'left', 'warning', msg);
+                             }
+                             if (errors['Montant_TVA']) {
+                                 console.log('dkhal')
+                                 er = errors['Montant_TVA']
+                                 msg = 'Commande  Montant TVA : ' + er
+                                 md.showNotificationFail('bottom', 'left', 'warning', msg);
+                             }
+                             if (errors['Date']) {
+                                 console.log('dkhal')
+                                 er = errors['Date']
+                                 msg = 'Commande Date  ' + er
+                                 md.showNotificationFail('bottom', 'right', 'warning', msg);
+                             }
+                             if (errors['Numero_commande']) {
+                                 console.log('dkhal')
+                                 er = errors['Numero_commande']
+                                 msg = 'Commande Numero_commande  :' + er
+                                 md.showNotificationFail('bottom', 'right', 'warning', msg);
+                             }
+                             if (errors['Type_Service']) {
+                                 console.log('dkhal')
+                                 er = errors['Type_Service']
+                                 msg = 'Commande Type_Service  : ' + er
+                                 md.showNotificationFail('bottom', 'right', 'warning', msg);
+                             }
+                             if (errors['Client']) {
+                                 console.log('dkhal')
+                                 er = errors['Client']
+                                 msg = 'Commande Client : ' + er
+                                 md.showNotificationFail('bottom', 'right', 'warning', msg);
+                             }
 
 
-                                 } else {
-                                     $.ajax({
-                                         headers: {
+                         } else {
+                             $.ajax({
+                                 headers: {
 
-                                             "X-CSRFToken": csrftoken
-                                         },
-                                         data: $('#form-three').serialize(),
-                                         type: 'POST',
-                                         url: '/commande/step3',
-                                         success: function (response) {
-                                             console.log("success !")
-                                             if (response.errors) {
+                                     "X-CSRFToken": csrftoken
+                                 },
+                                 data: $('#form-two').serialize(),
+                                 type: 'POST',
+                                 url: '/commande/test2',
+                                 success: function (response) {
+                                     console.log("success !")
+                                     if (response.errors) {
+                                         var errors = jQuery.parseJSON(response.errors)
 
-                                                 if(response.errors){
-                                                     msg = 'Modalité ' + response.errors
-                                                md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                         console.log(errors)
+                                         console.log(errors[0])
+                                         if (errors[0]['Montant_HT']) {
+                                             console.log('dkhal')
+                                             er = errors[0]['Montant_HT']
+                                             msg = 'Commande Designation Montant HT : ' + er
+                                             md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                         }
+                                         if (errors[0]['Montant_TTC']) {
+                                             console.log('dkhal')
+                                             er = errors[0]['Montant_TTC']
+                                             msg = 'Commande Designation Montant TTC : ' + er
+                                             md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                         }
+                                         if (errors[0]['Montant_TVA']) {
+                                             console.log('dkhal')
+                                             er = errors[0]['Montant_TVA']
+                                             msg = 'Commande Designation Montant TVA :' + er
+                                             md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                         }
+                                         if (errors[0]['Quantite']) {
+                                             console.log('dkhal')
+                                             er = errors[0]['Quantite']
+                                             msg = 'Commande Designation Quantite : ' + er
+                                             md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                         }
+                                         if (errors[0]['Prix_Unitaire']) {
+                                             console.log('dkhal')
+                                             er = errors[0]['Prix_Unitaire']
+                                             msg = 'Commande Designation Prix_Unitaire : ' + er
+                                             md.showNotificationFail('bottom', 'left', 'warning', msg);
+                                         }
 
+
+                                     } else {
+                                         $.ajax({
+                                             headers: {
+
+                                                 "X-CSRFToken": csrftoken
+                                             },
+                                             data: $('#form-three').serialize(),
+                                             type: 'POST',
+                                             url: '/commande/step3',
+                                             success: function (response) {
+                                                 console.log("success !")
+                                                 if (response.errors) {
+
+                                                     if (response.errors) {
+                                                         msg = 'Modalité ' + response.errors
+                                                         md.showNotificationFail('bottom', 'left', 'warning', msg);
+
+                                                     }
+
+
+                                                 } else {
+
+                                                     window.location = '/commande/'
                                                  }
 
-
-                                             } else {
-
-                                                 window.location = '/commande/'
-                                             }
-
-                                         },
+                                             },
 
 
-                                     });
+                                         });
+                                     }
                                  }
-                             }
-                         });
+                             });
 
 
-                         //return false;
+                             //return false;
+
+
+                         }
 
 
                      }
+                 });
 
-
-                 }
-             });
-
+             }
          }
      });
   });
