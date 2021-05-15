@@ -91,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Stage',
-        'USER': 'juba',
-        'PASSWORD': 'Nadjib11051963',
+        'USER': '',
+        'PASSWORD': '',
         'PORT': '',
     }
 }
@@ -154,7 +154,7 @@ LOGIN_EXEMPT_URLS = (
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST_USER = "attignadjib@gmail.com"
+EMAIL_HOST_USER = ""
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS =True
 EMAIL_HOST_PASSWORD = ""
